@@ -1,7 +1,14 @@
 package fr.eni.enchere.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utilisateur {
 
+	private List<ArticleVendu> lstArticlesVendu = new ArrayList<>();
+	private List<Enchere> lstEncheres = new ArrayList<>();
+	
+	
 	private Integer noUtilisateur;
 	private String pseudo;
 	private String nom;
@@ -9,7 +16,7 @@ public class Utilisateur {
 	private String email;
 	private String telephone;
 	private String rue;
-	private String cp;
+	private String codePostal;
 	private String ville;
 	private String motDePasse;
 	private Integer credit;
@@ -23,7 +30,7 @@ public class Utilisateur {
 	
 	
 	
-	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String cp,
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal,
 			String ville, String motDePasse, Integer credit, Byte administrateur) {
 		super();
 		this.pseudo = pseudo;
@@ -32,7 +39,7 @@ public class Utilisateur {
 		this.email = email;
 		this.telephone = telephone;
 		this.rue = rue;
-		this.cp = cp;
+		this.codePostal = codePostal;
 		this.ville = ville;
 		this.motDePasse = motDePasse;
 		this.credit = credit;
@@ -43,7 +50,7 @@ public class Utilisateur {
 
 
 	public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String cp, String ville, String motDePasse, Integer credit, Byte administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, Integer credit, Byte administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -52,7 +59,7 @@ public class Utilisateur {
 		this.email = email;
 		this.telephone = telephone;
 		this.rue = rue;
-		this.cp = cp;
+		this.codePostal = codePostal;
 		this.ville = ville;
 		this.motDePasse = motDePasse;
 		this.credit = credit;
@@ -100,11 +107,11 @@ public class Utilisateur {
 	public void setRue(String rue) {
 		this.rue = rue;
 	}
-	public String getCp() {
-		return cp;
+	public String getCodePostal() {
+		return codePostal;
 	}
-	public void setCp(String cp) {
-		this.cp = cp;
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
 	}
 	public String getVille() {
 		return ville;
@@ -130,14 +137,29 @@ public class Utilisateur {
 	public void setAdministrateur(Byte administrateur) {
 		this.administrateur = administrateur;
 	}
-
-
+	
+	public List<ArticleVendu> getLstArticlesVendu() {
+		return lstArticlesVendu;
+	}
+	public void setLstArticlesVendu(List<ArticleVendu> lstArticlesVendu) {
+		this.lstArticlesVendu = lstArticlesVendu;
+	}
+	public List<Enchere> getLstEncheres() {
+		return lstEncheres;
+	}
+	public void setLstEncheres(List<Enchere> lstEncheres) {
+		this.lstEncheres = lstEncheres;
+	}
 
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Utilisateur [noUtilisateur=");
+		builder.append("Utilisateur [lstArticlesVendu=");
+		builder.append(lstArticlesVendu);
+		builder.append(", lstEncheres=");
+		builder.append(lstEncheres);
+		builder.append(", noUtilisateur=");
 		builder.append(noUtilisateur);
 		builder.append(", pseudo=");
 		builder.append(pseudo);
@@ -152,19 +174,18 @@ public class Utilisateur {
 		builder.append(", rue=");
 		builder.append(rue);
 		builder.append(", cp=");
-		builder.append(cp);
+		builder.append(codePostal);
 		builder.append(", ville=");
 		builder.append(ville);
 		builder.append(", motDePasse=");
 		builder.append(motDePasse);
 		builder.append(", credit=");
 		builder.append(credit);
-		builder.append(", Administrateur=");
+		builder.append(", administrateur=");
 		builder.append(administrateur);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
+
+		
 }
