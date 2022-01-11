@@ -1,5 +1,7 @@
 package fr.eni.enchere.bll;
 
+import java.util.List;
+
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
 import fr.eni.enchere.dal.EnchereDAOFact;
@@ -31,6 +33,23 @@ public class EnchereManagerImpl implements EnchereManager {
 
 		dao.insertUtilisateur(utilisateur);
 
+	}
+
+	@Override
+	public List<Utilisateur> afficherTousUtilisateurs() {
+
+		return dao.getAllUtilisateur();
+	}
+
+	public Boolean seConnecter(String identifiant, String motDePasse) {
+		Boolean cnx = false;
+		for (Utilisateur u : dao.getAllUtilisateur()) {
+			if (((identifiant.equals(u.getNom()) || identifiant.equals(u.getPseudo()))
+					&& motDePasse.equals(u.getPseudo()))) {
+				cnx = true;
+			}
+		}
+		return cnx;
 	}
 
 	private void verificationPseudo(String pseudo, BLLException be) {
@@ -119,4 +138,5 @@ public class EnchereManagerImpl implements EnchereManager {
 
 		}
 	}
+
 }
