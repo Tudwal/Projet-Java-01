@@ -6,7 +6,7 @@ import fr.eni.enchere.bo.Utilisateur;
 
 public interface EnchereDAO {
 
-	public void insert(Utilisateur utilisateur);
+	public void insertUtilisateur(Utilisateur utilisateur);
 	
 	public List<Utilisateur> getAll();
 }

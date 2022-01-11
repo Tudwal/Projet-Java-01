@@ -10,7 +10,7 @@ public class EnchereDAOMock implements EnchereDAO {
 	private static List<Utilisateur> lstUtilisateurs = new ArrayList<>();
 	
 	@Override
-	public void insert(Utilisateur utilisateur) {
+	public void insertUtilisateur(Utilisateur utilisateur) {
 		lstUtilisateurs.add(utilisateur);
 		
 	}
