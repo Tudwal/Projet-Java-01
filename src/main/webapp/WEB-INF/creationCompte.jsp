@@ -14,7 +14,7 @@
 	<input placeholder="Pseudo" type="text" name="pseudo" value="${model.utilisateur.pseudo}"/> 
 	<input placeholder="Nom" type="text" name="nom" value="${model.utilisateur.nom}"/>
 	<input placeholder="Prenom" type="text" name="prenom" value="${model.utilisateur.prenom}"/>
-	<input placeholder="Email" type="text" name="email" value="${model.utilisateur.email}"/>
+	<input placeholder="Email" type="email" name="email" value="${model.utilisateur.email}"/>
 	<input placeholder="Telephone" type="text" name="telephone" value="${model.utilisateur.telephone}"/>
 	<input placeholder="Rue" type="text" name="rue" value="${model.utilisateur.rue}"/>
 	<input placeholder="Code postal" type="text" name="codePostal" value="${model.utilisateur.codePostal}"/>
