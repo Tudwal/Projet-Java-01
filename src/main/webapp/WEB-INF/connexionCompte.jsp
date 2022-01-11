@@ -8,21 +8,25 @@
 </head>
 <body>
 
-<Center>
-<form action="ConnexionCompteServlet" method="POST">
-	<input placeholder="Identifiant" type="text" name="pseudo" value="${model.utilisateur.pseudo}"/> 
+<CENTER>
+<form action="ConnexionServlet" method="POST">
+	<input placeholder="Identifiant" type="text" name="identifiant" value="${model.utilisateur.pseudo}"/> 
 	
 	<br>
 	<br>
 	<input placeholder="Mot de Passe" type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
 
-	<input type="submit" name="ajouter" value="Connexion"/>
+	<br>
+	<br>
 
-	<a href="mailto:email@exemple.com?subject=subject text"> Mot de passe oublié"</a>
+	<input type="submit" name="connexion" value="Connexion"/>
+
+	<input type="checkbox">Se souvenir de moi
+	<a href="mailto:email@exemple.com?subject=subject text"> Mot de passe oublié</a>
 	
-	</Center>
 
 </form>
+</CENTER>
 
 
 </body>

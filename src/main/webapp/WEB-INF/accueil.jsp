@@ -8,7 +8,13 @@
 </head>
 <body>
 <h1>Ebehhhhhh</h1>
+
+<form action="AccueilServlet" method="POST">
+
 <input type="submit" name="connexion" value="S'inscrire - Se connecter"/>
+
+</form>
+
 <h2>Liste des enchères</h2>
 <p>Filtres</p> <br>
 <input type="search"/> <br>
@@ -19,6 +25,7 @@
 	<option>Vetement </option>
 	<option>Sport&Loisirs </option>
 </select>
+
 
 </body>
 </html>
