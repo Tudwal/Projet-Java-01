@@ -13,8 +13,8 @@ public class EnchereDAOJdbcImpl {
 	
 	
 	public void insertUtilisateur(Utilisateur utilisateur) {
-		try (Connection con = ConnectionProvider.getConnection()){
-			PreparedStatement stmt = con.prepareStatement(INSERT_USER);
+		//try (Connection con = ConnectionProvider.getConnection()){
+			//PreparedStatement stmt = con.prepareStatement(INSERT_USER);
 			stmt.setString(1, utilisateur.getPseudo());
 			stmt.setString(2, utilisateur.getNom());
 			stmt.setString(3, utilisateur.getPrenom());
