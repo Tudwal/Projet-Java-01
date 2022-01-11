@@ -16,7 +16,7 @@ public class EnchereDAOMock implements EnchereDAO {
 	}
 
 	@Override
-	public List<Utilisateur> getAll() {
+	public List<Utilisateur> getAllUtilisateur() {
 		return lstUtilisateurs;
 	}
 

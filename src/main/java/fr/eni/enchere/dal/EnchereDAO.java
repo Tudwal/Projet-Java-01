@@ -8,5 +8,5 @@ public interface EnchereDAO {
 
 	public void insertUtilisateur(Utilisateur utilisateur);
 	
-	public List<Utilisateur> getAll();
+	public List<Utilisateur> getAllUtilisateur();
 }
