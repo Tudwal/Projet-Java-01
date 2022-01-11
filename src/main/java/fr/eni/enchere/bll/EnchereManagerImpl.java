@@ -44,8 +44,8 @@ public class EnchereManagerImpl implements EnchereManager {
 	public Boolean seConnecter(String identifiant, String motDePasse) {
 		Boolean cnx = false;
 		for (Utilisateur u : dao.getAllUtilisateur()) {
-			if (((identifiant.equals(u.getNom()) || identifiant.equals(u.getPseudo()))
-					&& motDePasse.equals(u.getPseudo()))) {
+			if (((identifiant.equals(u.getEmail()) || identifiant.equals(u.getPseudo()))
+					&& motDePasse.equals(u.getMotDePasse()))) {
 				cnx = true;
 			}
 		}
