@@ -11,8 +11,8 @@ import fr.eni.enchere.bo.Utilisateur;
 
 public class EnchereDAOJdbcImpl {
 
-	private final static String INSERT_USER="INSERT INTO utilisateurs(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-	private final static String SELECT_ALL_USER="SELECT * FROM utilisateurs";
+	private final static String INSERT_USER="INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+	private final static String SELECT_ALL_USER="SELECT * FROM UTILISATEURS";
 	
 	/*Permet l'insertion d'un utilisateur dans la base de donnée
 	 * 
@@ -47,7 +47,7 @@ public class EnchereDAOJdbcImpl {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL_USER);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Utilisateur utilisateur = map(rs);
+				Utilisateur utilisateur = mapUtilisateur(rs);
 				lstUtilisateurs.add(utilisateur);
 			}
 		} catch (SQLException e) {
@@ -57,7 +57,8 @@ public class EnchereDAOJdbcImpl {
 		return lstUtilisateurs;
 	}
 
-	private Utilisateur map(ResultSet rs) throws SQLException {
+	private Utilisateur mapUtilisateur(ResultSet rs) throws SQLException {
+		Integer noUtilisateur = rs.getInt("no_utilisateur");
 		String pseudo = rs.getString("pseudo");
 		String nom = rs.getString("nom");
 		String prenom = rs.getString("prenom");
@@ -70,7 +71,7 @@ public class EnchereDAOJdbcImpl {
 		Integer credit = rs.getInt("credit");
 		Byte administrateur = rs.getByte("administrateur");
 		
-		Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 		
 		return utilisateur;
 	}
