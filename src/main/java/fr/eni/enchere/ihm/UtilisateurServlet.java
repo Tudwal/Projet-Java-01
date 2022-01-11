@@ -62,14 +62,16 @@ public class UtilisateurServlet extends HttpServlet {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
 				} catch (BLLException e) {
-					model.setMessage("La création du compte n'est pas validée");
+					model.setMessage("La création du compte n'est pas validée ");
 				}
 			} else {				
 				model.setMessage("Le mdp doit être identique à la confirmation");
 			}
-
+			
+			
 		}
 		
+		System.out.println(manager.afficherTousUtilisateurs());
 		
 		request.setAttribute("model", model);
 		request.getRequestDispatcher("WEB-INF/creationCompte.jsp").forward(request, response);
