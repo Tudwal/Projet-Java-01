@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.dal.jdbc.DALException;
 
 public class EnchereDAOMock implements EnchereDAO {
 
@@ -18,6 +19,29 @@ public class EnchereDAOMock implements EnchereDAO {
 	@Override
 	public List<Utilisateur> getAllUtilisateur() {
 		return lstUtilisateurs;
+	}
+
+	@Override
+	public void update(Utilisateur utilisateur) throws DALException {
+		for (Utilisateur u : lstUtilisateurs) {
+			if (u.getNoUtilisateur().equals(utilisateur.getNoUtilisateur())) {
+				u=utilisateur;
+				lstUtilisateurs.add(u);
+			}
+		}
+		
+	}
+
+	@Override
+	public void delete(Integer noUtilisateur) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Utilisateur getUnUtilisateur(Integer noUtilisateur) throws DALException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -203,10 +203,35 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	private void verificationDoublon(Utilisateur utilisateur, BLLException be) {
 		// TODO a revoir conditions
-		try {
+		if (utilisateur.getNoUtilisateur()!=null) {
+			try {
+				for (Utilisateur u : dao.getAllUtilisateur()) {
+					if (u.getNoUtilisateur().equals(utilisateur.getNoUtilisateur())) {
+						if (!u.getPseudo().equals(utilisateur.getPseudo())|| !u.getEmail().equals(utilisateur.getEmail())) {
+							try {
+								for (Utilisateur u2 : dao.getAllUtilisateur()) {
+									if (utilisateur.getEmail().equals(u2.getEmail())
+											&& utilisateur.getPseudo().equals(u2.getPseudo())) {
+										be.ajouterErreur(new ParameterException("Doublon modif"));
+									}
+
+								}
+							} catch (DALException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			try {
 			for (Utilisateur u : dao.getAllUtilisateur()) {
-				if (utilisateur.getNom().equalsIgnoreCase(u.getNom())
-						&& utilisateur.getPseudo().equalsIgnoreCase(u.getPseudo())) {
+				if (utilisateur.getEmail().equals(u.getEmail())
+						&& utilisateur.getPseudo().equals(u.getPseudo())) {
 					be.ajouterErreur(new ParameterException("Doublon"));
 				}
 
@@ -215,6 +240,8 @@ public class EnchereManagerImpl implements EnchereManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
+		
 	}
 
 

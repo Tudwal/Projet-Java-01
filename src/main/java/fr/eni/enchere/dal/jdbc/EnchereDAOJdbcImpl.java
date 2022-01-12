@@ -14,7 +14,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	private final static String INSERT_USER="INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private final static String SELECT_ALL_USER="SELECT * FROM UTILISATEURS";
-	private final static String UPDATE_USER="UPDATE UTILISATEURS SET pseudo = ? nom = ? prenom = ? email = ? telephone = ? rue = ? code_postal = ? ville = ? mot_de_Passe = ? credit = ? administrateur = ? WHERE no_utilisateur = ?";
+	private final static String UPDATE_USER="UPDATE UTILISATEURS SET pseudo = ? , nom = ? , prenom = ? , email = ? , telephone = ? , rue = ? , code_postal = ? , ville = ? , mot_de_Passe = ? , credit = ? , administrateur = ? WHERE no_utilisateur = ?";
 	private final static String DELETE_USER="DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private final static String SELECT_USER="SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 	

@@ -12,6 +12,7 @@ import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.dal.jdbc.DALException;
 
 /**
  * Servlet implementation class EnchereServlet
@@ -22,7 +23,7 @@ public class UtilisateurServlet extends HttpServlet {
 	private String adresse ="WEB-INF/creationCompte.jsp";
 	
 	final Integer CREDIT_BASE = 100;
-	final Byte ADMIN = 0;
+	final Integer ADMIN = 0;
 
        
 	private EnchereManager manager = EnchereManagerSing.getInstance();
@@ -53,7 +54,7 @@ public class UtilisateurServlet extends HttpServlet {
 			String motDePasse = request.getParameter("motDePasse");
 			String confirmation = request.getParameter("confirmation");
 			Integer credit = CREDIT_BASE;
-			Byte administrateur = ADMIN;
+			Integer administrateur = ADMIN;
 			
 			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 			model.setUtilisateur(utilisateur);
@@ -62,7 +63,7 @@ public class UtilisateurServlet extends HttpServlet {
 				try {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
-					adresse = "WEB-INF/accueilConnecte";
+//					adresse = "WEB-INF/accueilConnecte";
 					
 				} catch (BLLException e) {
 					model.setMessage("La création du compte n'est pas validée ");
@@ -71,8 +72,36 @@ public class UtilisateurServlet extends HttpServlet {
 				model.setMessage("Le mdp doit être identique à la confirmation");
 			}
 			
-			
 		}
+		
+			
+			try {
+				System.out.println(manager.afficherMonProfil(1));
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Utilisateur utilisateur;
+			try {
+				utilisateur = manager.afficherMonProfil(1);
+//				utilisateur.setCodePostal("45200");
+				try {
+					manager.supprimerCompte(1);
+				} catch (BLLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				System.out.println(manager.afficherMonProfil(1));
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+//				manager.modifCompte(utilisateur);
+//				System.out.println(manager.afficherMonProfil(1));
+			
 		
 		System.out.println(manager.afficherTousUtilisateurs());
 		
