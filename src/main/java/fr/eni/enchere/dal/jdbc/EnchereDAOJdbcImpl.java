@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.dal.EnchereDAO;
 
-public class EnchereDAOJdbcImpl {
+public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	private final static String INSERT_USER="INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private final static String SELECT_ALL_USER="SELECT * FROM UTILISATEURS";
@@ -32,6 +33,7 @@ public class EnchereDAOJdbcImpl {
 			stmt.setInt(10, utilisateur.getCredit());
 			stmt.setByte(11, utilisateur.getAdministrateur());
 			stmt.executeUpdate();
+			System.out.println(utilisateur);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("problème de conection insertUser");

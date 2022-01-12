@@ -26,7 +26,7 @@
 	<br>
 	<Center><input type="submit" name="ajouter" value="Créer"/></Center>
 	
-
+	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
 </form>
 
 <h4>${model.message}</h4>

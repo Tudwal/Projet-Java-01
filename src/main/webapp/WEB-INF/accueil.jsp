@@ -12,6 +12,8 @@
 <form action="AccueilServlet" method="POST">
 
 <input type="submit" name="connexion" value="S'inscrire - Se connecter"/>
+<a href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">Se connecter</a>
+<a href="http://localhost:8080/Ebehhhhhh/UtilisateurServlet">S'inscrire</a>
 
 </form>
 

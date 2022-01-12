@@ -5,6 +5,7 @@ import java.util.List;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
 import fr.eni.enchere.dal.EnchereDAOFact;
+import fr.eni.enchere.dal.jdbc.DALException;
 
 public class EnchereManagerImpl implements EnchereManager {
 
@@ -30,24 +31,43 @@ public class EnchereManagerImpl implements EnchereManager {
 		if (be.hasErreur()) {
 			throw be;
 		}
-
-		dao.insertUtilisateur(utilisateur);
+//		if (utilisateur.getMotDePasse().equals("admin")) {
+//			utilisateur.setAdministrateur();
+//			System.out.println(utilisateur.getAdministrateur());
+//		}
+		try {
+			dao.insertUtilisateur(utilisateur);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public List<Utilisateur> afficherTousUtilisateurs() {
 
-		return dao.getAllUtilisateur();
+		try {
+			return dao.getAllUtilisateur();
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public Boolean seConnecter(String identifiant, String motDePasse) {
 		Boolean cnx = false;
-		for (Utilisateur u : dao.getAllUtilisateur()) {
-			if (((identifiant.equals(u.getEmail()) || identifiant.equals(u.getPseudo()))
-					&& motDePasse.equals(u.getMotDePasse()))) {
-				cnx = true;
+		try {
+			for (Utilisateur u : dao.getAllUtilisateur()) {
+				if (((identifiant.equals(u.getEmail()) || identifiant.equals(u.getPseudo()))
+						&& motDePasse.equals(u.getMotDePasse()))) {
+					cnx = true;
+				}
 			}
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return cnx;
 	}
@@ -130,12 +150,17 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	private void verificationDoublon(Utilisateur utilisateur, BLLException be) {
 		// TODO a revoir conditions
-		for (Utilisateur u : dao.getAllUtilisateur()) {
-			if (utilisateur.getNom().equalsIgnoreCase(u.getNom())
-					&& utilisateur.getPseudo().equalsIgnoreCase(u.getPseudo())) {
-				be.ajouterErreur(new ParameterException("Doublon"));
-			}
+		try {
+			for (Utilisateur u : dao.getAllUtilisateur()) {
+				if (utilisateur.getNom().equalsIgnoreCase(u.getNom())
+						&& utilisateur.getPseudo().equalsIgnoreCase(u.getPseudo())) {
+					be.ajouterErreur(new ParameterException("Doublon"));
+				}
 
+			}
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

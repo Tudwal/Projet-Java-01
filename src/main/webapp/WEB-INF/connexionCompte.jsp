@@ -24,6 +24,9 @@
 	<input type="checkbox">Se souvenir de moi
 	<a href="mailto:email@exemple.com?subject=subject text"> Mot de passe oublié</a>
 	
+	<a href="http://localhost:8080/Ebehhhhhh/UtilisateurServlet">Crée un compte</a>
+	
+	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
 
 </form>
 </CENTER>
