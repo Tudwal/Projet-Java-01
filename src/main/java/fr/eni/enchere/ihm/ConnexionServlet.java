@@ -1,6 +1,8 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +35,8 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilisateurModel model = new UtilisateurModel();
 		
+		PrintWriter pw = response.getWriter();
+		response.setContentType("text/plain");
 		
 		
 		if (request.getParameter("connexion")!= null) {
@@ -42,12 +46,28 @@ public class ConnexionServlet extends HttpServlet {
 			
 			if (manager.seConnecter(identifiant, motDePasse)) {
 				System.out.println("OK Compte existant");
-				adresse = "WEB-INF/accueilConnecte";
+				adresse = "WEB-INF/accueilConnecte.jsp";
 				
 				//1er test session
-				HttpSession session = request.getSession(true);
+				//HttpSession session = request.getSession(true);
+				HttpSession session = request.getSession();
+				pw.println("Session ?" + session.isNew());
+				System.out.println("Session ?" + session.isNew());
+
+				
+				String nom = (String)session.getAttribute("identifiant");
+				if (nom != null) {
+					pw.println("nom : "+nom);
+					System.out.println("nom : "+nom);
+				} else {
+					pw.println("Il n'existe pas");
+					System.out.println("Il n'existe pas");
+				}
+				
 				session.setAttribute("identifiant", identifiant);
 			
+				pw.close();
+				
 			} else {
 				model.setMessage("L'identifiant et/ou le mdp est invalide");				
 				}

@@ -4,9 +4,41 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Modif Profil</title>
 </head>
 <body>
-<h1>test</h1>
+
+<h2>Modifier mon profil</h2>
+
+<form action="UtilisateurServlet" method="POST">
+	<input placeholder="Pseudo" type="text" name="pseudo" value="${model.utilisateur.pseudo}"/> 
+	<br><br>
+	<input placeholder="Nom" type="text" name="nom" value="${model.utilisateur.nom}"/>
+	<br><br>
+	<input placeholder="Prenom" type="text" name="prenom" value="${model.utilisateur.prenom}"/>
+	<br><br>
+	<input placeholder="Email" type="email" name="email" value="${model.utilisateur.email}"/>
+	<br><br>
+	<input placeholder="Telephone" type="text" name="telephone" value="${model.utilisateur.telephone}"/>
+	<br><br>
+	<input placeholder="Rue" type="text" name="rue" value="${model.utilisateur.rue}"/>
+	<br><br>
+	<input placeholder="Code postal" type="text" name="codePostal" value="${model.utilisateur.codePostal}"/>
+	<br><br>
+	<input placeholder="Ville" type="text" name="ville" value="${model.utilisateur.ville}"/>
+	<br><br>
+	<input placeholder="Mot de Passe" type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
+	<br><br>
+	<input placeholder="Confirmation" type="password" name="confirmation">
+	
+	<br>
+	<br>
+	<input type="submit" name="enregistrer" value="Enregistrer"/>
+	<input type="submit" name="supprimer" value="Supprimer mon compte"/>
+
+
+	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
+</form>
+
 </body>
 </html>

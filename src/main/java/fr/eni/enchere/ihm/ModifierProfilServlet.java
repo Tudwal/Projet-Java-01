@@ -7,24 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.enchere.bll.EnchereManager;
-import fr.eni.enchere.bll.EnchereManagerSing;
-
 /**
- * Servlet implementation class AccueilServlet
+ * Servlet implementation class ModifierProfilServlet
  */
-@WebServlet("/ProfilServlet")
-public class ProfilServlet extends HttpServlet {
+@WebServlet("/ModifierProfilServlet")
+public class ModifierProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private String adresse = "WEB-INF/afficherCompte.jsp";
-	
-	private EnchereManager manager = EnchereManagerSing.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProfilServlet() {
+    public ModifierProfilServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,11 +26,9 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("modifier")!= null) {
-			adresse = "ModifierProfilServlet";
-		}
 		
-		request.getRequestDispatcher(adresse).forward(request, response);
+		
+		request.getRequestDispatcher("WEB-INF/modifierCompte.jsp").forward(request, response);
 	}
 
 	/**

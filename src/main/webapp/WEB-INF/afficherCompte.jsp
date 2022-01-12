@@ -4,9 +4,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Mon Profil</title>
 </head>
 <body>
+
+<form action="ProfilServlet" method="POST">
+
+Pseudo : 
+<br>
+Nom : 
+<br>
+Prénom : 
+<br>
+Email : 
+<br>
+Téléphone : 
+<br>
+Rue : 
+<br>
+Code Postale : 
+<br>
+Ville : 
+<br>
+
+	<Center><input type="submit" name="modifier" value="Modifier"/></Center>
+
+
+</form>
+
 
 </body>
 </html>
