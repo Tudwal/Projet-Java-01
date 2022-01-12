@@ -20,7 +20,7 @@ public class Utilisateur {
 	private String ville;
 	private String motDePasse;
 	private Integer credit;
-	private Byte administrateur;
+	private Integer administrateur;
 	
 	
 	public Utilisateur() {
@@ -31,7 +31,7 @@ public class Utilisateur {
 	
 	
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal,
-			String ville, String motDePasse, Integer credit, Byte administrateur) {
+			String ville, String motDePasse, Integer credit, Integer administrateur) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -67,7 +67,7 @@ public class Utilisateur {
 
 
 	public Utilisateur(Integer noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, Integer credit, Byte administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, Integer credit, Integer administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -148,10 +148,10 @@ public class Utilisateur {
 	public void setCredit(Integer credit) {
 		this.credit = credit;
 	}
-	public Byte getAdministrateur() {
+	public Integer getAdministrateur() {
 		return administrateur;
 	}
-	public void setAdministrateur(Byte administrateur) {
+	public void setAdministrateur(Integer administrateur) {
 		this.administrateur = administrateur;
 	}
 	

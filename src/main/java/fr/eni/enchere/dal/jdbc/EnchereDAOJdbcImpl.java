@@ -14,13 +14,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	private final static String INSERT_USER="INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private final static String SELECT_ALL_USER="SELECT * FROM UTILISATEURS";
+	private final static String UPDATE_USER="UPDATE UTILISATEURS SET pseudo = ? nom = ? prenom = ? email = ? telephone = ? rue = ? code_postal = ? ville = ? mot_de_Passe = ? WHERE noUtilisateur";
 	
 	/*Permet l'insertion d'un utilisateur dans la base de donnée
 	 * 
 	 */
 	public void insertUtilisateur(Utilisateur utilisateur) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
-			PreparedStatement stmt = con.prepareStatement(INSERT_USER);
+			PreparedStatement stmt = con.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, utilisateur.getPseudo());
 			stmt.setString(2, utilisateur.getNom());
 			stmt.setString(3, utilisateur.getPrenom());
@@ -31,8 +32,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			stmt.setString(8, utilisateur.getVille());
 			stmt.setString(9, utilisateur.getMotDePasse());
 			stmt.setInt(10, utilisateur.getCredit());
-			stmt.setByte(11, utilisateur.getAdministrateur());
+			stmt.setInt(11, utilisateur.getAdministrateur());
 			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				utilisateur.setNoUtilisateur(id);
+			}
 			System.out.println(utilisateur);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,6 +65,34 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return lstUtilisateurs;
 	}
 
+	/*Permet de modifier les infos d'un utilisateur
+	 * 
+	 */
+	public void update (Utilisateur utilisateur) throws DALException {
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(UPDATE_USER);
+			
+			
+			utilisateur.setPseudo(utilisateur.getPseudo());
+			utilisateur.setNom(utilisateur.getNom());
+			utilisateur.setPrenom(utilisateur.getPrenom());
+			utilisateur.setEmail(utilisateur.getEmail());
+			utilisateur.setTelephone(utilisateur.getTelephone());
+			utilisateur.setRue(utilisateur.getRue());
+			utilisateur.setCodePostal(utilisateur.getCodePostal());
+			utilisateur.setVille(utilisateur.getVille());
+			utilisateur.setMotDePasse(utilisateur.getMotDePasse());
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de modification de l'utilisateur");
+		}
+	}
+	
+	
+	
+	
 	private Utilisateur mapUtilisateur(ResultSet rs) throws SQLException {
 		Integer noUtilisateur = rs.getInt("no_utilisateur");
 		String pseudo = rs.getString("pseudo");
