@@ -72,6 +72,59 @@ public class EnchereManagerImpl implements EnchereManager {
 		return cnx;
 	}
 
+	@Override
+	public void modifCompte(Utilisateur utilisateur) throws BLLException, DALException {
+		BLLException be = new BLLException();
+		
+		verificationPseudo(utilisateur.getPseudo(), be);
+		verificationNom(utilisateur.getNom(), be);
+		verificationPrenom(utilisateur.getPrenom(), be);
+		verificationEmail(utilisateur.getEmail(), be);
+		verificationTelephone(utilisateur.getTelephone(), be);
+		verificationRue(utilisateur.getRue(), be);
+		verificationCodePostal(utilisateur.getCodePostal(), be);
+		verificationVille(utilisateur.getVille(), be);
+		verificationMotDePasse(utilisateur.getMotDePasse(), be);
+		verificationCredit(utilisateur.getCredit(), be);
+		verificationAdministrateur(utilisateur.getAdministrateur(), be);
+		verificationDoublon(utilisateur, be);
+		
+		if (be.hasErreur()) {
+			throw be;
+		}
+		
+		dao.update(utilisateur);
+		
+	}
+
+	@Override
+	public void supprimerCompte(Integer noUtilisateur) throws DALException, BLLException {
+		BLLException be = new BLLException();
+		if (be.hasErreur()) {
+			throw be;
+		}
+		
+		dao.delete(noUtilisateur);
+		
+	}
+
+	@Override
+	public Utilisateur afficherMonProfil(Integer noUtilisateur) throws DALException {
+		return dao.getUnUtilisateur(noUtilisateur);
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void verificationPseudo(String pseudo, BLLException be) {
 		if (pseudo.length() > 30 || pseudo.isBlank() || pseudo == null) {
 			be.ajouterErreur(new ParameterException("Le pseudo est obligatoire et inferieur a 30 caracteres"));
@@ -141,7 +194,7 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	}
 
-	private void verificationAdministrateur(Byte administrateur, BLLException be) {
+	private void verificationAdministrateur(Integer administrateur, BLLException be) {
 		if (administrateur == null) {
 			be.ajouterErreur(new ParameterException("Le code administrateur est obligatoire"));
 		}
@@ -163,5 +216,6 @@ public class EnchereManagerImpl implements EnchereManager {
 			e.printStackTrace();
 		}
 	}
+
 
 }
