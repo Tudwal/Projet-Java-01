@@ -34,7 +34,7 @@ public class EnchereDAOMock implements EnchereDAO {
 
 	@Override
 	public void delete(Integer noUtilisateur) throws DALException {
-		// TODO Auto-generated method stub
+		//ceci est un test
 		
 	}
 
