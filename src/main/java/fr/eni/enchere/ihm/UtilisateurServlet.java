@@ -19,6 +19,7 @@ import fr.eni.enchere.bo.Utilisateur;
 @WebServlet("/UtilisateurServlet")
 public class UtilisateurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String adresse ="WEB-INF/creationCompte.jsp";
 	
 	final Integer CREDIT_BASE = 100;
 	final Byte ADMIN = 0;
@@ -61,6 +62,8 @@ public class UtilisateurServlet extends HttpServlet {
 				try {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
+					adresse = "WEB-INF/accueilConnecte";
+					
 				} catch (BLLException e) {
 					model.setMessage("La création du compte n'est pas validée ");
 				}
@@ -74,7 +77,7 @@ public class UtilisateurServlet extends HttpServlet {
 		System.out.println(manager.afficherTousUtilisateurs());
 		
 		request.setAttribute("model", model);
-		request.getRequestDispatcher("WEB-INF/creationCompte.jsp").forward(request, response);
+		request.getRequestDispatcher(adresse).forward(request, response);
 	}
 
 	/**

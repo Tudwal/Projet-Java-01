@@ -18,6 +18,7 @@ import fr.eni.enchere.bll.EnchereManagerSing;
 @WebServlet("/ConnexionServlet")
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String adresse ="WEB-INF/connexionCompte.jsp";
        
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
@@ -33,6 +34,7 @@ public class ConnexionServlet extends HttpServlet {
 		UtilisateurModel model = new UtilisateurModel();
 		
 		
+		
 		if (request.getParameter("connexion")!= null) {
 			
 			String identifiant = request.getParameter("identifiant");
@@ -40,6 +42,7 @@ public class ConnexionServlet extends HttpServlet {
 			
 			if (manager.seConnecter(identifiant, motDePasse)) {
 				System.out.println("OK Compte existant");
+				adresse = "WEB-INF/accueilConnecte";
 				
 				//1er test session
 				HttpSession session = request.getSession(true);
@@ -54,7 +57,7 @@ public class ConnexionServlet extends HttpServlet {
 			
 		
 			request.setAttribute("model", model);
-			request.getRequestDispatcher("WEB-INF/connexionCompte.jsp").forward(request, response);
+			request.getRequestDispatcher(adresse).forward(request, response);
 	}
 
 	/**
