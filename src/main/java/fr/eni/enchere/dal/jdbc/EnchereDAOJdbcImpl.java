@@ -14,7 +14,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	private final static String INSERT_USER="INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private final static String SELECT_ALL_USER="SELECT * FROM UTILISATEURS";
-	private final static String UPDATE_USER="UPDATE UTILISATEURS SET pseudo = ? nom = ? prenom = ? email = ? telephone = ? rue = ? code_postal = ? ville = ? mot_de_Passe = ? WHERE noUtilisateur";
+	private final static String UPDATE_USER="UPDATE UTILISATEURS SET pseudo = ? nom = ? prenom = ? email = ? telephone = ? rue = ? code_postal = ? ville = ? mot_de_Passe = ? credit = ? administrateur = ? WHERE no_utilisateur = ?";
+	private final static String DELETE_USER="DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private final static String SELECT_USER="SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 	
 	/*Permet l'insertion d'un utilisateur dans la base de donnée
 	 * 
@@ -72,16 +74,19 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(UPDATE_USER);
 			
-			
-			utilisateur.setPseudo(utilisateur.getPseudo());
-			utilisateur.setNom(utilisateur.getNom());
-			utilisateur.setPrenom(utilisateur.getPrenom());
-			utilisateur.setEmail(utilisateur.getEmail());
-			utilisateur.setTelephone(utilisateur.getTelephone());
-			utilisateur.setRue(utilisateur.getRue());
-			utilisateur.setCodePostal(utilisateur.getCodePostal());
-			utilisateur.setVille(utilisateur.getVille());
-			utilisateur.setMotDePasse(utilisateur.getMotDePasse());
+			stmt.setString(1, utilisateur.getPseudo());
+			stmt.setString(2, utilisateur.getNom());
+			stmt.setString(3, utilisateur.getPrenom());
+			stmt.setString(4, utilisateur.getEmail());
+			stmt.setString(5, utilisateur.getTelephone());
+			stmt.setString(6, utilisateur.getRue());
+			stmt.setString(7, utilisateur.getCodePostal());
+			stmt.setString(8, utilisateur.getVille());
+			stmt.setString(9, utilisateur.getMotDePasse());
+			stmt.setInt(10, utilisateur.getCredit());
+			stmt.setInt(11, utilisateur.getAdministrateur());
+			stmt.setInt(12, utilisateur.getNoUtilisateur());
+
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -90,6 +95,35 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 	}
 	
+	@Override
+	public void delete(Integer noUtilisateur) throws DALException {
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(DELETE_USER);
+			stmt.setInt(1, noUtilisateur);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de suppression de l'utilisateur");
+		}
+	}
+
+	@Override
+	public Utilisateur getUnUtilisateur(Integer noUtilisateur) throws DALException {
+		Utilisateur utilisateur = null;
+		
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_USER);
+			stmt.setInt(1, noUtilisateur);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				utilisateur = mapUtilisateur(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de récupération d'un utilisateur");
+		}
+		return utilisateur;
+	}
 	
 	
 	
@@ -105,12 +139,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		String ville = rs.getString("ville");
 		String motDePasse = rs.getString("mot_de_passe");
 		Integer credit = rs.getInt("credit");
-		Byte administrateur = rs.getByte("administrateur");
+		Integer administrateur = rs.getInt("administrateur");
 		
 		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 		
 		return utilisateur;
 	}
+
+	
 	
 	
 }

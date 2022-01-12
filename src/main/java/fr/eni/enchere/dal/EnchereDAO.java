@@ -11,9 +11,9 @@ public interface EnchereDAO {
 	
 	public List<Utilisateur> getAllUtilisateur() throws DALException;
 	
-	public void update(Utilisateur utilisateur);
+	public void update(Utilisateur utilisateur) throws DALException;
 	
-	public void delete (Integer noUtilisateur);
+	public void delete (Integer noUtilisateur) throws DALException;
 	
-	public Utilisateur getUnUtilisateur(Integer noUtilisateur);
+	public Utilisateur getUnUtilisateur(Integer noUtilisateur) throws DALException;
 }
