@@ -48,11 +48,15 @@ public class ConnexionServlet extends HttpServlet {
 			
 			if (manager.seConnecter(identifiant, motDePasse)) {
 				//System.out.println("OK Compte existant");
+				
+				
 				adresse = "WEB-INF/accueilConnecte.jsp";
 				
 				//1er test session
-				//HttpSession session = request.getSession(true);
 				HttpSession session = request.getSession();
+				
+				
+				//HttpSession session = request.getSession();
 				//pw.println("Session ?" + session.isNew());
 				//System.out.println("Session ?" + session.isNew());
 
@@ -83,10 +87,18 @@ public class ConnexionServlet extends HttpServlet {
 			
 			}
 			
+//			if (request.getParameter("deconnexion")!= null) {
+//				HttpSession session = request.getSession(false);
+//			}
 			
 			request.getSession().setAttribute("model", model);
+			
+			//Ajout avec erwan 13h30  13.01
+			request.getSession().setAttribute("utilisateur", model.getUtilisateur());
+			
 			//request.setAttribute("model", model);
 			request.getRequestDispatcher(adresse).forward(request, response);
+			//request.getRequestDispatcher("WEB-INF/connexionCompte.jsp").forward(request, response);
 	}
 
 	/**

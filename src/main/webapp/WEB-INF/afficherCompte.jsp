@@ -8,6 +8,9 @@
 </head>
 <body>
 
+<h1 class="titreConnexion"><a href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">ENI-Enchères</a></h1>
+
+
 <form action="ProfilServlet" method="POST">
 
 Pseudo : ${model.utilisateur.pseudo}

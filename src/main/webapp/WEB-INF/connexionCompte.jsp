@@ -27,6 +27,8 @@
 	<a href="http://localhost:8080/Ebehhhhhh/UtilisateurServlet">Crée un compte</a>
 	
 	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
+	
+	<h4>${model.message}</h4>
 
 </form>
 </CENTER>

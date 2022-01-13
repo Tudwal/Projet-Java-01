@@ -10,7 +10,7 @@
 
 <h2>Modifier mon profil</h2>
 
-<form action="UtilisateurServlet" method="POST">
+<form action="ModifierProfilServlet" method="POST">
 	<input placeholder="Pseudo" type="text" name="pseudo" value="${model.utilisateur.pseudo}"/> 
 	<br><br>
 	<input placeholder="Nom" type="text" name="nom" value="${model.utilisateur.nom}"/>
@@ -33,11 +33,14 @@
 	<br><br>
 	<input placeholder="Confirmation" type="password" name="confirmation">
 	
+	<br><br>
+	<input placeholder="Numéro Utilisateur" type="number" name="noUtilisateur" value="${noUtilisateur}"/>
+	
+	
 	<br>
 	<br>
 	<input type="submit" name="enregistrer" value="Enregistrer"/>
 	<input type="submit" name="supprimer" value="Supprimer mon compte"/>
-
 
 	<a href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">Accueil</a>
 </form>
