@@ -9,6 +9,7 @@
 <body>
 
 	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">ENI-Enchères</a>
+	<h3>Bienvenue  ${model.utilisateur.pseudo}</h3> 
 
 	<a style="text-align: right">Enchères </a>
 	<a style="text-align: right">Vendre un article </a>

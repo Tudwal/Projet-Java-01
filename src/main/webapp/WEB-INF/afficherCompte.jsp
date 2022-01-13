@@ -10,21 +10,21 @@
 
 <form action="ProfilServlet" method="POST">
 
-Pseudo : 
+Pseudo : ${model.utilisateur.pseudo}
 <br>
-Nom : 
+Nom : ${model.utilisateur.nom}
 <br>
-Prénom : 
+Prénom : ${model.utilisateur.prenom}
 <br>
-Email : 
+Email : ${model.utilisateur.email}
 <br>
-Téléphone : 
+Téléphone : ${model.utilisateur.telephone}
 <br>
-Rue : 
+Rue : ${model.utilisateur.rue}
 <br>
-Code Postale : 
+Code Postale : ${model.utilisateur.codePostal}
 <br>
-Ville : 
+Ville : ${model.utilisateur.ville}
 <br>
 
 	<Center><input type="submit" name="modifier" value="Modifier"/></Center>

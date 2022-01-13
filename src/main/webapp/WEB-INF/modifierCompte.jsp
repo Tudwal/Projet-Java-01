@@ -27,7 +27,9 @@
 	<br><br>
 	<input placeholder="Ville" type="text" name="ville" value="${model.utilisateur.ville}"/>
 	<br><br>
-	<input placeholder="Mot de Passe" type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
+	<input placeholder="Mot de passe actuel" type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
+	<br><br>
+	<input placeholder="Nouveau mot de passe " type="password" name="motDePasse" />
 	<br><br>
 	<input placeholder="Confirmation" type="password" name="confirmation">
 	
@@ -37,7 +39,7 @@
 	<input type="submit" name="supprimer" value="Supprimer mon compte"/>
 
 
-	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
+	<a href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">Accueil</a>
 </form>
 
 </body>

@@ -6,25 +6,25 @@
 <meta charset="UTF-8">
 <title>CREATION PROFIL UTILISATEUR</title>
 </head>
-<body>
+<body style="text-align: center">
 
-<h2><Center> Mon profil</Center></h2>
+<h2>Mon profil</h2>
 
 <form action="UtilisateurServlet" method="POST">
-	<input placeholder="Pseudo" type="text" name="pseudo" value="${model.utilisateur.pseudo}"/> 
-	<input placeholder="Nom" type="text" name="nom" value="${model.utilisateur.nom}"/>
-	<input placeholder="Prenom" type="text" name="prenom" value="${model.utilisateur.prenom}"/>
-	<input placeholder="Email" type="email" name="email" value="${model.utilisateur.email}"/>
-	<input placeholder="Telephone" type="text" name="telephone" value="${model.utilisateur.telephone}"/>
-	<input placeholder="Rue" type="text" name="rue" value="${model.utilisateur.rue}"/>
-	<input placeholder="Code postal" type="text" name="codePostal" value="${model.utilisateur.codePostal}"/>
-	<input placeholder="Ville" type="text" name="ville" value="${model.utilisateur.ville}"/>
-	<input placeholder="Mot de Passe" type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
-	<input placeholder="Confirmation" type="password" name="confirmation">
+	<input placeholder="Pseudo" type="text" required pattern="[a-zA-Z0-9]{1,30}$" title="Le pseudo doit être alphaNumerique" name="pseudo" value="${model.utilisateur.pseudo}"/> 
+	<input placeholder="Nom" type="text" required pattern="[a-zA-Z'-']{1,30}$" title="Le nom doit être au maximum de 30 caractères" name="nom" value="${model.utilisateur.nom}"/>
+	<input placeholder="Prenom" type="text" required pattern="[a-zA-Z'-']{1,30}$" title="Le prénom doit être au maximum de 30 caractères" name="prenom" value="${model.utilisateur.prenom}"/>
+	<input placeholder="Email" type="email" required name="email" value="${model.utilisateur.email}"/>
+	<input placeholder="Telephone" type="text" pattern="[a-zA-Z0-9._%+-]{0,15}$" title="Le téléphone doit être au maximum de 15 chiffres" name="telephone" value="${model.utilisateur.telephone}"/>
+	<input placeholder="Rue" type="text" required pattern="[a-zA-Z'-']{1,50}$" title="La rue doit être au maximum de 50 caractères" name="rue" value="${model.utilisateur.rue}"/>
+	<input placeholder="Code postal" required  type="text" pattern="[a-zA-Z0-9'-']{1,10}$" title="Le code postal doit être au maximum de 10 caractères" name="codePostal" value="${model.utilisateur.codePostal}"/>
+	<input placeholder="Ville" type="text" required pattern="[a-zA-Z'-']{1,50}$" title="La ville doit être au maximum de 50 caractères" name="ville" value="${model.utilisateur.ville}"/>
+	<input placeholder="Mot de Passe" required type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
+	<input placeholder="Confirmation" required type="password" name="confirmation">
 	
 	<br>
 	<br>
-	<Center><input type="submit" name="ajouter" value="Créer"/></Center>
+	<input type="submit" name="ajouter" value="Créer"/>
 	
 	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
 </form>

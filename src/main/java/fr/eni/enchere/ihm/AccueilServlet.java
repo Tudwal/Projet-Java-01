@@ -1,6 +1,8 @@
 package fr.eni.enchere.ihm;
 
 import java.io.IOException;
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +38,8 @@ public class AccueilServlet extends HttpServlet {
 		if (request.getParameter("connexion")!= null) {
 			adresse = "ConnexionServlet";
 		}
+		
+		
 		
 		request.getRequestDispatcher(adresse).forward(request, response);
 	}
