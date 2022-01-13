@@ -2,6 +2,8 @@ package fr.eni.enchere.dal;
 
 import java.util.List;
 
+import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.jdbc.DALException;
 
@@ -42,4 +44,26 @@ public interface EnchereDAO {
 	 * @throws DALException
 	 */
 	public Utilisateur getUnUtilisateur(Integer noUtilisateur) throws DALException;
+
+	/**
+	 * Fonction permettant d'insérer un article dans la base de donnée
+	 * @param article
+	 * @throws DALException 
+	 */
+	public void insertArticle(ArticleVendu article) throws DALException;
+	
+	/**
+	 * Fonction permettant de récupérer tout les articles présent dans la base de donnée
+	 * @return List<ArticleVendu>
+	 * @throws DALException 
+	 */
+	public List<ArticleVendu> getAllArticles() throws DALException;
+
+	/**
+	 * Fonction permettant de faire remonter une catégorie d'article en fonction de son noCategorie
+	 * @param noCategorie
+	 * @return
+	 * @throws DALException
+	 */
+	public Categorie getUneCategorie(Integer noCategorie) throws DALException;
 }
