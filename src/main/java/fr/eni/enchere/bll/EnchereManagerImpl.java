@@ -329,7 +329,7 @@ public class EnchereManagerImpl implements EnchereManager {
 		} else {
 			try {
 				for (Utilisateur u : dao.getAllUtilisateur()) {
-					if (utilisateur.getEmail().equals(u.getEmail()) && utilisateur.getPseudo().equals(u.getPseudo())) {
+					if (utilisateur.getEmail().equals(u.getEmail()) || utilisateur.getPseudo().equals(u.getPseudo())) {
 						be.ajouterErreur(new ParameterException("Doublon"));
 					}
 
