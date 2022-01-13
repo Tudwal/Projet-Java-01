@@ -18,8 +18,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private final static String DELETE_USER="DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private final static String SELECT_USER="SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 	
-	/*Permet l'insertion d'un utilisateur dans la base de donnée
-	 * 
+	
+	/**
+	 *Fonction permettant d'insérer un utilisateur dans la base de donnée
+	 * @param utilisateur
+	 * @throws DALException
 	 */
 	public void insertUtilisateur(Utilisateur utilisateur) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
@@ -48,8 +51,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 	}
 
-	/*Permet de récupérer la liste de tout les utilisateurs
-	 * 
+	
+	/**
+	 *Fonction permettant de récupérer tout les utilisateurs présents dans la base de donnée
+	 * @return List<Utilisateur>
+	 * @throws DALException
 	 */
 	public List<Utilisateur> getAllUtilisateur() throws DALException {
 		List<Utilisateur> lstUtilisateurs = new ArrayList<Utilisateur>();
@@ -67,10 +73,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return lstUtilisateurs;
 	}
 
-	/*Permet de modifier les infos d'un utilisateur
-	 * 
+	
+	/**
+	 *Fonction permettant de modifier les informations d'un utilisateur dans la base de donnée
+	 * @param utilisateur
+	 * @throws DALException
 	 */
-	public void update (Utilisateur utilisateur) throws DALException {
+	public void updateUtilisateur (Utilisateur utilisateur) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(UPDATE_USER);
 			
@@ -94,9 +103,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			throw new DALException("problème de modification de l'utilisateur");
 		}
 	}
+
 	
-	@Override
-	public void delete(Integer noUtilisateur) throws DALException {
+	/**
+	 *Fonction permettant de supprimer un utilisateur dans la base de donnée
+	 * @param noUtilisateur
+	 * @throws DALException
+	 */
+	public void deleteUtilisateur(Integer noUtilisateur) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(DELETE_USER);
 			stmt.setInt(1, noUtilisateur);
@@ -107,7 +121,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 	}
 
-	@Override
+	
+	/**
+	 *Fonction permettant de faire remonter le profil d'un utilisateur en fonction de son noUtilisateur
+	 * @param noUtilisateur
+	 * @return Utilisateur
+	 * @throws DALException
+	 */
 	public Utilisateur getUnUtilisateur(Integer noUtilisateur) throws DALException {
 		Utilisateur utilisateur = null;
 		
@@ -127,6 +147,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	
 	
 	
+	
+	
+	
+	/**
+	 * Fonction permettant de charger toute les informations utilisateurs dans une map
+	 * et de pouvoir s'en servir dans d'autres fonctions
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	private Utilisateur mapUtilisateur(ResultSet rs) throws SQLException {
 		Integer noUtilisateur = rs.getInt("no_utilisateur");
 		String pseudo = rs.getString("pseudo");

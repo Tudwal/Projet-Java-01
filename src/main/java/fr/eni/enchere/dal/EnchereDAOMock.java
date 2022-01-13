@@ -22,7 +22,7 @@ public class EnchereDAOMock implements EnchereDAO {
 	}
 
 	@Override
-	public void update(Utilisateur utilisateur) throws DALException {
+	public void updateUtilisateur(Utilisateur utilisateur) throws DALException {
 		for (Utilisateur u : lstUtilisateurs) {
 			if (u.getNoUtilisateur().equals(utilisateur.getNoUtilisateur())) {
 				u=utilisateur;
@@ -33,7 +33,7 @@ public class EnchereDAOMock implements EnchereDAO {
 	}
 
 	@Override
-	public void delete(Integer noUtilisateur) throws DALException {
+	public void deleteUtilisateur(Integer noUtilisateur) throws DALException {
 		//ceci est un test
 		
 	}
