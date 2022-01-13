@@ -18,6 +18,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * passe "admin" est rentrée à la création du compte, dans ce cas le compte
 	 * créer est un compte utilisateur
 	 */
+	@Override
 	public void creerCompte(Utilisateur utilisateur) throws BLLException {
 		BLLException be = new BLLException();
 
@@ -54,6 +55,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * 
 	 * @return List<Utilisateur>
 	 */
+	@Override
 	public List<Utilisateur> afficherTousUtilisateurs() {
 
 		try {
@@ -71,6 +73,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * 
 	 * @return boolean
 	 */
+	@Override
 	public Boolean seConnecter(String identifiant, String motDePasse) {
 		Boolean cnx = false;
 		try {
@@ -90,6 +93,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * Fonction permettant à un utilisateur de modifier les informations de son
 	 * compte, des vérifications de conformiter des champs sont aussi effectués.
 	 */
+	@Override
 	public void modifCompte(Utilisateur utilisateur) throws BLLException, DALException {
 		BLLException be = new BLLException();
 
@@ -118,6 +122,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * Fonction permettant la suppression d'un compte uilisateur à partir de son
 	 * numéro d'utilisateur.
 	 */
+	@Override
 	public void supprimerCompte(Integer noUtilisateur) throws DALException, BLLException {
 		BLLException be = new BLLException();
 		if (be.hasErreur()) {
@@ -134,12 +139,29 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * 
 	 * @return Utilisateur
 	 */
+	@Override
 	public Utilisateur afficherMonProfil(Integer noUtilisateur) throws DALException {
 		return dao.getUnUtilisateur(noUtilisateur);
 
 	}
 
-	
+	/**
+	 *Fonction permettant de récupérer un utilisateur en fonction de son identifiant de connection
+	 * @param identifiant
+	 * @return
+	 * @throws DALException
+	 */
+	@Override
+	public Utilisateur recupererUnProfil(String identifiant) throws DALException {
+		Utilisateur utilisateur = new Utilisateur();
+		for (Utilisateur u : dao.getAllUtilisateur()) {
+			if (u.getPseudo().equals(identifiant)|| u.getEmail().equals(identifiant)) {
+				utilisateur = u;
+				
+			}
+		}
+		return utilisateur;
+	}
 	
 	
 	/**
@@ -340,5 +362,7 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 
 	}
+
+	
 
 }

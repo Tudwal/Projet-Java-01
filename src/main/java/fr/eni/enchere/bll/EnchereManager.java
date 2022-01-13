@@ -61,4 +61,12 @@ public interface EnchereManager {
 	 */
 	public Utilisateur afficherMonProfil (Integer noUtilisateur) throws DALException;
 	
+	/**
+	 * Fonction permettant de récupérer un utilisateur en fonction de son identifiant de connection
+	 * @param identifiant
+	 * @return
+	 * @throws DALException
+	 */
+	public Utilisateur recupererUnProfil (String identifiant) throws DALException;
+	
 }

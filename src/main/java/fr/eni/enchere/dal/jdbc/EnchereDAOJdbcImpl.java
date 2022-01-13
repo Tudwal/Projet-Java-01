@@ -24,6 +24,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * @param utilisateur
 	 * @throws DALException
 	 */
+	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -57,6 +58,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * @return List<Utilisateur>
 	 * @throws DALException
 	 */
+	@Override
 	public List<Utilisateur> getAllUtilisateur() throws DALException {
 		List<Utilisateur> lstUtilisateurs = new ArrayList<Utilisateur>();
 		try (Connection con = ConnectionProvider.getConnection()){
@@ -79,6 +81,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * @param utilisateur
 	 * @throws DALException
 	 */
+	@Override
 	public void updateUtilisateur (Utilisateur utilisateur) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(UPDATE_USER);
