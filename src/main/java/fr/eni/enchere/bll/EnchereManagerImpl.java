@@ -1,8 +1,10 @@
 package fr.eni.enchere.bll;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
 import fr.eni.enchere.dal.EnchereDAOFact;
@@ -12,29 +14,30 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	private static EnchereDAO dao = EnchereDAOFact.getInstance();
 
-	
 	/**
-	 *Fonction permettant la création d'un compte Utilisateur après la verification
+	 * Fonction permettant la création d'un compte Utilisateur après la verification
 	 * de tout les champs renseigner par l'utilisateur On verifie aussi si le mot de
 	 * passe "admin" est rentrée à la création du compte, dans ce cas le compte
 	 * créer est un compte utilisateur
+	 * 
+	 * @throws BLLException
 	 */
 	@Override
 	public void creerCompte(Utilisateur utilisateur) throws BLLException {
 		BLLException be = new BLLException();
 
-		verificationPseudo(utilisateur.getPseudo(), be);
-		verificationNom(utilisateur.getNom(), be);
-		verificationPrenom(utilisateur.getPrenom(), be);
-		verificationEmail(utilisateur.getEmail(), be);
-		verificationTelephone(utilisateur.getTelephone(), be);
-		verificationRue(utilisateur.getRue(), be);
-		verificationCodePostal(utilisateur.getCodePostal(), be);
-		verificationVille(utilisateur.getVille(), be);
-		verificationMotDePasse(utilisateur.getMotDePasse(), be);
-		verificationCredit(utilisateur.getCredit(), be);
-		verificationAdministrateur(utilisateur.getAdministrateur(), be);
-		verificationDoublon(utilisateur, be);
+		verificationPseudoUtilisateur(utilisateur.getPseudo(), be);
+		verificationNomUtilisateur(utilisateur.getNom(), be);
+		verificationPrenomUtilisateur(utilisateur.getPrenom(), be);
+		verificationEmailUtilisateur(utilisateur.getEmail(), be);
+		verificationTelephoneUtilisateur(utilisateur.getTelephone(), be);
+		verificationRueUtilisateur(utilisateur.getRue(), be);
+		verificationCodePostalUtilisateur(utilisateur.getCodePostal(), be);
+		verificationVilleUtilisateur(utilisateur.getVille(), be);
+		verificationMotDePasseUtilisateur(utilisateur.getMotDePasse(), be);
+		verificationCreditUtilisateur(utilisateur.getCredit(), be);
+		verificationAdministrateurUtilisateur(utilisateur.getAdministrateur(), be);
+		verificationDoublonUtilisateur(utilisateur, be);
 
 		if (be.hasErreur()) {
 			throw be;
@@ -56,11 +59,11 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * ont crée un compte.
 	 * 
 	 * @return List<Utilisateur>
-	 * @throws BLLException 
+	 * @throws BLLException
 	 */
 	@Override
 	public List<Utilisateur> afficherTousUtilisateurs() throws BLLException {
-		List<Utilisateur> lstUtilisateurs = new ArrayList<Utilisateur>();	
+		List<Utilisateur> lstUtilisateurs = new ArrayList<Utilisateur>();
 		try {
 			lstUtilisateurs = dao.getAllUtilisateur();
 		} catch (DALException e) {
@@ -76,8 +79,9 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * l'email appartiennent à un utilisateur, on verifie aussi que le mot de passe
 	 * soit le bon
 	 * 
+	 * @param identifiant et mot de passe
 	 * @return boolean
-	 * @throws BLLException 
+	 * @throws BLLException
 	 */
 	@Override
 	public Boolean seConnecter(String identifiant, String motDePasse) throws BLLException {
@@ -99,30 +103,30 @@ public class EnchereManagerImpl implements EnchereManager {
 	/**
 	 * Fonction permettant à un utilisateur de modifier les informations de son
 	 * compte, des vérifications de conformiter des champs sont aussi effectués.
+	 * 
+	 * @param utilisateur
+	 * @throws BLLException
 	 */
 	@Override
 	public void modifCompte(Utilisateur utilisateur) throws BLLException {
 		BLLException be = new BLLException();
 
-		verificationPseudo(utilisateur.getPseudo(), be);
-		verificationNom(utilisateur.getNom(), be);
-		verificationPrenom(utilisateur.getPrenom(), be);
-		verificationEmail(utilisateur.getEmail(), be);
-		verificationTelephone(utilisateur.getTelephone(), be);
-		verificationRue(utilisateur.getRue(), be);
-		verificationCodePostal(utilisateur.getCodePostal(), be);
-		verificationVille(utilisateur.getVille(), be);
-		
-		
-		//Mis en commentaire ce 14.01 pour update utilisateur
+		verificationPseudoUtilisateur(utilisateur.getPseudo(), be);
+		verificationNomUtilisateur(utilisateur.getNom(), be);
+		verificationPrenomUtilisateur(utilisateur.getPrenom(), be);
+		verificationEmailUtilisateur(utilisateur.getEmail(), be);
+		verificationTelephoneUtilisateur(utilisateur.getTelephone(), be);
+		verificationRueUtilisateur(utilisateur.getRue(), be);
+		verificationCodePostalUtilisateur(utilisateur.getCodePostal(), be);
+		verificationVilleUtilisateur(utilisateur.getVille(), be);
 
-		//verificationMotDePasse(utilisateur.getMotDePasse(), be);
-		
-//		verificationCredit(utilisateur.getCredit(), be);
-//		verificationAdministrateur(utilisateur.getAdministrateur(), be);
-		
-		//TODO
-		//verificationDoublon(utilisateur, be);
+		// Mis en commentaire ce 14.01 pour update utilisateur
+		verificationMotDePasseUtilisateur(utilisateur.getMotDePasse(), be);
+		verificationCreditUtilisateur(utilisateur.getCredit(), be);
+		verificationAdministrateurUtilisateur(utilisateur.getAdministrateur(), be);
+
+		// TODO
+		// verificationDoublon(utilisateur, be);
 
 		if (be.hasErreur()) {
 			throw be;
@@ -140,6 +144,9 @@ public class EnchereManagerImpl implements EnchereManager {
 	/**
 	 * Fonction permettant la suppression d'un compte uilisateur à partir de son
 	 * numéro d'utilisateur.
+	 * 
+	 * @param numéro d'utilisateur
+	 * @throws BLLException
 	 */
 	@Override
 	public void supprimerCompte(Integer noUtilisateur) throws BLLException {
@@ -161,7 +168,9 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * Fonction permettant d'afficher un profil utilisateur en fonction de son
 	 * noUtilisateur
 	 * 
+	 * @param numéro d'utilisateur
 	 * @return Utilisateur
+	 * @throws BLLException
 	 */
 	@Override
 	public Utilisateur afficherMonProfil(Integer noUtilisateur) throws BLLException {
@@ -175,17 +184,19 @@ public class EnchereManagerImpl implements EnchereManager {
 	}
 
 	/**
-	 *Fonction permettant de récupérer un utilisateur en fonction de son identifiant de connection
+	 * Fonction permettant de récupérer un utilisateur en fonction de son
+	 * identifiant de connection
+	 * 
 	 * @param identifiant
-	 * @return
-	 * @throws DALException
+	 * @return un utilisateur
+	 * @throws BLLException
 	 */
 	@Override
 	public Utilisateur recupererUnProfil(String identifiant) throws BLLException {
 		Utilisateur utilisateur = new Utilisateur();
 		try {
 			for (Utilisateur u : dao.getAllUtilisateur()) {
-				if (u.getPseudo().equals(identifiant)|| u.getEmail().equals(identifiant)) {
+				if (u.getPseudo().equals(identifiant) || u.getEmail().equals(identifiant)) {
 					utilisateur = u;
 				}
 			}
@@ -195,16 +206,81 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 		return utilisateur;
 	}
-	
-	
+
+	/**
+	 * Fonction permettant de créer un article
+	 * 
+	 * @param article
+	 * @throws BLLException
+	 */
+	@Override
+	public void creerUnArticle(ArticleVendu article) throws BLLException {
+		BLLException be = new BLLException();
+		verificationNomArticle(article.getNomArticle(), be);
+		verificationDescriptionArticle(article.getDescription(), be);
+		verificationDateDebutEnchereArticle(article.getDateDebutEncheres(), be);
+		verificationDateFinEnchereArticle(article.getDateFinEncheres(), be);
+		verificationPrixInitialArticle(article.getMiseAPrix(), be);
+
+		if (be.hasErreur()) {
+			throw be;
+		}
+
+		try {
+			dao.insertArticle(article);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+
+	}
+
+	private void verificationNomArticle(String nomArticle, BLLException be) {
+		if (nomArticle.length() > 30 || nomArticle.isBlank() || nomArticle == null) {
+			be.ajouterErreur(
+					new ParameterException("Le nom de l'article est obligatoire et inferieur a 30 caracteres"));
+		}
+
+	}
+
+	private void verificationDescriptionArticle(String descriptionArticle, BLLException be) {
+		if (descriptionArticle.length() > 300 || descriptionArticle.isBlank() || descriptionArticle == null) {
+			be.ajouterErreur(new ParameterException(
+					"La description de l'article est obligatoire et inferieur a 300 caracteres"));
+		}
+
+	}
+
+	private void verificationDateDebutEnchereArticle(LocalDate dateDebutEnchere, BLLException be) {
+		if (dateDebutEnchere == null) {
+			be.ajouterErreur(new ParameterException("La date de début d'enchère est obligatoire"));
+		}
+
+	}
+
+	private void verificationDateFinEnchereArticle(LocalDate dateFinEnchere, BLLException be) {
+		if (dateFinEnchere == null) {
+			be.ajouterErreur(new ParameterException("La date de fin d'enchère est obligatoire"));
+		}
+
+	}
+
+	private void verificationPrixInitialArticle(Integer prixInitial, BLLException be) {
+		if (prixInitial < 0) {
+			be.ajouterErreur(new ParameterException("Le prix initial est un entier positif"));
+		}
+
+	}
+
 	/**
 	 * Fonction permettant de vérifier que le pseudo rentrée par l'utilisateur est
 	 * conforme aux règles inscrites dans la base de donnée.
 	 * 
 	 * @param pseudo
 	 * @param be
+	 * 
 	 */
-	private void verificationPseudo(String pseudo, BLLException be) {
+	private void verificationPseudoUtilisateur(String pseudo, BLLException be) {
 		if (pseudo.length() > 30 || pseudo.isBlank() || pseudo == null) {
 			be.ajouterErreur(new ParameterException("Le pseudo est obligatoire et inferieur a 30 caracteres"));
 		}
@@ -217,7 +293,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param nom
 	 * @param be
 	 */
-	private void verificationNom(String nom, BLLException be) {
+	private void verificationNomUtilisateur(String nom, BLLException be) {
 		if (nom.length() > 30 || nom.isBlank() || nom == null) {
 			be.ajouterErreur(new ParameterException("Le nom est obligatoire et inferieur a 30 caracteres"));
 		}
@@ -231,7 +307,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param prenom
 	 * @param be
 	 */
-	private void verificationPrenom(String prenom, BLLException be) {
+	private void verificationPrenomUtilisateur(String prenom, BLLException be) {
 		if (prenom.length() > 30 || prenom.isBlank() || prenom == null) {
 			be.ajouterErreur(new ParameterException("Le prenom est obligatoire et inferieur a 30 caracteres"));
 		}
@@ -245,7 +321,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param email
 	 * @param be
 	 */
-	private void verificationEmail(String email, BLLException be) {
+	private void verificationEmailUtilisateur(String email, BLLException be) {
 		if (email.length() > 50 || email.isBlank() || email == null) {
 			be.ajouterErreur(new ParameterException("L'email est obligatoire et inferieur a 50 caracteres"));
 		}
@@ -259,7 +335,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param telephone
 	 * @param be
 	 */
-	private void verificationTelephone(String telephone, BLLException be) {
+	private void verificationTelephoneUtilisateur(String telephone, BLLException be) {
 		if (telephone.length() > 15) {
 			be.ajouterErreur(new ParameterException("Le telephone est inferieur a 15 caracteres"));
 		}
@@ -273,7 +349,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param rue
 	 * @param be
 	 */
-	private void verificationRue(String rue, BLLException be) {
+	private void verificationRueUtilisateur(String rue, BLLException be) {
 		if (rue.length() > 50 || rue.isBlank() || rue == null) {
 			be.ajouterErreur(new ParameterException("La rue est obligatoire et inferieur a 50 caracteres"));
 		}
@@ -287,7 +363,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param codePostal
 	 * @param be
 	 */
-	private void verificationCodePostal(String codePostal, BLLException be) {
+	private void verificationCodePostalUtilisateur(String codePostal, BLLException be) {
 		if (codePostal.length() > 10 || codePostal.isBlank() || codePostal == null) {
 			be.ajouterErreur(new ParameterException("Le code postal est obligatoire et inferieur a 10 caracteres"));
 		}
@@ -301,7 +377,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param ville
 	 * @param be
 	 */
-	private void verificationVille(String ville, BLLException be) {
+	private void verificationVilleUtilisateur(String ville, BLLException be) {
 		if (ville.length() > 50 || ville.isBlank() || ville == null) {
 			be.ajouterErreur(new ParameterException("La ville est obligatoire et inferieur a 50 caracteres"));
 		}
@@ -315,7 +391,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param motDePasse
 	 * @param be
 	 */
-	private void verificationMotDePasse(String motDePasse, BLLException be) {
+	private void verificationMotDePasseUtilisateur(String motDePasse, BLLException be) {
 		if (motDePasse.length() > 30 || motDePasse.isBlank() || motDePasse == null) {
 			be.ajouterErreur(new ParameterException("Le mot de passe est obligatoire et inferieur a 30 caracteres"));
 		}
@@ -329,7 +405,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param credit
 	 * @param be
 	 */
-	private void verificationCredit(Integer credit, BLLException be) {
+	private void verificationCreditUtilisateur(Integer credit, BLLException be) {
 		if (credit < 0 || credit == null) {
 			be.ajouterErreur(new ParameterException("Le credit est obligatoire et superieur ou egal a zero"));
 		}
@@ -343,7 +419,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param administrateur
 	 * @param be
 	 */
-	private void verificationAdministrateur(Integer administrateur, BLLException be) {
+	private void verificationAdministrateurUtilisateur(Integer administrateur, BLLException be) {
 		if (administrateur == null) {
 			be.ajouterErreur(new ParameterException("Le code administrateur est obligatoire"));
 		}
@@ -357,7 +433,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param utilisateur
 	 * @param be
 	 */
-	private void verificationDoublon(Utilisateur utilisateur, BLLException be) {
+	private void verificationDoublonUtilisateur(Utilisateur utilisateur, BLLException be) {
 		if (utilisateur.getNoUtilisateur() != null) {
 			try {
 				for (Utilisateur u : dao.getAllUtilisateur()) {
@@ -395,7 +471,5 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 
 	}
-
-	
 
 }
