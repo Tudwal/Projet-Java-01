@@ -64,7 +64,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * Fonction permettant d'insérer un article dans la base de donnée
 	 */
 	@Override
-	public void insertArticle(ArticleVendu article, Utilisateur utilisateur) throws DALException {
+	public void insertArticle(ArticleVendu article) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, article.getNomArticle());
@@ -74,7 +74,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			stmt.setInt(5, article.getMiseAPrix());
 			stmt.setInt(6, article.getMiseAPrix());
 			stmt.setString(7, article.getEtatVente());
-			stmt.setInt(8, utilisateur.getNoUtilisateur());
+			stmt.setInt(8, article.getUtilisateur().getNoUtilisateur());
 			stmt.setInt(9, article.getCategorieArticle().getNoCategorie());
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -89,9 +89,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			throw new DALException("problème de conection insertArticle");
 		}
 		Retrait lieuRetrait = new Retrait();
-		lieuRetrait.setRue(utilisateur.getRue());
-		lieuRetrait.setCodePostal(utilisateur.getCodePostal());
-		lieuRetrait.setVille(utilisateur.getVille());
+		lieuRetrait.setRue(article.getUtilisateur().getRue());
+		lieuRetrait.setCodePostal(article.getUtilisateur().getCodePostal());
+		lieuRetrait.setVille(article.getUtilisateur().getVille());
 		lieuRetrait.setArticleVendu(article);
 		insertLieuRetrait(lieuRetrait);
 

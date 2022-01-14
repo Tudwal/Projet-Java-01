@@ -47,10 +47,10 @@ public class TestIHM extends HttpServlet {
 		
 		//test insertion article CONCLUANT
 		try {
-			Utilisateur utilisateur = dao.getUnUtilisateur(21);
-			Categorie cat = dao.getUneCategorie(1);
-			ArticleVendu art = new ArticleVendu(utilisateur,cat ,"PC g@m3rz de ouf", "pc de ouf malade", LocalDate.now(), LocalDate.now().plusDays(4), 600, null, "EC");
-			dao.insertArticle(art, utilisateur);
+			Utilisateur utilisateur = dao.getUnUtilisateur(5);
+			Categorie cat = dao.getUneCategorie(4);
+			ArticleVendu art = new ArticleVendu(utilisateur,cat ,"ballon de foot", "bleu et blanc et accroche bien", LocalDate.now(), LocalDate.now().plusDays(4), 19, null, "EC");
+			dao.insertArticle(art);
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

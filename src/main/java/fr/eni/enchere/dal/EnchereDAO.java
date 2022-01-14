@@ -50,7 +50,7 @@ public interface EnchereDAO {
 	 * @param article
 	 * @throws DALException 
 	 */
-	public void insertArticle(ArticleVendu article ,Utilisateur utilisateur) throws DALException;
+	public void insertArticle(ArticleVendu article) throws DALException;
 	
 	/**
 	 * Fonction permettant de récupérer tout les articles présent dans la base de donnée
