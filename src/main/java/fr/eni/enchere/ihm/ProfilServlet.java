@@ -6,13 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.enchere.dal.jdbc.DALException;
 
 /**
  * Servlet implementation class AccueilServlet
@@ -25,7 +21,7 @@ public class ProfilServlet extends HttpServlet {
 	
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 	
-	//Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+	
 
 	       
     /**
@@ -40,7 +36,7 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		
 		if (request.getParameter("modifier")!= null) {
 			adresse = "ModifierProfilServlet";

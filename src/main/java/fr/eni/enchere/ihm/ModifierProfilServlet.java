@@ -22,7 +22,7 @@ public class ModifierProfilServlet extends HttpServlet {
 
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
-	private String adresse = "WEB-INF/afficherCompte.jsp";
+	private String adresse = "WEB-INF/modifierCompte.jsp";
 
 	Utilisateur utilisateur = new Utilisateur();
 
@@ -87,7 +87,7 @@ public class ModifierProfilServlet extends HttpServlet {
 			}
 		}
 
-		request.getRequestDispatcher("WEB-INF/modifierCompte.jsp").forward(request, response);
+		request.getRequestDispatcher(adresse).forward(request, response);
 	}
 
 	/**
