@@ -2,6 +2,7 @@ package fr.eni.enchere.bll;
 
 import java.util.List;
 
+import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.jdbc.DALException;
 
@@ -66,10 +67,16 @@ public interface EnchereManager {
 	/**
 	 * Fonction permettant de récupérer un utilisateur en fonction de son identifiant de connection
 	 * @param identifiant
-	 * @return
 	 * @throws DALException
 	 * @throws BLLException 
 	 */
 	public Utilisateur recupererUnProfil (String identifiant) throws BLLException;
+	
+	/**
+	 * Fonction permettant de créer un article
+	 * @param article
+	 * @throws BLLException 
+	 */
+	public void creerUnArticle(ArticleVendu article) throws BLLException;
 	
 }

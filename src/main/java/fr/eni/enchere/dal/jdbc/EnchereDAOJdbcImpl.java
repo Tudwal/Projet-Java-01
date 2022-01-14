@@ -72,7 +72,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			stmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
 			stmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 			stmt.setInt(5, article.getMiseAPrix());
-			stmt.setInt(6, article.getMiseAPrix());
+			if (article.getPrixVente() != null) {
+				stmt.setInt(6, article.getPrixVente());
+			}
 			stmt.setString(7, article.getEtatVente());
 			stmt.setInt(8, article.getUtilisateur().getNoUtilisateur());
 			stmt.setInt(9, article.getCategorieArticle().getNoCategorie());
@@ -253,11 +255,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private Categorie mapCat(ResultSet rs) throws SQLException {
 		Integer noCategorie = rs.getInt("no_categorie");
 		String libelle = rs.getString("libelle");
-		
-		Categorie cat = new Categorie(noCategorie,libelle);
+
+		Categorie cat = new Categorie(noCategorie, libelle);
 		return cat;
 	}
-	
+
 	/**
 	 * Fonction permettant de charger toute les informations utilisateurs dans une
 	 * map et de pouvoir s'en servir dans d'autres fonctions
