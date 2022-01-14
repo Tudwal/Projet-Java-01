@@ -40,13 +40,11 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		
 		if (request.getParameter("modifier")!= null) {
 			adresse = "ModifierProfilServlet";
 		}
-		
-		
 		
 		request.getRequestDispatcher(adresse).forward(request, response);
 	}
@@ -55,7 +53,7 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		adresse = "WEB-INF/afficherCompte.jsp";
 		doGet(request, response);
 	}
 

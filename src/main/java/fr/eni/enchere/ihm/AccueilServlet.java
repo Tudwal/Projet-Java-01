@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
@@ -35,8 +36,11 @@ public class AccueilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		
-		
+		if (model!= null) {
+			adresse = "WEB-INF/accueilConnecte.jsp";
+		}  
 		
 		request.getRequestDispatcher(adresse).forward(request, response);
 	}
