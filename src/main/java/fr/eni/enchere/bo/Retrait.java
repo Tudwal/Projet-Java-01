@@ -17,6 +17,17 @@ public class Retrait {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
+	public Retrait(String rue, String codePostal, String ville) {
+		super();
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+	}
+
+
+
 	public Retrait(ArticleVendu articleVendu, String rue, String codePostal, String ville) {
 		super();
 		this.articleVendu = articleVendu;

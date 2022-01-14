@@ -47,7 +47,7 @@ public class EnchereDAOMock implements EnchereDAO {
 	}
 
 	@Override
-	public void insertArticle(ArticleVendu article) {
+	public void insertArticle(ArticleVendu article ,Utilisateur utilisateur ) {
 		// TODO Auto-generated method stub
 		
 	}

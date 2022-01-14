@@ -18,6 +18,16 @@ public class Categorie {
 	public Categorie() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+	public Categorie(String libelle) {
+		super();
+		this.libelle = libelle;
+	}
+
+
+
 	public Categorie(Integer noCategorie, String libelle) {
 		super();
 		this.noCategorie = noCategorie;
