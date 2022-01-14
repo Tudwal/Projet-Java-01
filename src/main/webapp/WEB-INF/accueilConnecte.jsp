@@ -13,7 +13,6 @@
 
 	<a style="text-align: right">Enchères </a>
 	<a style="text-align: right">Vendre un article </a>
-<!-- 	<a style="text-align: right">Mon Profil </a> -->
 	<a href="http://localhost:8080/Ebehhhhhh/ProfilServlet">Mon Profil</a>
 	<a style="text-align: right">Déconnexion</a>
 

@@ -22,91 +22,52 @@ import fr.eni.enchere.dal.jdbc.DALException;
 @WebServlet("/ConnexionServlet")
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String adresse ="WEB-INF/connexionCompte.jsp";
-       
+	private String adresse = "WEB-INF/connexionCompte.jsp";
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
-	
 	public ConnexionServlet() {
-        super();
-    }
+		super();
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		UtilisateurModel model = new UtilisateurModel();
-		
-//		PrintWriter pw = response.getWriter();
-//		response.setContentType("text/plain");
-		
-		
-		if (request.getParameter("connexion")!= null) {
-			
+
+		if (request.getParameter("connexion") != null) {
+
 			String identifiant = request.getParameter("identifiant");
 			String motDePasse = request.getParameter("motDePasse");
-			
+
 			try {
 				if (manager.seConnecter(identifiant, motDePasse)) {
-					//System.out.println("OK Compte existant");
-					
-					
 					adresse = "WEB-INF/accueilConnecte.jsp";
-					
-					//1er test session
 					HttpSession session = request.getSession();
-					
-					
-					//HttpSession session = request.getSession();
-					//pw.println("Session ?" + session.isNew());
-					//System.out.println("Session ?" + session.isNew());
-
-					
-//				String nom = (String)session.getAttribute("identifiant");
-//				if (nom != null) {
-//					pw.println("nom : "+nom);
-//					System.out.println("nom : "+nom);
-//				} else {
-//					pw.println("Il n'existe pas");
-//					System.out.println("Il n'existe pas");
-//				}
-					
-						model.setUtilisateur(manager.recupererUnProfil(identifiant));
-					
-					
-					
-					//session.setAttribute("model", model);
-				
-					//pw.close();
-					
+					model.setUtilisateur(manager.recupererUnProfil(identifiant));
+					request.getSession().setAttribute("model", model);
 				} else {
-					model.setMessage("L'identifiant et/ou le mdp est invalide");				
-					}
+					model.setMessage("L'identifiant et/ou le mdp est invalide");
+				}
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			}
-			
-//			if (request.getParameter("deconnexion")!= null) {
-//				HttpSession session = request.getSession(false);
-//			}
-			
-			request.getSession().setAttribute("model", model);
-			
-			//Ajout avec erwan 13h30  13.01
-			request.getSession().setAttribute("utilisateur", model.getUtilisateur());
-			
-			//request.setAttribute("model", model);
-			request.getRequestDispatcher(adresse).forward(request, response);
-			//request.getRequestDispatcher("WEB-INF/connexionCompte.jsp").forward(request, response);
+		}
+
+		request.getRequestDispatcher(adresse).forward(request, response);
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 

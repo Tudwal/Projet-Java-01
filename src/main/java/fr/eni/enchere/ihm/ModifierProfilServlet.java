@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
@@ -40,9 +42,14 @@ public class ModifierProfilServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 
 		if (request.getParameter("supprimer") != null) {
-			Integer noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
+
+			Integer noUtilisateur = model.getUtilisateur().getNoUtilisateur();
+			request.getSession().invalidate();
+			adresse = "WEB-INF/accueil.jsp";
+			
 
 			try {
 				manager.supprimerCompte(noUtilisateur);
@@ -53,7 +60,7 @@ public class ModifierProfilServlet extends HttpServlet {
 		}
 
 		if (request.getParameter("enregistrer") != null) {
-
+			Integer noUtilisateur = model.getUtilisateur().getNoUtilisateur();
 			String pseudo = request.getParameter("pseudo");
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");
@@ -66,7 +73,8 @@ public class ModifierProfilServlet extends HttpServlet {
 			String nouveauMotDePasse = request.getParameter("nouveauMotDePasse");
 			String confirmation = request.getParameter("confirmation");
 
-			utilisateur = new Utilisateur(5, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 100, 0);
+			utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse,
+					100, 0);
 
 			if (nouveauMotDePasse != null) {
 				if (nouveauMotDePasse.equals(confirmation)) {
@@ -76,6 +84,7 @@ public class ModifierProfilServlet extends HttpServlet {
 
 			try {
 				manager.modifCompte(utilisateur);
+				model.setUtilisateur(utilisateur);
 			} catch (BLLException e) {
 				e.printStackTrace();
 			}
@@ -96,7 +105,6 @@ public class ModifierProfilServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

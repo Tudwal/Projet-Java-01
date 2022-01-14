@@ -34,7 +34,7 @@
 	<input placeholder="Confirmation" type="password" name="confirmation">
 	
 	<br><br>
-	<input placeholder="Numéro Utilisateur" type="number" name="noUtilisateur" value="${noUtilisateur}"/>
+<%-- 	<input placeholder="Numéro Utilisateur" type="number" name="noUtilisateur" value="${noUtilisateur}"/> --%>
 	
 	
 	<br>

@@ -9,6 +9,8 @@
 <body>
 <h1>Ebehhhhhh</h1>
 
+<h3>bonjour ${model.utilisateur.pseudo}</h3>
+
 <a href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">Se connecter</a>
 <a href="http://localhost:8080/Ebehhhhhh/UtilisateurServlet">S'inscrire</a>
 
