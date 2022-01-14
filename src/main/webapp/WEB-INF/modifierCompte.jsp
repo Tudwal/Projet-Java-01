@@ -27,9 +27,9 @@
 	<br><br>
 	<input placeholder="Ville" type="text" name="ville" value="${model.utilisateur.ville}"/>
 	<br><br>
-	<input placeholder="Mot de passe actuel" type="password" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
+	<input placeholder="Mot de passe actuel" type="text" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
 	<br><br>
-	<input placeholder="Nouveau mot de passe " type="password" name="motDePasse" />
+	<input placeholder="Nouveau mot de passe " type="password" name="nouveauMotDePasse" />
 	<br><br>
 	<input placeholder="Confirmation" type="password" name="confirmation">
 	

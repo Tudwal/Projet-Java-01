@@ -24,6 +24,8 @@ public class ModifierProfilServlet extends HttpServlet {
 
 	private String adresse = "WEB-INF/afficherCompte.jsp";
 
+	Utilisateur utilisateur = new Utilisateur();
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -51,21 +53,39 @@ public class ModifierProfilServlet extends HttpServlet {
 		}
 
 		if (request.getParameter("enregistrer") != null) {
-			Integer noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
-			adresse = "WEB-INF/accueil.jsp";
-		}
 
-		// TODO Test avec Erwan 13h30 13.01
-//			if (request.getParameter("enregistrer")!= null) {
-//				try {
-//					manager.modifCompte(utilisateur)
-//				} catch (DALException e) {
-//					e.printStackTrace();
-//				} catch (BLLException e) {
-//					e.printStackTrace();
-//				}
-//				
-//			}
+			String pseudo = request.getParameter("pseudo");
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String email = request.getParameter("email");
+			String telephone = request.getParameter("telephone");
+			String rue = request.getParameter("rue");
+			String codePostal = request.getParameter("codePostal");
+			String ville = request.getParameter("ville");
+			String motDePasse = request.getParameter("motDePasse");
+			String nouveauMotDePasse = request.getParameter("nouveauMotDePasse");
+			String confirmation = request.getParameter("confirmation");
+
+			utilisateur = new Utilisateur(5, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 100, 0);
+
+			if (nouveauMotDePasse != null) {
+				if (nouveauMotDePasse.equals(confirmation)) {
+					utilisateur.setMotDePasse(nouveauMotDePasse);
+				}
+			}
+
+			try {
+				manager.modifCompte(utilisateur);
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+			try {
+				System.out.println(manager.afficherTousUtilisateurs());
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		request.getRequestDispatcher("WEB-INF/modifierCompte.jsp").forward(request, response);
 	}

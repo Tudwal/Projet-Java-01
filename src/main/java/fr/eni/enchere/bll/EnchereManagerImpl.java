@@ -112,10 +112,17 @@ public class EnchereManagerImpl implements EnchereManager {
 		verificationRue(utilisateur.getRue(), be);
 		verificationCodePostal(utilisateur.getCodePostal(), be);
 		verificationVille(utilisateur.getVille(), be);
-		verificationMotDePasse(utilisateur.getMotDePasse(), be);
-		verificationCredit(utilisateur.getCredit(), be);
-		verificationAdministrateur(utilisateur.getAdministrateur(), be);
-		verificationDoublon(utilisateur, be);
+		
+		
+		//Mis en commentaire ce 14.01 pour update utilisateur
+
+		//verificationMotDePasse(utilisateur.getMotDePasse(), be);
+		
+//		verificationCredit(utilisateur.getCredit(), be);
+//		verificationAdministrateur(utilisateur.getAdministrateur(), be);
+		
+		//TODO
+		//verificationDoublon(utilisateur, be);
 
 		if (be.hasErreur()) {
 			throw be;
