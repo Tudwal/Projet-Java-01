@@ -46,21 +46,22 @@ public class ConnexionServlet extends HttpServlet {
 			String identifiant = request.getParameter("identifiant");
 			String motDePasse = request.getParameter("motDePasse");
 			
-			if (manager.seConnecter(identifiant, motDePasse)) {
-				//System.out.println("OK Compte existant");
-				
-				
-				adresse = "WEB-INF/accueilConnecte.jsp";
-				
-				//1er test session
-				HttpSession session = request.getSession();
-				
-				
-				//HttpSession session = request.getSession();
-				//pw.println("Session ?" + session.isNew());
-				//System.out.println("Session ?" + session.isNew());
+			try {
+				if (manager.seConnecter(identifiant, motDePasse)) {
+					//System.out.println("OK Compte existant");
+					
+					
+					adresse = "WEB-INF/accueilConnecte.jsp";
+					
+					//1er test session
+					HttpSession session = request.getSession();
+					
+					
+					//HttpSession session = request.getSession();
+					//pw.println("Session ?" + session.isNew());
+					//System.out.println("Session ?" + session.isNew());
 
-				
+					
 //				String nom = (String)session.getAttribute("identifiant");
 //				if (nom != null) {
 //					pw.println("nom : "+nom);
@@ -69,21 +70,22 @@ public class ConnexionServlet extends HttpServlet {
 //					pw.println("Il n'existe pas");
 //					System.out.println("Il n'existe pas");
 //				}
-				try {
-					model.setUtilisateur(manager.recupererUnProfil(identifiant));
-				} catch (DALException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					
+						model.setUtilisateur(manager.recupererUnProfil(identifiant));
+					
+					
+					
+					//session.setAttribute("model", model);
 				
-				
-				//session.setAttribute("model", model);
-			
-				//pw.close();
-				
-			} else {
-				model.setMessage("L'identifiant et/ou le mdp est invalide");				
-				}
+					//pw.close();
+					
+				} else {
+					model.setMessage("L'identifiant et/ou le mdp est invalide");				
+					}
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			}
 			

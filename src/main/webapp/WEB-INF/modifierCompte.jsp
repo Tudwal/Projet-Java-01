@@ -42,7 +42,7 @@
 	<input type="submit" name="enregistrer" value="Enregistrer"/>
 	<input type="submit" name="supprimer" value="Supprimer mon compte"/>
 
-	<a href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">Accueil</a>
+	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
 </form>
 
 </body>

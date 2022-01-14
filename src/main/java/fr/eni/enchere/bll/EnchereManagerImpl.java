@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
@@ -45,6 +46,7 @@ public class EnchereManagerImpl implements EnchereManager {
 			dao.insertUtilisateur(utilisateur);
 		} catch (DALException e) {
 			e.printStackTrace();
+			throw new BLLException();
 		}
 
 	}
@@ -54,16 +56,19 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * ont crée un compte.
 	 * 
 	 * @return List<Utilisateur>
+	 * @throws BLLException 
 	 */
 	@Override
-	public List<Utilisateur> afficherTousUtilisateurs() {
-
+	public List<Utilisateur> afficherTousUtilisateurs() throws BLLException {
+		List<Utilisateur> lstUtilisateurs = new ArrayList<Utilisateur>();	
 		try {
-			return dao.getAllUtilisateur();
+			lstUtilisateurs = dao.getAllUtilisateur();
 		} catch (DALException e) {
 			e.printStackTrace();
+			throw new BLLException();
+
 		}
-		return null;
+		return lstUtilisateurs;
 	}
 
 	/**
@@ -72,9 +77,10 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * soit le bon
 	 * 
 	 * @return boolean
+	 * @throws BLLException 
 	 */
 	@Override
-	public Boolean seConnecter(String identifiant, String motDePasse) {
+	public Boolean seConnecter(String identifiant, String motDePasse) throws BLLException {
 		Boolean cnx = false;
 		try {
 			for (Utilisateur u : dao.getAllUtilisateur()) {
@@ -85,6 +91,7 @@ public class EnchereManagerImpl implements EnchereManager {
 			}
 		} catch (DALException e) {
 			e.printStackTrace();
+			throw new BLLException();
 		}
 		return cnx;
 	}
@@ -94,7 +101,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * compte, des vérifications de conformiter des champs sont aussi effectués.
 	 */
 	@Override
-	public void modifCompte(Utilisateur utilisateur) throws BLLException, DALException {
+	public void modifCompte(Utilisateur utilisateur) throws BLLException {
 		BLLException be = new BLLException();
 
 		verificationPseudo(utilisateur.getPseudo(), be);
@@ -114,7 +121,12 @@ public class EnchereManagerImpl implements EnchereManager {
 			throw be;
 		}
 
-		dao.updateUtilisateur(utilisateur);
+		try {
+			dao.updateUtilisateur(utilisateur);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
 
 	}
 
@@ -123,13 +135,18 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * numéro d'utilisateur.
 	 */
 	@Override
-	public void supprimerCompte(Integer noUtilisateur) throws DALException, BLLException {
+	public void supprimerCompte(Integer noUtilisateur) throws BLLException {
 		BLLException be = new BLLException();
 		if (be.hasErreur()) {
 			throw be;
 		}
 
-		dao.deleteUtilisateur(noUtilisateur);
+		try {
+			dao.deleteUtilisateur(noUtilisateur);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
 
 	}
 
@@ -140,8 +157,13 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @return Utilisateur
 	 */
 	@Override
-	public Utilisateur afficherMonProfil(Integer noUtilisateur) throws DALException {
-		return dao.getUnUtilisateur(noUtilisateur);
+	public Utilisateur afficherMonProfil(Integer noUtilisateur) throws BLLException {
+		try {
+			return dao.getUnUtilisateur(noUtilisateur);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
 
 	}
 
@@ -152,13 +174,17 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @throws DALException
 	 */
 	@Override
-	public Utilisateur recupererUnProfil(String identifiant) throws DALException {
+	public Utilisateur recupererUnProfil(String identifiant) throws BLLException {
 		Utilisateur utilisateur = new Utilisateur();
-		for (Utilisateur u : dao.getAllUtilisateur()) {
-			if (u.getPseudo().equals(identifiant)|| u.getEmail().equals(identifiant)) {
-				utilisateur = u;
-				
+		try {
+			for (Utilisateur u : dao.getAllUtilisateur()) {
+				if (u.getPseudo().equals(identifiant)|| u.getEmail().equals(identifiant)) {
+					utilisateur = u;
+				}
 			}
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
 		}
 		return utilisateur;
 	}

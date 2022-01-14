@@ -19,39 +19,43 @@ import fr.eni.enchere.dal.jdbc.DALException;
 @WebServlet("/ModifierProfilServlet")
 public class ModifierProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
-	
 	private String adresse = "WEB-INF/afficherCompte.jsp";
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ModifierProfilServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public ModifierProfilServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		if (request.getParameter("supprimer") != null) {
 			Integer noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
-							try {
-								manager.supprimerCompte(noUtilisateur);
 
-							} catch (DALException e) {
-								e.printStackTrace();
-							} catch (BLLException e) {
-								e.printStackTrace();
-							}
-							adresse = "WEB-INF/accueil.jsp";
+			try {
+				manager.supprimerCompte(noUtilisateur);
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+			adresse = "WEB-INF/accueil.jsp";
 		}
-		
-		// TODO Test avec Erwan 13h30  13.01
+
+		if (request.getParameter("enregistrer") != null) {
+			Integer noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
+			adresse = "WEB-INF/accueil.jsp";
+		}
+
+		// TODO Test avec Erwan 13h30 13.01
 //			if (request.getParameter("enregistrer")!= null) {
 //				try {
 //					manager.modifCompte(utilisateur)
@@ -62,17 +66,16 @@ public class ModifierProfilServlet extends HttpServlet {
 //				}
 //				
 //			}
-		
-				
+
 		request.getRequestDispatcher("WEB-INF/modifierCompte.jsp").forward(request, response);
 	}
-	
-	
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

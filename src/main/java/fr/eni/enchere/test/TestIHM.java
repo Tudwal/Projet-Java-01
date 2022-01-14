@@ -1,4 +1,4 @@
-package fr.eni.enchere.ihm;
+package fr.eni.enchere.test;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,32 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import fr.eni.enchere.bll.BLLException;
-import fr.eni.enchere.bll.EnchereManager;
-import fr.eni.enchere.bll.EnchereManagerSing;
-import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.enchere.dal.jdbc.DALException;
 
 /**
- * Servlet implementation class AccueilServlet
+ * Servlet implementation class TestIHM
  */
-@WebServlet("/ProfilServlet")
-public class ProfilServlet extends HttpServlet {
+@WebServlet("/TestIHM")
+public class TestIHM extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private String adresse = "WEB-INF/afficherCompte.jsp";
-	
-	private EnchereManager manager = EnchereManagerSing.getInstance();
-	
-	//Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-
-	       
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProfilServlet() {
+    public TestIHM() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,15 +26,25 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	
+//		System.out.println(manager.afficherMonProfil(1));
+//		Utilisateur utilisateur;
+//		try {
+//			utilisateur = manager.afficherMonProfil(1);
+//			utilisateur.setCodePostal("45200");
+//			try {
+//				manager.supprimerCompte(1);
+//			} catch (BLLException e) {
+//				e.printStackTrace();
+//			}
+//			System.out.println(manager.afficherMonProfil(1));
 		
-		
-		if (request.getParameter("modifier")!= null) {
-			adresse = "ModifierProfilServlet";
-		}
-		
-		
-		
-		request.getRequestDispatcher(adresse).forward(request, response);
+//		manager.modifCompte(utilisateur);
+//		System.out.println(manager.afficherMonProfil(1));
+//		
+//		} 
+	
 	}
 
 	/**

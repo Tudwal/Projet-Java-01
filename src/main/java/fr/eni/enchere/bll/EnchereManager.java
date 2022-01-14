@@ -21,8 +21,9 @@ public interface EnchereManager {
 	 * Fonction permettant de faire remonter la liste de tout les utilisateur qui
 	 * ont crée un compte
 	 * @return List<Utilisateur>
+	 * @throws BLLException 
 	 */
-	public List<Utilisateur> afficherTousUtilisateurs();
+	public List<Utilisateur> afficherTousUtilisateurs() throws BLLException;
 	
 	/**
 	 * Fonction permettant de vérifier dans la base de donnée si le pseudo ou
@@ -31,8 +32,9 @@ public interface EnchereManager {
 	 * @param identifiant
 	 * @param motDePasse
 	 * @return boolean
+	 * @throws BLLException 
 	 */
-	public Boolean seConnecter(String identifiant, String motDePasse);
+	public Boolean seConnecter(String identifiant, String motDePasse) throws BLLException;
 	
 	/**
 	 * Fonction permettant à un utilisateur de modifier les informations de son
@@ -41,7 +43,7 @@ public interface EnchereManager {
 	 * @throws BLLException
 	 * @throws DALException
 	 */
-	public void modifCompte (Utilisateur utilisateur) throws BLLException, DALException;
+	public void modifCompte (Utilisateur utilisateur) throws BLLException;
 	
 	/**
 	 *  Fonction permettant la suppression d'un compte uilisateur à partir de son
@@ -50,7 +52,7 @@ public interface EnchereManager {
 	 * @throws DALException
 	 * @throws BLLException
 	 */
-	public void supprimerCompte (Integer noUtilisateur) throws DALException, BLLException;
+	public void supprimerCompte (Integer noUtilisateur) throws BLLException;
 	
 	/**
 	 * Fonction permettant d'afficher un profil utilisateur en fonction de son
@@ -59,14 +61,15 @@ public interface EnchereManager {
 	 * @return Utilisateur
 	 * @throws DALException
 	 */
-	public Utilisateur afficherMonProfil (Integer noUtilisateur) throws DALException;
+	public Utilisateur afficherMonProfil (Integer noUtilisateur) throws BLLException;
 	
 	/**
 	 * Fonction permettant de récupérer un utilisateur en fonction de son identifiant de connection
 	 * @param identifiant
 	 * @return
 	 * @throws DALException
+	 * @throws BLLException 
 	 */
-	public Utilisateur recupererUnProfil (String identifiant) throws DALException;
+	public Utilisateur recupererUnProfil (String identifiant) throws BLLException;
 	
 }
