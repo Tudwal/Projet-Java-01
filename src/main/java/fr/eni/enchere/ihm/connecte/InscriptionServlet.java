@@ -1,4 +1,4 @@
-package fr.eni.enchere.ihm;
+package fr.eni.enchere.ihm.connecte;
 
 import java.io.IOException;
 
@@ -16,8 +16,8 @@ import fr.eni.enchere.bo.Utilisateur;
 /**
  * Servlet implementation class EnchereServlet
  */
-@WebServlet("/UtilisateurServlet")
-public class UtilisateurServlet extends HttpServlet {
+@WebServlet("/InscriptionServlet")
+public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String adresse = "WEB-INF/creationCompte.jsp";
 
@@ -26,7 +26,7 @@ public class UtilisateurServlet extends HttpServlet {
 
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
-	public UtilisateurServlet() {
+	public InscriptionServlet() {
 		super();
 	}
 
@@ -61,7 +61,10 @@ public class UtilisateurServlet extends HttpServlet {
 				try {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
-					adresse = "WEB-INF/accueilConnecte.jsp";
+
+
+					adresse = "accueilConnecteServlet";
+
 
 				} catch (BLLException e) {
 					model.setMessage("La création du compte n'est pas validée ");
@@ -72,14 +75,9 @@ public class UtilisateurServlet extends HttpServlet {
 
 		}
 
-		try {
-			System.out.println(manager.afficherTousUtilisateurs());
-		} catch (BLLException e) {
-			e.printStackTrace();
-		}
-
 		request.setAttribute("model", model);
 		request.getRequestDispatcher(adresse).forward(request, response);
+
 	}
 
 	/**

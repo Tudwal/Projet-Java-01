@@ -1,16 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Modif Profil</title>
 </head>
-<body>
+<body style="text-align: center">
+<jsp:include page="banniereConnecte.jsp"></jsp:include>
 
 <h2>Modifier mon profil</h2>
 
-<form action="ModifierProfilServlet" method="POST">
+<form action="ModifierMonProfilServlet" method="POST">
 	<input placeholder="Pseudo" type="text" name="pseudo" value="${model.utilisateur.pseudo}"/> 
 	<br><br>
 	<input placeholder="Nom" type="text" name="nom" value="${model.utilisateur.nom}"/>
@@ -34,15 +37,11 @@
 	<input placeholder="Confirmation" type="password" name="confirmation">
 	
 	<br><br>
-<%-- 	<input placeholder="Numéro Utilisateur" type="number" name="noUtilisateur" value="${noUtilisateur}"/> --%>
-	
-	
-	<br>
-	<br>
+
+	<br><br>
 	<input type="submit" name="enregistrer" value="Enregistrer"/>
 	<input type="submit" name="supprimer" value="Supprimer mon compte"/>
 
-	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
 </form>
 
 </body>
