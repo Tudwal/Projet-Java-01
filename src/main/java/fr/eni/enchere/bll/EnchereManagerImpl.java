@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
 import fr.eni.enchere.dal.EnchereDAOFact;
@@ -233,6 +234,127 @@ public class EnchereManagerImpl implements EnchereManager {
 			throw new BLLException();
 		}
 
+	}
+
+	/**
+	 * Fonction permettant de faire remonter la totalités des articles en vente
+	 */
+	@Override
+	public List<ArticleVendu> consulterArticles() throws BLLException {
+		List<ArticleVendu> lstArticles = new ArrayList<ArticleVendu>();
+		try {
+			lstArticles = dao.getAllArticles();
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		return lstArticles;
+	}
+
+	/**
+	 * Fonction permettant d'enchérire sur una rticle, on verifie que le montant
+	 * proposer par l'acheteur est bien un montant plus haut que celui de la
+	 * dernière enchère
+	 */
+	@Override
+	public void encherire(Enchere enchere) throws BLLException {
+		BLLException be = new BLLException();
+		if (be.hasErreur()) {
+			throw be;
+		}
+		try {
+			Enchere meilleurEnchere = dao.getTopEnchere(enchere.getArticleVendu().getNoArticle());
+			if (meilleurEnchere.getMontantEnchere() < enchere.getMontantEnchere()) {
+				dao.insertEnchere(enchere);
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+
+	}
+
+	public boolean remporterVente(Enchere enchere) {
+		//TO-DO gestion de la win d'une enchere
+		return false;
+	}
+	
+	
+	@Override
+	public List<ArticleVendu> moteurDeRecherche(Integer noCategorie, String etatVente, String motClef) throws BLLException {
+		List<ArticleVendu> lstRecherche = new ArrayList<ArticleVendu>();
+		try {
+			List<ArticleVendu> lstArticles = dao.getAllArticles();
+			if (noCategorie != null && etatVente != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && etatVente != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+
+			} else if (etatVente != null && motClef != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+			} else if (etatVente != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+			} else if (motClef != null) {
+				lstRecherche = rechercheParMotClefs(motClef, lstArticles);
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		return lstRecherche;
+	}
+
+
+	@Override
+	public List<ArticleVendu> rechercheParCategorie(Integer noCategorie, List<ArticleVendu> lstAfiltrer)
+			throws BLLException {
+		List<ArticleVendu> lstArticleParCategorie = new ArrayList<ArticleVendu>();
+		for (ArticleVendu articleVendu : lstAfiltrer) {
+			if (articleVendu.getCategorieArticle().getNoCategorie().equals(noCategorie)) {
+				lstArticleParCategorie.add(articleVendu);
+			}
+		}
+
+		return lstArticleParCategorie;
+	}
+
+	@Override
+	public List<ArticleVendu> rechercheParMotClefs(String motClef, List<ArticleVendu> lstAfiltrer) throws BLLException {
+		List<ArticleVendu> lstArticleParMotClef = new ArrayList<ArticleVendu>();
+		for (ArticleVendu articleVendu : lstAfiltrer) {
+			if (articleVendu.getDescription().contains(motClef.toLowerCase())
+					|| articleVendu.getNomArticle().contains(motClef.toLowerCase())) {
+				lstArticleParMotClef.add(articleVendu);
+			}
+		}
+		return lstArticleParMotClef;
+	}
+
+	@Override
+	public List<ArticleVendu> rechercheParEtatVente(String etatVente, List<ArticleVendu> lstAfiltrer)
+			throws BLLException {
+		List<ArticleVendu> lstArticleParEtatVente = new ArrayList<ArticleVendu>();
+		for (ArticleVendu articleVendu : lstAfiltrer) {
+			if (articleVendu.getEtatVente().equals(etatVente)) {
+				lstArticleParEtatVente.add(articleVendu);
+			}
+		}
+		return lstArticleParEtatVente;
 	}
 
 	private void verificationNomArticle(String nomArticle, BLLException be) {

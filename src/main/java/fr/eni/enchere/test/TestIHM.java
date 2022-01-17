@@ -16,6 +16,7 @@ import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
 import fr.eni.enchere.dal.EnchereDAOFact;
@@ -45,6 +46,30 @@ public class TestIHM extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		//test moteur de recherche
+		
+		try {
+			System.out.println(manager.moteurDeRecherche(4, "EC", "bal"));
+		} catch (BLLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+//		try {
+//			System.out.println(manager.rechercheParMotClefs("BAL"));
+//		} catch (BLLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
+		
+		
+		
 		// test insertion user CONCLUANT
 //		try {
 //			dao.insertUtilisateur(new Utilisateur("dubix", "corlouer", "tudwal","tud.c@gmail.com", "0669627119", "3 square du menou", "35200", "rennes", "tud", 100, 1));
@@ -63,6 +88,55 @@ public class TestIHM extends HttpServlet {
 //		} catch (DALException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
+//		}
+		
+		//test participation à une enchère CONCLUANT
+		 
+		//via bll
+//		Utilisateur user;
+//		try {
+//			user = dao.getUnUtilisateur(12);
+//			System.out.println(user);
+//			ArticleVendu art = dao.getUnArticle(1);
+//			System.out.println(art);
+//			Enchere enchere = new Enchere(art, user , LocalDate.now(), 345 );
+//			try {
+//				manager.encherire(enchere);
+//			} catch (BLLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		} catch (DALException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+		
+		
+		// via la dal
+//		try {
+//			Utilisateur user = dao.getUnUtilisateur(12);
+//			System.out.println(user);
+//			ArticleVendu art = dao.getUnArticle(1);
+//			System.out.println(art);
+////			Categorie cat = dao.getUneCategorie(4);
+////			System.out.println(cat);
+//			
+//			
+//			Enchere enchere = new Enchere(art, user , LocalDate.now(), 350 );
+//			dao.insertEnchere(enchere);
+////			System.out.println(dao.getUneEnchere(2));
+//		} catch (DALException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
+//		try {
+//			System.out.println(dao.getTopEnchere(1));
+//			
+//		} catch (DALException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
 //		}
 
 		// test remonter une catégorie CONCLUANT
@@ -92,18 +166,18 @@ public class TestIHM extends HttpServlet {
 
 		// Test ajout d'un article depuis le manager
 
-		Categorie cat;
-		try {
-			cat = dao.getUneCategorie(4);
-			try {
-				manager.creerUnArticle(new ArticleVendu(manager.afficherMonProfil(21), cat, "boite de volant",
-						"plume d'oie véritable", LocalDate.now(), LocalDate.now().plusDays(2), 30, "EA"));
-			} catch (BLLException e) {
-				e.printStackTrace();
-			}
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
+//		Categorie cat;
+//		try {
+//			cat = dao.getUneCategorie(4);
+//			try {
+//				manager.creerUnArticle(new ArticleVendu(manager.afficherMonProfil(21), cat, "boite de volant",
+//						"plume d'oie véritable", LocalDate.now(), LocalDate.now().plusDays(2), 30, "EA"));
+//			} catch (BLLException e) {
+//				e.printStackTrace();
+//			}
+//		} catch (DALException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 

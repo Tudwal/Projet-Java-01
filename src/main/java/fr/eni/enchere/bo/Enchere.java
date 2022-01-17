@@ -3,7 +3,7 @@
  */
 package fr.eni.enchere.bo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Enchere {
 
@@ -11,7 +11,7 @@ public class Enchere {
 	private Utilisateur utilisateur;
 	
 	private Integer noEnchere;
-	private Date dateEnchere;
+	private LocalDate dateEnchere;
 	private Integer montantEnchere;
 	
 	
@@ -19,7 +19,18 @@ public class Enchere {
 	public Enchere() {
 		// TODO Auto-generated constructor stub
 	}
-	public Enchere(ArticleVendu articleVendu, Utilisateur utilisateur, Integer noEnchere, Date dateEnchere,
+	
+	
+	public Enchere(ArticleVendu articleVendu, Utilisateur utilisateur, LocalDate dateEnchere, Integer montantEnchere) {
+		super();
+		this.articleVendu = articleVendu;
+		this.utilisateur = utilisateur;
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+	}
+
+
+	public Enchere(ArticleVendu articleVendu, Utilisateur utilisateur, Integer noEnchere, LocalDate dateEnchere,
 			Integer montantEnchere) {
 		super();
 		this.articleVendu = articleVendu;
@@ -48,10 +59,10 @@ public class Enchere {
 	public void setNoEnchere(Integer noEnchere) {
 		this.noEnchere = noEnchere;
 	}
-	public Date getDateEnchere() {
+	public LocalDate getDateEnchere() {
 		return dateEnchere;
 	}
-	public void setDateEnchere(Date dateEnchere) {
+	public void setDateEnchere(LocalDate dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 	public Integer getMontantEnchere() {
