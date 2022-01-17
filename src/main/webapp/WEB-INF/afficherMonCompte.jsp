@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Mon Profil</title>
 </head>
-<body>
+<body style="text-align: center">
+<jsp:include page="banniereConnecte.jsp"></jsp:include>
 
-<h1 class="titreConnexion"><a href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">ENI-Enchères</a></h1>
 
-
-<form action="ProfilServlet" method="POST">
 
 Pseudo : ${model.utilisateur.pseudo}
 <br>
@@ -30,11 +30,9 @@ Code Postale : ${model.utilisateur.codePostal}
 Ville : ${model.utilisateur.ville}
 <br>
 
-	<Center><input type="submit" name="modifier" value="Modifier"/></Center>
-
-
+<form action="MonProfilServlet" method="post">
+	<input type="submit" name="modifier" value="modifier">
 </form>
-
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-package fr.eni.enchere.ihm;
+package fr.eni.enchere.ihm.connecte;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,7 +38,6 @@ public class ConnexionServlet extends HttpServlet {
 		UtilisateurModel model = new UtilisateurModel();
 
 		if (request.getParameter("connexion") != null) {
-
 			String identifiant = request.getParameter("identifiant");
 			String motDePasse = request.getParameter("motDePasse");
 
@@ -47,12 +46,11 @@ public class ConnexionServlet extends HttpServlet {
 					adresse = "WEB-INF/accueilConnecte.jsp";
 					HttpSession session = request.getSession();
 					model.setUtilisateur(manager.recupererUnProfil(identifiant));
-					request.getSession().setAttribute("model", model);
+					session.setAttribute("model", model);
 				} else {
 					model.setMessage("L'identifiant et/ou le mdp est invalide");
 				}
 			} catch (BLLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -67,7 +65,6 @@ public class ConnexionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		doGet(request, response);
 	}
 

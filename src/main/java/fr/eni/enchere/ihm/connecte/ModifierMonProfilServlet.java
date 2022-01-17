@@ -1,4 +1,4 @@
-package fr.eni.enchere.ihm;
+package fr.eni.enchere.ihm.connecte;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -18,20 +18,20 @@ import fr.eni.enchere.dal.jdbc.DALException;
 /**
  * Servlet implementation class ModifierProfilServlet
  */
-@WebServlet("/ModifierProfilServlet")
-public class ModifierProfilServlet extends HttpServlet {
+@WebServlet("/ModifierMonProfilServlet")
+public class ModifierMonProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
-	private String adresse = "WEB-INF/afficherCompte.jsp";
+	private String adresse = "WEB-INF/modifierCompte.jsp";
 
 	Utilisateur utilisateur = new Utilisateur();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ModifierProfilServlet() {
+	public ModifierMonProfilServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -45,18 +45,15 @@ public class ModifierProfilServlet extends HttpServlet {
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 
 		if (request.getParameter("supprimer") != null) {
-
 			Integer noUtilisateur = model.getUtilisateur().getNoUtilisateur();
-			request.getSession().invalidate();
-			adresse = "WEB-INF/accueil.jsp";
-			
-
 			try {
 				manager.supprimerCompte(noUtilisateur);
 			} catch (BLLException e) {
 				e.printStackTrace();
 			}
-			adresse = "WEB-INF/accueil.jsp";
+			request.getSession().invalidate();
+			request.getSession().removeAttribute("model");
+			adresse = "AccueilServlet";
 		}
 
 		if (request.getParameter("enregistrer") != null) {
@@ -94,9 +91,11 @@ public class ModifierProfilServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			adresse = "MonProfilServlet";
+			request.setAttribute("model", model);
 		}
 
-		request.getRequestDispatcher("WEB-INF/modifierCompte.jsp").forward(request, response);
+		request.getRequestDispatcher(adresse).forward(request, response);
 	}
 
 	/**

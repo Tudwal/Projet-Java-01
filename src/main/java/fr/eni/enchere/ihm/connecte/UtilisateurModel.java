@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.eni.enchere.ihm;
+package fr.eni.enchere.ihm.connecte;
 
 import fr.eni.enchere.bo.Utilisateur;
 

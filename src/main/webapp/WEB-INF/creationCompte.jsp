@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +9,8 @@
 <title>CREATION PROFIL UTILISATEUR</title>
 </head>
 <body style="text-align: center">
+
+<jsp:include page="banniereDeconnecte.jsp"></jsp:include>
 
 <h2>Mon profil</h2>
 
@@ -26,7 +30,6 @@
 	<br>
 	<input type="submit" name="ajouter" value="Créer"/>
 	
-	<a href="http://localhost:8080/Ebehhhhhh/AccueilServlet">Accueil</a>
 </form>
 
 <h4>${model.message}</h4>
