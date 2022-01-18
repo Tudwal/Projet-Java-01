@@ -26,6 +26,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private final static String SELECT_ALL_ARTICLE = "SELECT * FROM ARTICLES_VENDUS";
 	private final static String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ? , nom = ? , prenom = ? , email = ? , telephone = ? , rue = ? , code_postal = ? , ville = ? , mot_de_Passe = ? , credit = ? , administrateur = ? WHERE no_utilisateur = ?";
 	private final static String DELETE_USER = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private final static String UPDATE_ARTICLE="UPDATE ARTICLES_VENDUS SET prix_vente = ?, etat_vente=? WHERE no_article=?";
+	private final static String DELETE_ARTICLE="DELETE FROM ARTICLES_VENDUS WHERE no_article=?";
 	private final static String SELECT_UN_USER = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private final static String SELECT_UN_ARTICLE ="SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
 	private final static String SELECT_UNE_CATEGORIE = "SELECT * FROM CATEGORIES WHERE no_categorie = ?";
@@ -248,6 +250,37 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	
+	@Override
+	public void updateArticle(ArticleVendu article) throws DALException {
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt =  con.prepareStatement(UPDATE_ARTICLE);
+			
+			stmt.setInt(1, article.getPrixVente());
+			stmt.setString(2, article.getEtatVente());
+			
+			stmt.setInt(3, article.getNoArticle());
+			
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de modification de l'article");
+		}
+		
+	}
+
+	@Override
+	public void deleteArticle(Integer noArticle) throws DALException {
+		try (Connection con = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(DELETE_ARTICLE);
+			stmt.setInt(1, noArticle);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de suppression de l'article");
+		}
+		
+	}
 	
 	
 	/**
@@ -460,6 +493,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				dateFinEnchere, prixInitial, prixVente, etatVente);
 		return article;
 	}
+
+	
 
 	
 

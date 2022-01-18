@@ -225,6 +225,7 @@ public class EnchereManagerImpl implements EnchereManager {
 		verificationDateDebutEnchereArticle(article.getDateDebutEncheres(), be);
 		verificationDateFinEnchereArticle(article.getDateFinEncheres(), be);
 		verificationPrixInitialArticle(article.getMiseAPrix(), be);
+		article.setEtatVente("EA");
 
 		if (be.hasErreur()) {
 			throw be;
@@ -236,7 +237,7 @@ public class EnchereManagerImpl implements EnchereManager {
 			e.printStackTrace();
 			throw new BLLException();
 		}
-
+		
 	}
 
 	/**
@@ -268,7 +269,7 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	
 	/**
-	 * Fonction permettant d'enchérire sur una rticle, on verifie que le montant
+	 * Fonction permettant d'enchérire sur un article, on verifie que le montant
 	 * proposer par l'acheteur est bien un montant plus haut que celui de la
 	 * dernière enchère
 	 */
@@ -302,13 +303,46 @@ public class EnchereManagerImpl implements EnchereManager {
 	}
 
 	public boolean remporterVente(Enchere enchere) {
-		//TO-DO gestion de la win d'une enchere
+		Timestamp dateFinEnchere = Timestamp.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
+		Timestamp dateJour = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+		
+		if (dateJour.after(dateFinEnchere)) {
+			crediterCompte(enchere);
+			modifierEtatVente(enchere, "VT");
+			return true;
+		}
+		
 		return false;
 	}
 	
 	
 	public void crediterCompte(Enchere enchere) {
-		
+		try {
+			Enchere meilleurEnchere = dao.getTopEnchere(enchere.getArticleVendu().getNoArticle());
+			enchere.getArticleVendu().getUtilisateur().setCredit(enchere.getArticleVendu().getUtilisateur().getCredit()+ meilleurEnchere.getMontantEnchere());
+			
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void modifierEtatVente(Enchere enchere, String etatVente) {
+		try {
+			
+			switch (etatVente) {
+				//EC: vente en cour
+			case "EC": enchere.getArticleVendu().setEtatVente("EC");
+				break;
+				//VT: vente terminé
+			case "VT": enchere.getArticleVendu().setEtatVente("VT"); 
+				break;
+			}
+			dao.updateArticle(enchere.getArticleVendu());
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

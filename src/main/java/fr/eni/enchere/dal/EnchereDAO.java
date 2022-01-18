@@ -59,6 +59,10 @@ public interface EnchereDAO {
 	 */
 	public void deleteUtilisateur (Integer noUtilisateur) throws DALException;
 	
+	public void updateArticle(ArticleVendu article) throws DALException;
+	
+	public void deleteArticle(Integer noArticle) throws DALException;
+	
 	/**
 	 * Fonction permettant de faire remonter le profil d'un utilisateur en fonction de son noUtilisateur
 	 * @param noUtilisateur
