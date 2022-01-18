@@ -1,3 +1,5 @@
+package fr.eni.enchere.dal;
+
 import java.util.ArrayList;
 import java.util.List;
 

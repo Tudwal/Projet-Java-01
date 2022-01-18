@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilConnecteServlet">Enchères</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="UneVenteServlet">Vendre un article</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="NouvelleVenteServlet">Vendre un article</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="MonProfilServlet">Mon profil</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">Déconnexion</a></li>
                         
@@ -149,16 +149,13 @@
 
 
             var encheresOuvertes = document.getElementById("encheresOuvertes");
-                encheresOuvertes.checked = true;
-                encheresOuvertes.disabled = false;
+            encheresOuvertes.disabled = false;
+           
+            var mesEncheres = document.getElementById("mesEncheres");
+            mesEncheres.disabled = false;
             
-                var mesEncheres = document.getElementById("mesEncheres");
-                mesEncheres.checked = true;
-                mesEncheres.disabled = false;
-            
-                var mesEncheresRemportees = document.getElementById("mesEncheresRemportees");
-                mesEncheresRemportees.checked = true;
-                mesEncheresRemportees.disabled = false;
+            var mesEncheresRemportees = document.getElementById("mesEncheresRemportees");
+            mesEncheresRemportees.disabled = false;
         }
 
             function onClickVentes() {
@@ -176,15 +173,12 @@
 
 
                 var mesVentesEnCours = document.getElementById("mesVentesEnCours");
-                mesVentesEnCours.checked = true;
                 mesVentesEnCours.disabled = false;
         
                 var ventesNonDebutees = document.getElementById("ventesNonDebutees");
-                ventesNonDebutees.checked = true;
                 ventesNonDebutees.disabled = false;
         
                 var ventesTerminees = document.getElementById("ventesTerminees");
-                ventesTerminees.checked = true;
                 ventesTerminees.disabled = false;
             }
 

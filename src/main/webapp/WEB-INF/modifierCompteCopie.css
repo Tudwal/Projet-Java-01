@@ -7480,6 +7480,7 @@ html {
 }
 #mainNav .navbar-nav {
   margin-top: 1rem;
+  float: left;
 }
 #mainNav .navbar-nav li.nav-item a.nav-link {
   color: #fff;
@@ -7548,7 +7549,7 @@ html {
 
 .masthead {
   padding-top: calc(6rem + 74px);
-  padding-bottom: 6rem;
+  padding-bottom: 1rem;
   
 }
 .masthead .masthead-heading {
@@ -7788,36 +7789,163 @@ select {
     margin-bottom: 25px;
   }
 
+
+
+body {
+  /* background-color: #070e95f3; */
+  background-color: rgb(173, 158, 141);
+  color: black;
+  padding: 0px 0 10px 0;
+  text-align: center;
+  font-family: "Advent Pro", sans-serif;
+
   
+}
+form {
+  margin: 0 auto;
+  max-width: 750px;
+}
+
+
+.fond-second {
+  background-color: #070e95f3;
+  margin-top: -19px; 
+  margin-bottom: -40px; 
+}
+
+ol {
+  text-align: right;
+  padding-left: 680px;	
+}
+
 input,
 textarea,
-.btnModifier {
+.buttonEnregistrer, .buttonSupprimer {
   border: none;
-  width: 55%;
-  padding: 11px 10px;
-  margin: 20px 0;
+  width: 50%;
+  padding: 15px 10px;
+  margin: 1px 0;
   font-size: 1, 2em;
   font-family: "Advent Pro", sans-serif;
   border-radius: 8px;
+  color: brown;
+  font-style: italic;
 }
 
-.btnModifier {
+.buttonEnregistrer {
   font-size: 1, 5em;
   background-color: blanchedalmond;
   color: black;
-  width: 30%;
-  margin-top: 25px;
+  width: 57%;
 }
-.btnModifier:hover {
+.buttonSupprimer {
+  font-size: 1, 5em;
+  background-color: blanchedalmond;
+  color: black;
+  width: 57%;
+}
+button:hover {
   background-color: dodgerblue;
   color: blanchedalmond;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
 
-span {
-	padding-left: 2px;
-    font-weight: bolder;
-    color: brown;
+.buttonEnregistrer {
+  font-size: 1, 5em;
+  background-color: blanchedalmond;
+  color: black;
+  width: 57%;
 }
-  
+.buttonEnregistrer:hover {
+  background-color :dodgerblue;
+  color: blanchedalmond;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+p {
+ font-size: 0.8em;
+ font-family: "Advent Pro", sans-serif;
+}
+h1 {
+  color: antiquewhite;
+  font-family: monospace;
+  font-size: 1.8em;
+  text-align: left;
+  padding-left: 50px;
+  padding-top: 5px;
+}
+h2 {
+  color: silver;
+  font-family: monospace;
+  font-size: 2.2em;
+  margin-top: 50px;
+}
+
+h3 {
+  color: red;
+  font-style: italic;
+  font-size: 19px;
+}
+
+h4 { 
+  font-style: italic;
+}
+
+#deuxiemeTrait {
+  height: 1px;
+  width: 75%;
+  background-color: blanchedalmond;
+  margin: 60px auto;
+  }
+
+#copyrightEtIcons {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 0 10%;
+}
+#copyright {
+  width: 100%;
+  text-align: left;
+  color: blanchedalmond;
+}
+
+.signature a {
+  color: blanchedalmond;
+  text-decoration: none;
+}
+
+.signature a:hover {
+  transition: 0.4s;
+  color: red;
+}
+
+.titreConnexion {
+  margin-bottom: 90px;
+}
+.titreConnexion a {
+  margin-bottom: 90px;
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.inputSouvenir {
+  border: none;
+  padding: 15px 10px;
+  margin: 1px 0;
+  font-size: 1, 2em;
+  font-family: "Advent Pro", sans-serif;
+  border-radius: 8px;
+}
+
+.btnConnexion {
+  width: 40%;
+  float: left;
+}
+
+span {
+	text-transform: uppercase;
+	font-weight: 500;
+    color: whitesmoke;
+}
