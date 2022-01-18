@@ -7788,15 +7788,10 @@ select {
     margin-bottom: 25px;
   }
 
-.spanInfos {
-	color: white;
-	display: flex;
-    margin-left: 30%;
-}
   
 input,
 textarea,
-.btnModifier {
+.btnEncherir {
   border: none;
   width: 55%;
   padding: 11px 10px;
@@ -7806,16 +7801,15 @@ textarea,
   border-radius: 8px;
 }
 
-.btnModifier {
+.btnEncherir {
   font-size: 1, 5em;
   background-color: blanchedalmond;
   color: black;
-  width: 30%;
+  width: 160px;
   margin-top: 25px;
 }
-.btnModifier:hover {
-  background-color: dodgerblue;
-  color: blanchedalmond;
+.btnEncherir:hover {
+  background-color: green;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
@@ -7824,5 +7818,20 @@ span {
 	padding-left: 2px;
     font-weight: bolder;
     color: brown;
+    margin-right: 15px;
+}
+
+.inputProposition {
+	width: 85px;
+	height: 33px;
+    margin-right: 20px;
+}
+.spanInfos {
+	color: white;
+	display: flex;
+    margin-left: 30%;
+}
+.spanProposition {
+	color: white;
 }
   

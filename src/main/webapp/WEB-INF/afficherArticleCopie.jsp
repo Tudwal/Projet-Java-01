@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
- 
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-
-
-  <style><%@includefile="/WEB-INF/afficherMonCompteCopie.css"%></style>
+	<meta charset="UTF-8">
+	
+	 <style><%@includefile="/WEB-INF/afficherArticleCopie.css"%></style>
+	
+	<title>DETAIL VENTE</title>
 
 </head>
 
-<title>Mon Profil</title>
-
-<!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  		<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -25,8 +24,8 @@
 
 
 <body id="page-top">
-
-       <!-- Navigation-->
+	
+ <!-- Navigation-->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="AccueilConnecteServlet">ENI-ENCHERE</a>
@@ -38,21 +37,21 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilConnecteServlet">Enchères</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="NouvelleVenteServlet">Vendre un article</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="http://localhost:8080/Ebehhhhhh/ConnexionServlet">Déconnexion</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="MonProfilServlet">Mon profil</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilServlet">Déconnexion</a></li>
                         
                     </ul>
                 </div>
             </div>
         </nav>
-        
-        
-        <!-- Masthead-->
+
+
+ <!-- Masthead-->
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
-               <h1 class="masthead-heading text-uppercase mb-0">Profil</h1>
+               <h1 class="masthead-heading text-uppercase mb-0">Détail vente</h1>
                 <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="https://p7.hiclipart.com/preview/954/328/914/computer-icons-user-profile-avatar.jpg" alt="..." />
-                <!-- Masthead Heading-->
+                
                 
         
                 <!-- Icon Divider-->
@@ -63,29 +62,38 @@
                 </div>
                 <!-- Masthead Subheading-->
                     <br> 
-        
 
-<span class="spanInfos">Pseudo : </span>  <span>${model.utilisateur.pseudo}</span>
-
-<span class="spanInfos">Nom : </span> <span>${model.utilisateur.nom}</span>
-
-<span class="spanInfos">Prénom : </span> <span>${model.utilisateur.prenom}</span>
-
-<span class="spanInfos">Email : </span> <span>${model.utilisateur.email}</span>
-
-<span class="spanInfos">Téléphone : </span> <span>${model.utilisateur.telephone}</span>
-
-<span class="spanInfos">Rue : </span> <span>${model.utilisateur.rue}</span>
-
-<span class="spanInfos">Code Postale : </span> <span>${model.utilisateur.codePostal}</span>
-
-<span class="spanInfos">Ville : </span> <span>${model.utilisateur.ville}</span>
-<br>
-
-<form action="MonProfilServlet" method="post">
-	<button class="btnModifier" type="submit" name="modifier" value="modifier">Modifier</button>
-</form>
-
+	
+	<span>${model.enchere.articleVendu.nomArticle}</span>
+	<br>
+	<span class="spanInfos">Description :</span> <span>${model.enchere.articleVendu.description}</span>
+	<br>
+	<span class="spanInfos">Catégorie :</span> <span>${model.enchere.articleVendu.categorieArticle.libelle}</span>
+	<br>
+	<c:if test="${model.enchere.montantEnchere}=!null">
+		<span class="spanInfos">Meilleure offre :</span> <span>${model.enchere.montantEnchere} par ${model.enchere.utilisateur.pseudo}</span>
+		<br>
+	</c:if>
+	
+	<span class="spanInfos">Mise à prix :</span> <span>${model.enchere.articleVendu.miseAPrix}</span>
+	<br>
+	<span class="spanInfos">Fin de l'enchère :</span> <span>${model.enchere.articleVendu.dateFinEncheres}</span>
+	<br>
+	<span class="spanInfos">Retrait :</span> <span>${model.enchere.articleVendu.lieuRetrait.rue}</span>
+	<br>
+	<span>${model.enchere.articleVendu.lieuRetrait.codePostal}</span>
+	<span>${model.enchere.articleVendu.lieuRetrait.ville}</span>
+	<br>
+	<span>${model.enchere.articleVendu.utilisateur.pseudo}</span>
+	
+		
+	<form action="UneVenteServlet" method="post">
+	
+		<span class="spanProposition">Ma proposition :</span> <input class="inputProposition" type="number" name="montantEnchere">
+		<button class="btnEncherir" type="submit" name="encherir" value="Enchérir">Enchérir</button>
+	<br>
+	
+	</form>
 
 
 <!-- Bootstrap core JS-->
