@@ -2,6 +2,8 @@ package fr.eni.enchere.test;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -95,9 +97,11 @@ public class TestIHM extends HttpServlet {
 			System.out.println(user);
 			ArticleVendu art = dao.getUnArticle(1);
 			System.out.println(art);
-			Enchere enchere = new Enchere(art, user , LocalDateTime.now(), 356 );
+			
+			Enchere enchere = new Enchere(art, user , new Date(System.currentTimeMillis()), 365 );
 			try {
 				manager.encherire(enchere);
+				System.out.println(dao.getTopEnchere(1));
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

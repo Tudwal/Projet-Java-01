@@ -1,6 +1,7 @@
 package fr.eni.enchere.dal.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -134,8 +135,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	public void insertEnchere(Enchere enchere) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS);
-			LocalDateTime date = enchere.getDateEnchere();
-			stmt.setObject(1, date);;
+//			Date date = new Date(enchere.getDateEnchere().getTime());
+//			date.setHours(enchere.getDateEnchere().getHours());
+//			date.setMinutes(enchere.getDateEnchere().getMinutes());
+//			stmt.setDate(1, date);
+			stmt.setTimestamp(1, new Timestamp(enchere.getDateEnchere().getTime()));
 			stmt.setInt(2, enchere.getMontantEnchere());
 			stmt.setInt(3, enchere.getArticleVendu().getNoArticle());
 			stmt.setInt(4, enchere.getUtilisateur().getNoUtilisateur());
@@ -378,10 +382,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private Enchere mapEnchere(ResultSet rs) throws SQLException, DALException {
 		Enchere enchere = new Enchere();
 		Integer noEnchere = rs.getInt("no_enchere");
-		String dateEnchere = Timestamp.valueOf( (String) rs.getObject("date_enchere")).toString();
-		LocalDateTime date= Timestamp.valueOf(dateEnchere).toLocalDateTime();
+//		String dateEnchere = Timestamp.valueOf( (String) rs.getObject("date_enchere")).toString();
+//		LocalDateTime date= Timestamp.valueOf(rs.getDate("date_enchere").getTime()).toLocalDateTime();
 //		OffsetDateTime dateEnchere = (OffsetDateTime) rs.getObject("date_enchere");
 //		LocalDate dateEnchere = rs.getDate("date_enchere");
+//		rs.getDate("date_enchere").getTime();
+//		LocalDateTime test = new 
+		java.util.Date test = rs.getTimestamp("date_enchere");
 		Integer montantEnchere = rs.getInt("montant_enchere");
 		Integer noArticle = rs.getInt("no_article");
 		Integer noUtilisateur = rs.getInt("no_utilisateur");
@@ -389,7 +396,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		enchere.setArticleVendu(getUnArticle(noArticle));
 		Utilisateur utilisateur = enchere.getUtilisateur();
 		ArticleVendu article = enchere.getArticleVendu();
-		enchere = new Enchere(article, utilisateur, noEnchere, date, montantEnchere);
+		enchere = new Enchere(article, utilisateur, noEnchere, test, montantEnchere);
 		return enchere;
 	}
 
