@@ -1,18 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-
-	<style><%@includefile="/WEB-INF/modifierCompteCopie.css"%></style>
-
+	
+	<style><%@includefile="/WEB-INF/nouvelleVenteCopie.css"%></style>
+	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
-
-	<title>MODIF PROFIL</title>
+	
+	<title>NOUVELLE VENTE</title>
 	
 	 <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -25,7 +22,6 @@
         <link href="css/styles.css" rel="stylesheet" />
 	
 </head>
-
 <body id="page-top">
 
 <!-- Navigation-->
@@ -39,19 +35,19 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilConnecteServlet">Enchères</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="MonProfilServlet">Mon profil</a></li>
 						<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilServlet">Déconnexion</a></li>                    
 					</ul>
                 </div>
             </div>
         </nav>
         
-        
         <!-- Masthead-->
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="https://p7.hiclipart.com/preview/954/328/914/computer-icons-user-profile-avatar.jpg" alt="..." />
                 <!-- Masthead Heading-->
+                <h1 class="masthead-heading text-uppercase mb-0">Nouvelle vente</h1>
                 
         
                 <!-- Icon Divider-->
@@ -62,59 +58,38 @@
                 </div>
                 <!-- Masthead Subheading-->
                     <br> 
+        
+        
 
+<form action="NouvelleVenteServlet" method="Post">
 
-<form action="ModifierMonProfilServlet" method="POST">
-	<span>Utilisateur </span> 
-	<br>
-	<input placeholder="Pseudo" type="text" name="pseudo" value="${model.utilisateur.pseudo}"/> 
-	<br>
-	<span>Nom </span> 
-	<br>
-	<input placeholder="Nom" type="text" name="nom" value="${model.utilisateur.nom}"/>
-	<br>
-	<span>Prénom</span> 
-	<br>
-	<input placeholder="Prenom" type="text" name="prenom" value="${model.utilisateur.prenom}"/>
-	<br>
-	<span>Email</span> 
-	<br>
-	<input placeholder="Email" type="email" name="email" value="${model.utilisateur.email}"/>
-	<br>
-	<span>Téléphone</span> 
-	<br>
-	<input placeholder="Telephone" type="text" name="telephone" value="${model.utilisateur.telephone}"/>
-	<br>
-	<span>Rue</span> 
-	<br>
-	<input placeholder="Rue" type="text" name="rue" value="${model.utilisateur.rue}"/>
-	<br>
-	<span>Code Postal</span> 
-	<br>
-	<input placeholder="Code postal" type="text" name="codePostal" value="${model.utilisateur.codePostal}"/>
-	<br>
-	<span>Ville</span> 
-	<br>
-	<input placeholder="Ville" type="text" name="ville" value="${model.utilisateur.ville}"/>
-	<br>
-	<span>Mot de passe</span> 
-	<br>
-	<input placeholder="Mot de passe actuel" type="text" name="motDePasse" value="${model.utilisateur.motDePasse}"/>
-	<br>
-	<span>Nouveau Mot de passe</span> 
-	<br>
-	<input placeholder="Nouveau mot de passe " type="password" name="nouveauMotDePasse" />
-	<br>
-	<span>Confirmation</span> 
-	<br>
-	<input placeholder="Confirmation" type="password" name="confirmation">
+	<input placeholder="Nom de l'article" type="text" name="nomArticle" value="" /> <br>
+	<input placeholder="Votre description de l'article ici..." size="50" type="text" name="descriptionArticle" value="" /> <br>	
+	<span> Catégorie : </span>
 	
-	<br><br><br>
-
+	<select class="categorieSelect" name="menuCategorie" id ="menuCategorie">
+			<option value = 1>Informatique</option>
+			<option value = 2>Ameublement</option>
+			<option value = 3>Vêtement</option>
+			<option value = 4>Sport & Loisirs</option>
+		</select> <br>	<br> <br>
+	
+	<span> Photo de l'article : </span>	
+	<input class="photoFichier" placeholder="Photo de l'article " type="file" name="photo" value="" /> <br>	
+	<input placeholder="Mise à prix" type="number" name="miseAPrix" value="" /> <br>	
+	<input placeholder="Début de l'enchère" type="datetime" name="debutEnchere" value="" /> <br>				
+	<input placeholder="Fin de l'enchère" type="datetime" name="finEnchere" value="" /> <br>	
+	<br>
+	<span>Retrait</span>  <br> <br>
+	<input placeholder="Rue" type="text" name="rueRetrait" value="${model.utilisateur.rue}" /> <br>
+	<input placeholder="Code Postal" type="text" name="codePostalRetrait" value="${model.utilisateur.codePostal}" /> <br>
+	<input placeholder="Ville" type="text" name="villeRetrait" value="${model.utilisateur.ville}" /> <br>
+	
+	<br>
 	
 	<button class="buttonEnregistrer" type="submit" name="enregistrer" value="Enregistrer">Enregistrer</button>
 	
-	<button class="buttonSupprimer" type="submit" name="supprimer" value="Supprimer">Supprimer mon compte</button>
+	<a href="AccueilConnecteServlet"><button class="buttonAnnuler" type="button">Annuler</button></a>
 
 </form>
 
@@ -127,6 +102,7 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
 
 </body>
 </html>
