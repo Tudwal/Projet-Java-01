@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
@@ -251,6 +252,19 @@ public class EnchereManagerImpl implements EnchereManager {
 		return lstArticles;
 	}
 
+	@Override
+	public Categorie recupereCategorie(Integer noCategorie) throws BLLException {
+		Categorie cat;
+		try {
+			cat = dao.getUneCategorie(noCategorie);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		return cat;	
+	}
+
+	
 	/**
 	 * Fonction permettant d'enchérire sur una rticle, on verifie que le montant
 	 * proposer par l'acheteur est bien un montant plus haut que celui de la
@@ -594,4 +608,5 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	}
 
+	
 }

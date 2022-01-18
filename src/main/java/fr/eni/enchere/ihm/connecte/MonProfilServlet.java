@@ -38,6 +38,10 @@ public class MonProfilServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
+		if (adresse != "WEB-INF/afficherMonCompteCopie.jsp" ) {
+			adresse = "WEB-INF/afficherMonCompteCopie.jsp";
+		}
+		
 		
 		if (adresse != "WEB-INF/afficherMonCompteCopie.jsp") {
 			adresse = "WEB-INF/afficherMonCompteCopie.jsp";

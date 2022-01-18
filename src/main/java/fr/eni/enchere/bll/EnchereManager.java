@@ -3,6 +3,7 @@ package fr.eni.enchere.bll;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.jdbc.DALException;
@@ -79,6 +80,8 @@ public interface EnchereManager {
 	 * @throws BLLException 
 	 */
 	public void creerUnArticle(ArticleVendu article) throws BLLException;
+	
+	public Categorie recupereCategorie(Integer noCategorie) throws BLLException;
 	
 	/**
 	 * Fonction permettant d'enchérire sur un article
