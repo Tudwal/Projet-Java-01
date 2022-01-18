@@ -1,7 +1,9 @@
 package fr.eni.enchere.bll;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
@@ -278,8 +280,19 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 		try {
 			Enchere meilleurEnchere = dao.getTopEnchere(enchere.getArticleVendu().getNoArticle());
-			if (meilleurEnchere.getMontantEnchere() < enchere.getMontantEnchere()) {
-				dao.insertEnchere(enchere);
+			Timestamp dateDebutEnchere = Timestamp.valueOf(enchere.getArticleVendu().getDateDebutEncheres().atStartOfDay());
+			Timestamp dateFinEnchere = Timestamp.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
+			Timestamp dateEnchere = new Timestamp(enchere.getDateEnchere().getTime());
+			
+			if (dateEnchere.after(dateDebutEnchere)&& dateEnchere.before(dateFinEnchere)) {
+				if (meilleurEnchere.getMontantEnchere() < enchere.getMontantEnchere()&& enchere.getArticleVendu().getMiseAPrix() < enchere.getMontantEnchere() ) {
+					dao.insertEnchere(enchere);
+					meilleurEnchere.getUtilisateur().setCredit(meilleurEnchere.getMontantEnchere());
+					Integer payement = enchere.getUtilisateur().getCredit()-enchere.getMontantEnchere();
+					enchere.getUtilisateur().setCredit(payement);
+				}
+			}else {
+				System.out.println("date depassé");
 			}
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -293,6 +306,10 @@ public class EnchereManagerImpl implements EnchereManager {
 		return false;
 	}
 	
+	
+	public void crediterCompte(Enchere enchere) {
+		
+	}
 	
 	@Override
 	public List<ArticleVendu> moteurDeRecherche(Integer noCategorie, String etatVente, String motClef) throws BLLException {
@@ -332,7 +349,6 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 		return lstRecherche;
 	}
-
 
 	@Override
 	public List<ArticleVendu> rechercheParCategorie(Integer noCategorie, List<ArticleVendu> lstAfiltrer)

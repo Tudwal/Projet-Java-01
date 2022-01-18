@@ -1,13 +1,11 @@
 package fr.eni.enchere.dal.jdbc;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ import fr.eni.enchere.dal.EnchereDAO;
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	private final static String INSERT_USER = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-	private final static String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_vente, no_utilisateur, no_categorie) VALUES(?,?,?,?,?,?,?,?,?) ";
+	private final static String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente no_utilisateur, no_categorie) VALUES(?,?,?,?,?,?,?,?) ";
 	private final static String INSERT_RETRAIT = "INSERT INTO RETRAITS(no_article, rue, code_postal, ville) VALUES(?,?,?,?)";
 	private final static String INSERT_ENCHERE = "INSERT INTO ENCHERES(date_enchere, montant_enchere, no_article, no_utilisateur) VALUES(?,?,?,?)";
 	private final static String SELECT_ALL_USER = "SELECT * FROM UTILISATEURS";
@@ -80,12 +78,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			stmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
 			stmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 			stmt.setInt(5, article.getMiseAPrix());
-			if (article.getPrixVente() != null) {
-				stmt.setInt(6, article.getPrixVente());
-			}
-			stmt.setString(7, article.getEtatVente());
-			stmt.setInt(8, article.getUtilisateur().getNoUtilisateur());
-			stmt.setInt(9, article.getCategorieArticle().getNoCategorie());
+			stmt.setString(6, article.getEtatVente());
+			stmt.setInt(7, article.getUtilisateur().getNoUtilisateur());
+			stmt.setInt(8, article.getCategorieArticle().getNoCategorie());
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			while (rs.next()) {
@@ -135,10 +130,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	public void insertEnchere(Enchere enchere) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement stmt = con.prepareStatement(INSERT_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS);
-//			Date date = new Date(enchere.getDateEnchere().getTime());
-//			date.setHours(enchere.getDateEnchere().getHours());
-//			date.setMinutes(enchere.getDateEnchere().getMinutes());
-//			stmt.setDate(1, date);
 			stmt.setTimestamp(1, new Timestamp(enchere.getDateEnchere().getTime()));
 			stmt.setInt(2, enchere.getMontantEnchere());
 			stmt.setInt(3, enchere.getArticleVendu().getNoArticle());
@@ -382,12 +373,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private Enchere mapEnchere(ResultSet rs) throws SQLException, DALException {
 		Enchere enchere = new Enchere();
 		Integer noEnchere = rs.getInt("no_enchere");
-//		String dateEnchere = Timestamp.valueOf( (String) rs.getObject("date_enchere")).toString();
-//		LocalDateTime date= Timestamp.valueOf(rs.getDate("date_enchere").getTime()).toLocalDateTime();
-//		OffsetDateTime dateEnchere = (OffsetDateTime) rs.getObject("date_enchere");
-//		LocalDate dateEnchere = rs.getDate("date_enchere");
-//		rs.getDate("date_enchere").getTime();
-//		LocalDateTime test = new 
 		java.util.Date test = rs.getTimestamp("date_enchere");
 		Integer montantEnchere = rs.getInt("montant_enchere");
 		Integer noArticle = rs.getInt("no_article");

@@ -3,7 +3,6 @@
  */
 package fr.eni.enchere.bo;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Enchere {
@@ -13,7 +12,7 @@ public class Enchere {
 	
 	private Integer noEnchere;
 	private Date dateEnchere;
-	private Integer montantEnchere;
+	private Integer montantEnchere=0;
 	
 	
 	

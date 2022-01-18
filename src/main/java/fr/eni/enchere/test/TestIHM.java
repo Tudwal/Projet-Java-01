@@ -1,7 +1,7 @@
 package fr.eni.enchere.test;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -14,6 +14,7 @@ import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
@@ -80,8 +81,8 @@ public class TestIHM extends HttpServlet {
 //		try {
 //			Utilisateur utilisateur = dao.getUnUtilisateur(5);
 //			Categorie cat = dao.getUneCategorie(4);
-//			ArticleVendu art = new ArticleVendu(utilisateur, cat, "ballon de foot", "bleu et blanc et accroche bien",
-//					LocalDate.now(), LocalDate.now().plusDays(4), 19, null, "EC");
+//			ArticleVendu art = new ArticleVendu(utilisateur, cat, "ballon de foot et de tennis", "bleu et blanc et accroche bien",
+//					LocalDate.now(), LocalDate.now().plusDays(4), 25, null, "EC");
 //			dao.insertArticle(art);
 //		} catch (DALException e) {
 //			// TODO Auto-generated catch block
@@ -95,13 +96,13 @@ public class TestIHM extends HttpServlet {
 		try {
 			user = dao.getUnUtilisateur(12);
 			System.out.println(user);
-			ArticleVendu art = dao.getUnArticle(1);
+			ArticleVendu art = dao.getUnArticle(5);
 			System.out.println(art);
 			
 			Enchere enchere = new Enchere(art, user , new Date(System.currentTimeMillis()), 365 );
 			try {
 				manager.encherire(enchere);
-				System.out.println(dao.getTopEnchere(1));
+				System.out.println(dao.getTopEnchere(5));
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
