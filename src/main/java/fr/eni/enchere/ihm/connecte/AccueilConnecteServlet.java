@@ -31,7 +31,7 @@ public class AccueilConnecteServlet extends HttpServlet {
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
 		
 		request.setAttribute("model", model);
-		request.getRequestDispatcher("WEB-INF/accueilConnecte.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/accueilConnecteCopie.jsp").forward(request, response);
 	}
 
 	/**

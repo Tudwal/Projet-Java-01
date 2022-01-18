@@ -20,7 +20,7 @@ import fr.eni.enchere.dal.jdbc.DALException;
 @WebServlet("/InscriptionServlet")
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String adresse = "WEB-INF/creationCompte.jsp";
+	private String adresse = "WEB-INF/creationCompteCopie.jsp";
 
 	final Integer CREDIT_BASE = 100;
 	final Integer ADMIN = 0;
@@ -62,7 +62,7 @@ public class InscriptionServlet extends HttpServlet {
 				try {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
-					adresse = "accueilConnecteServlet";
+					adresse = "AccueilConnecteServlet";
 
 				} catch (BLLException e) {
 					model.setMessage("La création du compte n'est pas validée ");

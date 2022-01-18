@@ -18,7 +18,7 @@ import fr.eni.enchere.bll.EnchereManagerSing;
 public class MonProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private String adresse = "WEB-INF/afficherMonCompte.jsp";
+	private String adresse = "WEB-INF/afficherMonCompteCopie.jsp";
 	
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 	

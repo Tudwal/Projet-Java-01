@@ -44,18 +44,14 @@ public class AccueilServlet extends HttpServlet {
 			//Accueilmodel.setLstArticles(manager.afficherArticlesParMotCle())
 			//Accueilmodel.setLstArticles(manager.afficherArticlesParCategorie())
 			
-		}
-			
-		
-			
-			
+		}		
 			
 
 		
 		// model.setLstArticles(manager.afficherArticles());
 
 		request.setAttribute("Accueilmodel", Accueilmodel);
-		request.getRequestDispatcher("WEB-INF/accueil.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/accueilCopie.jsp").forward(request, response);
 	}
 
 	/**
