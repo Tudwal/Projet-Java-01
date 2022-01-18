@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
 
@@ -32,26 +33,31 @@ public class AccueilServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		AccueilModel Accueilmodel = new AccueilModel();
+		AccueilModel accueilmodel = new AccueilModel();
 
 		request.getSession().invalidate();
 		request.getSession().removeAttribute("model");
-		
-		if (request.getParameter("rechercher") != null) {
-			String articleRecherche = request.getParameter("motClef");
-			String categorie = request.getParameter("menuCategorie");
-	
-			//Accueilmodel.setLstArticles(manager.afficherArticlesParMotCle())
-			//Accueilmodel.setLstArticles(manager.afficherArticlesParCategorie())
-			
-		}		
-			
 
-		
+		if (request.getParameter("rechercher") != null) {
+			if (request.getParameter("motClef") != null) {
+				String articleRecherche = request.getParameter("motClef");
+			}
+//			if (request.getParameter("menuCategorie") != null) {
+//				Integer categorie = Integer.parseInt(request.getParameter("menuCategorie"));
+//			}
+			try {
+				accueilmodel.setLstArticles(manager.consulterArticles());
+				System.out.println(accueilmodel.getLstArticles());
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		// model.setLstArticles(manager.afficherArticles());
 
-		request.setAttribute("Accueilmodel", Accueilmodel);
-		request.getRequestDispatcher("WEB-INF/accueilCopie.jsp").forward(request, response);
+		request.setAttribute("accueilmodel", accueilmodel);
+		request.getRequestDispatcher("WEB-INF/accueil.jsp").forward(request, response);
 	}
 
 	/**
