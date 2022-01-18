@@ -1,6 +1,7 @@
 package fr.eni.enchere.dal.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
@@ -19,12 +21,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private final static String INSERT_USER = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_Passe, credit, administrateur) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private final static String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, etat_vente, no_utilisateur, no_categorie) VALUES(?,?,?,?,?,?,?,?,?) ";
 	private final static String INSERT_RETRAIT = "INSERT INTO RETRAITS(no_article, rue, code_postal, ville) VALUES(?,?,?,?)";
+	private final static String INSERT_ENCHERE = "INSERT INTO ENCHERES(date_enchere, montant_enchere, no_article, no_utilisateur) VALUES(?,?,?,?)";
 	private final static String SELECT_ALL_USER = "SELECT * FROM UTILISATEURS";
 	private final static String SELECT_ALL_ARTICLE = "SELECT * FROM ARTICLES_VENDUS";
 	private final static String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ? , nom = ? , prenom = ? , email = ? , telephone = ? , rue = ? , code_postal = ? , ville = ? , mot_de_Passe = ? , credit = ? , administrateur = ? WHERE no_utilisateur = ?";
 	private final static String DELETE_USER = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
-	private final static String SELECT_USER = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
-	private final static String SELECT_CATEGORIE = "SELECT * FROM CATEGORIES WHERE no_categorie = ?";
+	private final static String SELECT_UN_USER = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private final static String SELECT_UN_ARTICLE ="SELECT * FROM ARTICLES_VENDUS WHERE no_article=?";
+	private final static String SELECT_UNE_CATEGORIE = "SELECT * FROM CATEGORIES WHERE no_categorie = ?";
+	private final static String SELECT_UNE_ENCHERE = "SELECT * FROM ENCHERES WHERE no_enchere=?";
+	private final static String SELECT_TOP_ENCHERE = "SELECT TOP 1 * FROM ENCHERES WHERE no_article=? ORDER BY montant_enchere desc" ;
 
 	/**
 	 * Fonction permettant d'insérer un utilisateur dans la base de donnée
@@ -99,6 +105,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	}
 
+	/**
+	 * Fonction permettant d'insérer un lieu de retrait dans la base de donnée.
+	 * @param lieuRetrait
+	 * @throws DALException
+	 */
 	public void insertLieuRetrait(Retrait lieuRetrait) throws DALException {
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = con.prepareStatement(INSERT_RETRAIT);
@@ -112,7 +123,36 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			throw new DALException("problème de conection insertLieuRetrait");
 		}
 	}
+	
+	/**
+	 *Fonction permettant d'insérer une nouvelle enchère dans la base de donnée.
+	 *@param enchere
+	 *@throws DALException
+	 */
+	@Override
+	public void insertEnchere(Enchere enchere) throws DALException {
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(INSERT_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS);
+			stmt.setDate(1, Date.valueOf(enchere.getDateEnchere()));
+			stmt.setInt(2, enchere.getMontantEnchere());
+			stmt.setInt(3, enchere.getArticleVendu().getNoArticle());
+			stmt.setInt(4, enchere.getUtilisateur().getNoUtilisateur());
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				enchere.setNoEnchere(id);
 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de conection insertEnchere");
+		}
+		
+	}
+	
+	
+	
 	/**
 	 * Fonction permettant de récupérer tout les utilisateurs présents dans la base
 	 * de donnée
@@ -157,6 +197,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return lstArticles;
 	}
 
+	
+	
+	
 	/**
 	 * Fonction permettant de modifier les informations d'un utilisateur dans la
 	 * base de donnée
@@ -207,6 +250,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 	}
 
+	
+	
+	
 	/**
 	 * Fonction permettant de faire remonter le profil d'un utilisateur en fonction
 	 * de son noUtilisateur
@@ -219,7 +265,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		Utilisateur utilisateur = null;
 
 		try (Connection con = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = con.prepareStatement(SELECT_USER);
+			PreparedStatement stmt = con.prepareStatement(SELECT_UN_USER);
 			stmt.setInt(1, noUtilisateur);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -239,7 +285,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		Categorie categorie = null;
 
 		try (Connection con = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORIE);
+			PreparedStatement stmt = con.prepareStatement(SELECT_UNE_CATEGORIE);
 			stmt.setInt(1, noCategorie);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -251,7 +297,104 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 		return categorie;
 	}
+	
+	/**
+	 *Fonction permettant de récupérer une enchère dans la base de donnée
+	 */
+	@Override
+	public Enchere getUneEnchere(Integer noEnchere) throws DALException {
+		Enchere enchere = new Enchere();
+		try (Connection con = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(SELECT_UNE_ENCHERE);
+			stmt.setInt(1, noEnchere);
+			ResultSet rs =stmt.executeQuery();
+			while (rs.next()) {
+				enchere = mapEnchere(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de récupération d'une enchere");
+		}
+		return enchere;
+	}
+	
+	/**
+	 *Fonction permettant de faire remonter la meilleur enchère sur un article
+	 */
+	@Override
+	public Enchere getTopEnchere(Integer noArticle) throws DALException {
+		Enchere enchere = new Enchere();
+		try (Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement stmt = con.prepareStatement(SELECT_TOP_ENCHERE);
+			stmt.setInt(1, noArticle);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				enchere = mapEnchere(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de récupération de la meilleure enchere");
+		}
+		return enchere;
+	}
+	
+	/**
+	 * Fonction permettant de récupérer un article dans la base de donnée
+	 * @param noArticle
+	 * @return
+	 * @throws DALException
+	 */
+	public ArticleVendu getUnArticle(Integer noArticle) throws DALException {
+		
+		ArticleVendu article = null;
+		try (Connection con = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(SELECT_UN_ARTICLE);
+			stmt.setInt(1, noArticle);
+			ResultSet rs =stmt.executeQuery();
+			while (rs.next()) {
+				article = mapArticle(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("problème de récupération d'un article");
+		}
+		return article;
+	}
+	
+	
 
+	
+	
+	/**
+	 * Fonction permettant de charger toute les informations d'une enchère dans une map
+	 * et de pouvoir s'en servir dans d'autres fonctions
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 * @throws DALException
+	 */
+	private Enchere mapEnchere(ResultSet rs) throws SQLException, DALException {
+		Enchere enchere = new Enchere();
+		Integer noEnchere = rs.getInt("no_enchere");
+		LocalDate dateEnchere = rs.getDate("date_enchere").toLocalDate();
+		Integer montantEnchere = rs.getInt("montant_enchere");
+		Integer noArticle = rs.getInt("no_article");
+		Integer noUtilisateur = rs.getInt("no_utilisateur");
+		enchere.setUtilisateur(getUnUtilisateur(noUtilisateur));
+		enchere.setArticleVendu(getUnArticle(noArticle));
+		Utilisateur utilisateur = enchere.getUtilisateur();
+		ArticleVendu article = enchere.getArticleVendu();
+		enchere = new Enchere(article, utilisateur, noEnchere, dateEnchere, montantEnchere);
+		return enchere;
+	}
+
+	/**
+	 * Fonction permettant de charger toute les informations d'un article dans une
+	 * map et de pouvoir s'en servir dans d'autres fonctions
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	private Categorie mapCat(ResultSet rs) throws SQLException {
 		Integer noCategorie = rs.getInt("no_categorie");
 		String libelle = rs.getString("libelle");
@@ -298,7 +441,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * @throws DALException
 	 */
 	private ArticleVendu mapArticle(ResultSet rs) throws SQLException, DALException {
-		ArticleVendu article = null;
+		ArticleVendu article = new ArticleVendu();
 		Integer noArticle = rs.getInt("no_article");
 		String nomArticle = rs.getString("nom_article");
 		String description = rs.getString("description");
@@ -320,5 +463,15 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				dateFinEnchere, prixInitial, prixVente, etatVente);
 		return article;
 	}
+
+	
+
+	
+	
+	
+	
+	
+
+	
 
 }

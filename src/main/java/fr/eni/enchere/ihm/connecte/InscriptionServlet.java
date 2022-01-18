@@ -12,7 +12,6 @@ import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.enchere.dal.jdbc.DALException;
 
 /**
  * Servlet implementation class EnchereServlet
@@ -62,7 +61,14 @@ public class InscriptionServlet extends HttpServlet {
 				try {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
+<<<<<<< HEAD
 					adresse = "AccueilConnecteServlet";
+=======
+
+
+					adresse = "accueilConnecteServlet";
+>>>>>>> 957c8a6a06cb6cefb505496dd4aa784f12b07635
+
 
 				} catch (BLLException e) {
 					model.setMessage("La création du compte n'est pas validée ");

@@ -3,6 +3,7 @@ package fr.eni.enchere.bll;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.jdbc.DALException;
 
@@ -78,5 +79,57 @@ public interface EnchereManager {
 	 * @throws BLLException 
 	 */
 	public void creerUnArticle(ArticleVendu article) throws BLLException;
+	
+	/**
+	 * Fonction permettant d'enchérire sur un article
+	 * @param enchere
+	 * @throws BLLException 
+	 */
+	public void encherire(Enchere enchere) throws BLLException;
+	
+	/**
+	 * Fonction permettant de faire remonter tout les articles en ventes
+	 * @return List<Enchere>
+	 * @throws BLLException 
+	 */
+	public List<ArticleVendu> consulterArticles() throws BLLException;
+	
+	/**
+	 * Fonction permettant à un utilisateur de rechercher parmis les articles en ventes, 
+	 * ceux correspondant a ses recherches
+	 * @param noCategorie
+	 * @param etatVente
+	 * @param motClef
+	 * @return
+	 * @throws BLLException
+	 */
+	public List<ArticleVendu> moteurDeRecherche(Integer noCategorie, String etatVente, String motClef) throws BLLException;
+	
+	/**
+	 * Fonction permettant de rechercher un article à partir de son numéro de catégorie
+	 * @param noCategorie
+	 * @param lstAfiltrer
+	 * @return
+	 * @throws BLLException
+	 */
+	public List<ArticleVendu> rechercheParCategorie(Integer noCategorie, List<ArticleVendu> lstAfiltrer) throws BLLException;
+	
+	/**
+	 * Fonction permettant de rechercher un article à partir d'un mot clé
+	 * @param motClef
+	 * @param lstAfiltrer
+	 * @return
+	 * @throws BLLException
+	 */
+	public List<ArticleVendu> rechercheParMotClefs (String motClef, List<ArticleVendu> lstAfiltrer) throws BLLException;
+	
+	/**
+	 * Fonction permettant de rechercher un article à partir de son état de vente
+	 * @param etatVente
+	 * @param lstAfiltrer
+	 * @return
+	 * @throws BLLException
+	 */
+	public List<ArticleVendu> rechercheParEtatVente(String etatVente, List<ArticleVendu> lstAfiltrer) throws BLLException;
 	
 }
