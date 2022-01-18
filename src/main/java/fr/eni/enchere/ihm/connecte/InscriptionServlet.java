@@ -61,13 +61,7 @@ public class InscriptionServlet extends HttpServlet {
 				try {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
-<<<<<<< HEAD
 					adresse = "AccueilConnecteServlet";
-=======
-
-
-					adresse = "accueilConnecteServlet";
->>>>>>> 957c8a6a06cb6cefb505496dd4aa784f12b07635
 
 
 				} catch (BLLException e) {
