@@ -39,7 +39,6 @@ public class InscriptionServlet extends HttpServlet {
 		UtilisateurModel model = new UtilisateurModel();
 
 		if (request.getParameter("ajouter") != null) {
-
 			String pseudo = request.getParameter("pseudo");
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");
@@ -63,14 +62,12 @@ public class InscriptionServlet extends HttpServlet {
 					System.out.println("OK VALIDER COMPTE");
 					adresse = "AccueilConnecteServlet";
 
-
 				} catch (BLLException e) {
 					model.setMessage("La création du compte n'est pas validée ");
 				}
 			} else {
 				model.setMessage("Le mdp doit être identique à la confirmation");
 			}
-
 		}
 
 		request.setAttribute("model", model);

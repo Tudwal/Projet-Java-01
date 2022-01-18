@@ -36,6 +36,10 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UtilisateurModel model = new UtilisateurModel();
+		
+		if (adresse != "WEB-INF/connexionCompteCopie2.jsp") {
+			adresse = "WEB-INF/connexionCompteCopie2.jsp";
+		}
 
 		if (request.getParameter("connexion") != null) {
 			String identifiant = request.getParameter("identifiant");

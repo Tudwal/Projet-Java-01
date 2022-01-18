@@ -90,6 +90,20 @@ public class ArticleVendu {
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 	}
+	
+
+	public ArticleVendu(Utilisateur utilisateur, Categorie categorieArticle, Retrait lieuRetrait, String nomArticle,
+			String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, Integer miseAPrix) {
+		super();
+		this.utilisateur = utilisateur;
+		this.categorieArticle = categorieArticle;
+		this.lieuRetrait = lieuRetrait;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+	}
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
