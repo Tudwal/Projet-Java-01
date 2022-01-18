@@ -1,21 +1,17 @@
 package fr.eni.enchere.test;
 
 import java.io.IOException;
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.Manager;
-
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
 import fr.eni.enchere.bll.EnchereManagerSing;
 import fr.eni.enchere.bo.ArticleVendu;
-import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.EnchereDAO;
@@ -49,12 +45,12 @@ public class TestIHM extends HttpServlet {
 		
 		//test moteur de recherche
 		
-		try {
-			System.out.println(manager.moteurDeRecherche(4, "EC", "bal"));
-		} catch (BLLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			System.out.println(manager.moteurDeRecherche(4, "EC", "bal"));
+//		} catch (BLLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 		
@@ -93,24 +89,24 @@ public class TestIHM extends HttpServlet {
 		//test participation à une enchère CONCLUANT
 		 
 		//via bll
-//		Utilisateur user;
-//		try {
-//			user = dao.getUnUtilisateur(12);
-//			System.out.println(user);
-//			ArticleVendu art = dao.getUnArticle(1);
-//			System.out.println(art);
-//			Enchere enchere = new Enchere(art, user , LocalDate.now(), 345 );
-//			try {
-//				manager.encherire(enchere);
-//			} catch (BLLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		} catch (DALException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
+		Utilisateur user;
+		try {
+			user = dao.getUnUtilisateur(12);
+			System.out.println(user);
+			ArticleVendu art = dao.getUnArticle(1);
+			System.out.println(art);
+			Enchere enchere = new Enchere(art, user , LocalDateTime.now(), 356 );
+			try {
+				manager.encherire(enchere);
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		
 		// via la dal
