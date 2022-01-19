@@ -24,6 +24,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private final static String INSERT_ENCHERE = "INSERT INTO ENCHERES(date_enchere, montant_enchere, no_article, no_utilisateur) VALUES(?,?,?,?)";
 	private final static String SELECT_ALL_USER = "SELECT * FROM UTILISATEURS";
 	private final static String SELECT_ALL_ARTICLE = "SELECT * FROM ARTICLES_VENDUS";
+	private final static String SELECT_ALL_ENCHERE = "SELECT * FROM ENCHERES";
 	private final static String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ? , nom = ? , prenom = ? , email = ? , telephone = ? , rue = ? , code_postal = ? , ville = ? , mot_de_Passe = ? , credit = ? , administrateur = ? WHERE no_utilisateur = ?";
 	private final static String DELETE_USER = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private final static String UPDATE_ARTICLE="UPDATE ARTICLES_VENDUS SET prix_vente = ?, etat_vente=? WHERE no_article=?";
@@ -191,12 +192,27 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("probleme de connection getAll");
+			throw new DALException("probleme de connection getAllArticle");
 		}
 		return lstArticles;
 	}
 
-	
+	@Override
+	public List<Enchere> getAllEnchere() throws DALException {
+		List<Enchere> lstEncheres = new ArrayList<Enchere>();
+		try (Connection con = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = con.prepareStatement(SELECT_ALL_ENCHERE);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Enchere enchere = mapEnchere(rs);
+				lstEncheres.add(enchere);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("probleme de connection getAllEnchere");
+		}
+		return lstEncheres;
+	}
 	
 	
 	/**
@@ -493,6 +509,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				dateFinEnchere, prixInitial, prixVente, etatVente);
 		return article;
 	}
+
+	
 
 	
 

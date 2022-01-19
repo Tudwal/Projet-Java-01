@@ -45,6 +45,8 @@ public interface EnchereDAO {
 	 */
 	public List<ArticleVendu> getAllArticles() throws DALException;
 	
+	public List<Enchere> getAllEnchere() throws DALException;
+	
 	/**
 	 * Fonction permettant de modifier les informations d'un utilisateur dans la base de donnée
 	 * @param utilisateur

@@ -524,7 +524,7 @@ public class EnchereManagerImpl implements EnchereManager {
 			String etatVente, String motClef) throws BLLException {
 		List<Enchere> lstRecherche = new ArrayList<Enchere>();
 		try {
-			List<Enchere> lstArticles = dao.get;
+			List<Enchere> lstArticles = dao.getAllEnchere();
 			if (noCategorie != null && etatVente != null && motClef != null) {
 				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
 				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
