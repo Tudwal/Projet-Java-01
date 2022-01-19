@@ -2,8 +2,8 @@ package fr.eni.enchere.bll;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
@@ -39,8 +39,9 @@ public class EnchereManagerImpl implements EnchereManager {
 		verificationCodePostalUtilisateur(utilisateur.getCodePostal(), be);
 		verificationVilleUtilisateur(utilisateur.getVille(), be);
 		verificationMotDePasseUtilisateur(utilisateur.getMotDePasse(), be);
+		utilisateur.setCredit(100);
 		verificationCreditUtilisateur(utilisateur.getCredit(), be);
-		verificationAdministrateurUtilisateur(utilisateur.getAdministrateur(), be);
+//		verificationAdministrateurUtilisateur(utilisateur.getAdministrateur(), be);
 		verificationDoublonUtilisateur(utilisateur, be);
 
 		if (be.hasErreur()) {
@@ -129,7 +130,7 @@ public class EnchereManagerImpl implements EnchereManager {
 		verificationCreditUtilisateur(utilisateur.getCredit(), be);
 		verificationAdministrateurUtilisateur(utilisateur.getAdministrateur(), be);
 
-		// TODO
+
 		// verificationDoublon(utilisateur, be);
 
 		if (be.hasErreur()) {
@@ -237,7 +238,7 @@ public class EnchereManagerImpl implements EnchereManager {
 			e.printStackTrace();
 			throw new BLLException();
 		}
-		
+
 	}
 
 	/**
@@ -246,6 +247,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	@Override
 	public List<ArticleVendu> consulterArticles() throws BLLException {
 		List<ArticleVendu> lstArticles = new ArrayList<ArticleVendu>();
+		modifierEtatVente();
 		try {
 			lstArticles = dao.getAllArticles();
 		} catch (DALException e) {
@@ -264,10 +266,9 @@ public class EnchereManagerImpl implements EnchereManager {
 			e.printStackTrace();
 			throw new BLLException();
 		}
-		return cat;	
+		return cat;
 	}
 
-	
 	/**
 	 * Fonction permettant d'enchérire sur un article, on verifie que le montant
 	 * proposer par l'acheteur est bien un montant plus haut que celui de la
@@ -281,18 +282,33 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 		try {
 			Enchere meilleurEnchere = dao.getTopEnchere(enchere.getArticleVendu().getNoArticle());
-			Timestamp dateDebutEnchere = Timestamp.valueOf(enchere.getArticleVendu().getDateDebutEncheres().atStartOfDay());
-			Timestamp dateFinEnchere = Timestamp.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
+			Timestamp dateDebutEnchere = Timestamp
+					.valueOf(enchere.getArticleVendu().getDateDebutEncheres().atStartOfDay());
+			Timestamp dateFinEnchere = Timestamp
+					.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
 			Timestamp dateEnchere = new Timestamp(enchere.getDateEnchere().getTime());
 			
-			if (dateEnchere.after(dateDebutEnchere)&& dateEnchere.before(dateFinEnchere)) {
-				if (meilleurEnchere.getMontantEnchere() < enchere.getMontantEnchere()&& enchere.getArticleVendu().getMiseAPrix() < enchere.getMontantEnchere() ) {
+//			remporterVente(enchere);
+
+			if (dateEnchere.after(dateDebutEnchere) && dateEnchere.before(dateFinEnchere)) {
+				if (meilleurEnchere.getMontantEnchere() < enchere.getMontantEnchere()
+						&& enchere.getArticleVendu().getMiseAPrix() < enchere.getMontantEnchere()) {
 					dao.insertEnchere(enchere);
-					meilleurEnchere.getUtilisateur().setCredit(meilleurEnchere.getMontantEnchere());
-					Integer payement = enchere.getUtilisateur().getCredit()-enchere.getMontantEnchere();
-					enchere.getUtilisateur().setCredit(payement);
+					if (meilleurEnchere.getUtilisateur() != null) {
+						meilleurEnchere.getUtilisateur().setCredit(meilleurEnchere.getUtilisateur().getCredit() + meilleurEnchere.getMontantEnchere());
+						dao.updateUtilisateur(meilleurEnchere.getUtilisateur());
+						Integer payement = enchere.getUtilisateur().getCredit() - enchere.getMontantEnchere();
+						enchere.getUtilisateur().setCredit(payement);
+						dao.updateUtilisateur(enchere.getUtilisateur());
+					} else if (meilleurEnchere.getUtilisateur() == null) {
+						Integer payement = enchere.getUtilisateur().getCredit() - enchere.getMontantEnchere();
+						enchere.getUtilisateur().setCredit(payement);
+						dao.updateUtilisateur(enchere.getUtilisateur());
+					}
+					
+					
 				}
-			}else {
+			} else {
 				System.out.println("date depassé");
 			}
 		} catch (DALException e) {
@@ -302,51 +318,68 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	}
 
-	public boolean remporterVente(Enchere enchere) {
-		Timestamp dateFinEnchere = Timestamp.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
-		Timestamp dateJour = Timestamp.valueOf(LocalDate.now().atStartOfDay());
-		
-		if (dateJour.after(dateFinEnchere)) {
-			crediterCompte(enchere);
-			modifierEtatVente(enchere, "VT");
-			return true;
-		}
-		
-		return false;
-	}
-	
-	
-	public void crediterCompte(Enchere enchere) {
+//	public void remporterVente(Enchere enchere) throws BLLException{
+//		Timestamp dateFinEnchere = Timestamp
+//				.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
+//		Timestamp dateJour = Timestamp.valueOf(LocalDate.now().atTime(LocalTime.now()));
+//
+//		if (dateJour.after(dateFinEnchere)) {
+//			crediterCompte(enchere);
+//			modifierEtatVente();
+//		}
+//
+//	}
+
+	public void crediterCompte(ArticleVendu article) throws BLLException {
 		try {
-			Enchere meilleurEnchere = dao.getTopEnchere(enchere.getArticleVendu().getNoArticle());
-			enchere.getArticleVendu().getUtilisateur().setCredit(enchere.getArticleVendu().getUtilisateur().getCredit()+ meilleurEnchere.getMontantEnchere());
-			
+			Enchere meilleurEnchere = dao.getTopEnchere(article.getNoArticle());
+			article.getUtilisateur().setCredit(
+					article.getUtilisateur().getCredit() + meilleurEnchere.getMontantEnchere());
+			dao.updateUtilisateur(article.getUtilisateur());
+
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new BLLException();
 		}
 	}
-	
-	public void modifierEtatVente(Enchere enchere, String etatVente) {
+
+	public void modifierEtatVente() throws BLLException {
+		Timestamp dateJour = Timestamp.valueOf(LocalDate.now().atTime(LocalTime.now()));
+		// actualisation des ventes en attente, a vente en cour
 		try {
-			
-			switch (etatVente) {
-				//EC: vente en cour
-			case "EC": enchere.getArticleVendu().setEtatVente("EC");
-				break;
-				//VT: vente terminé
-			case "VT": enchere.getArticleVendu().setEtatVente("VT"); 
-				break;
+			List<ArticleVendu> lstEtat = moteurDeRecherche(null, "EA", null);
+			System.out.println(lstEtat);
+			for (ArticleVendu article : lstEtat) {
+				Timestamp dateDebutEnchere = Timestamp.valueOf(article.getDateDebutEncheres().atStartOfDay());
+				if (dateJour.after(dateDebutEnchere)) {
+					article.setEtatVente("EC");
+					dao.updateArticle(article);
+				}
 			}
-			dao.updateArticle(enchere.getArticleVendu());
+
+			// actualisation des ventes en cours à vente terminé
+			List<ArticleVendu> lstEtatTerminer = moteurDeRecherche(null, "EC", null);
+			for (ArticleVendu article : lstEtatTerminer) {
+				Timestamp dateFinEnchere = Timestamp.valueOf(article.getDateFinEncheres().plusDays(1).atStartOfDay());
+				if (dateJour.after(dateFinEnchere)) {
+					crediterCompte(article);
+					article.setEtatVente("VT");
+					dao.updateArticle(article);
+				}
+			}
+			
+			
+
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new BLLException();
 		}
+
 	}
-	
+
 	@Override
-	public List<ArticleVendu> moteurDeRecherche(Integer noCategorie, String etatVente, String motClef) throws BLLException {
+	public List<ArticleVendu> moteurDeRecherche(Integer noCategorie, String etatVente, String motClef)
+			throws BLLException {
 		List<ArticleVendu> lstRecherche = new ArrayList<ArticleVendu>();
 		try {
 			List<ArticleVendu> lstArticles = dao.getAllArticles();
@@ -658,5 +691,4 @@ public class EnchereManagerImpl implements EnchereManager {
 
 	}
 
-	
 }
