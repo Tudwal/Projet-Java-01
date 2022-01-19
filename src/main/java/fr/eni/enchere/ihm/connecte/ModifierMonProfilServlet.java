@@ -24,7 +24,7 @@ public class ModifierMonProfilServlet extends HttpServlet {
 
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
-	private String adresse = "WEB-INF/modifierCompteCopie.jsp";
+	private String adresse = "WEB-INF/modifierCompte.jsp";
 
 	Utilisateur utilisateur = new Utilisateur();
 

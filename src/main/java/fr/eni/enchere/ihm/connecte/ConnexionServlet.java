@@ -22,7 +22,7 @@ import fr.eni.enchere.dal.jdbc.DALException;
 @WebServlet("/ConnexionServlet")
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String adresse = "WEB-INF/connexionCompteCopie2.jsp";
+	private String adresse = "WEB-INF/connexionCompte.jsp";
 	private EnchereManager manager = EnchereManagerSing.getInstance();
 
 	public ConnexionServlet() {
@@ -37,8 +37,8 @@ public class ConnexionServlet extends HttpServlet {
 			throws ServletException, IOException {
 		UtilisateurModel model = new UtilisateurModel();
 		
-		if (adresse != "WEB-INF/connexionCompteCopie2.jsp") {
-			adresse = "WEB-INF/connexionCompteCopie2.jsp";
+		if (adresse != "WEB-INF/connexionCompte.jsp") {
+			adresse = "WEB-INF/connexionCompte.jsp";
 		}
 
 		if (request.getParameter("connexion") != null) {
@@ -47,7 +47,7 @@ public class ConnexionServlet extends HttpServlet {
 
 			try {
 				if (manager.seConnecter(identifiant, motDePasse)) {
-					adresse = "WEB-INF/accueilConnecteCopie.jsp";
+					adresse = "WEB-INF/accueilConnecte.jsp";
 					HttpSession session = request.getSession();
 					model.setUtilisateur(manager.recupererUnProfil(identifiant));
 					session.setAttribute("model", model);

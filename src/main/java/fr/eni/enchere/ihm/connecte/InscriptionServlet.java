@@ -19,7 +19,7 @@ import fr.eni.enchere.bo.Utilisateur;
 @WebServlet("/InscriptionServlet")
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String adresse = "WEB-INF/creationCompteCopie.jsp";
+	private String adresse = "WEB-INF/creationCompte.jsp";
 
 	final Integer CREDIT_BASE = 100;
 	final Integer ADMIN = 0;
