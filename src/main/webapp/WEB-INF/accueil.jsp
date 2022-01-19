@@ -53,34 +53,65 @@
                 </div>
                 <!-- Masthead Subheading-->
                     <br> 
-    
-<div class="container-fluid statistiques">
-    <div class="row">
-        <div class="col-sm-6">
-            <span class="filtresRecherche">Filtres : </span> <br>
-            <form action="AccueilServlet" method="post">
-            <input class="inputRecherche" placeholder="Le nom de l'article contient" type="search"/>
+                
+               </div>
+               
+   
+<form action="AccueilServlet" method="post"> 
+	<div class="container-fluid statistiques">
+    	<div class="row">
+	        <div class="col-sm-6">
+          
+            	<span class="filtresRecherche">Filtres : </span> <br>    
+            	<input class="inputRecherche" placeholder="Le nom de l'article contient" type="search" name="motClef"/>
+            		<br>
+            	<span class="categorie">Catégorie : </span> 
+            	<select name="menu_categorie">
+                	<option>Toutes </option>
+                	<option>Informatique </option>
+                	<option>Ameublement </option>
+                	<option>Vetement </option>
+                	<option>Sport&Loisirs </option>
+            	</select>  
+          </div>
             
+          <div class="col-sm-6">  
+          		<br> <br>
+          		<button class="btn-Rechercher" type="submit" name="rechercher" value="rechercher">Rechercher</button>
+		  </div>
+ 
+    	</div>
+	</div>
+</form>	
+
+<br>
+<br>
+<br>
+
+<div class="container-fluid">
+    	<div class="row">
+	        <div class="col-lg-4, col-sm-8">
+
+<c:forEach items="${ accueilmodel.lstArticles }" var="article" varStatus="index">
+        
+            index
+            <%--     <c:out value="${ status.count }" /> : <c:out value="${ titre }" />  --%>
             <br>
-            <span class="categorie">Catégorie : </span> 
-            <select name="menu_categorie">
-                <option>Toutes </option>
-                <option>Informatique </option>
-                <option>Ameublement </option>
-                <option>Vetement </option>
-                <option>Sport&Loisirs </option>
-            </select>
-        </form>
-        </div>
-        <div class="col-sm-6">
-            <br> <br>
-            <button class="btn-Rechercher" type="submit" name="ajouter" value="Créer">Rechercher</button>
+<%--            <c:url value=""> ${article.nomArticle} </c:url> --%>
+            ${article.nomArticle}
+            <br> Prix : ${article.miseAPrix} points
+            <br> Fin de l'enchère : ${article.dateFinEncheres} 
+            <br>Vendeur : ${article.utilisateur.pseudo} <br>
+            <br>
+        
+</c:forEach>
 
-        </div>
-    </div>
+ 		</div>
+	</div>
 </div>
 
-</div>
+
+
 
         </header>
        
