@@ -76,6 +76,8 @@ public interface EnchereManager {
 	
 	public ArticleVendu recupererUnArticle (Integer noArticle) throws BLLException;
 	
+	public Enchere recupererTopEnchere (Integer noArticle) throws BLLException;
+	
 	/**
 	 * Fonction permettant de créer un article
 	 * @param article
@@ -108,7 +110,13 @@ public interface EnchereManager {
 	 * @return
 	 * @throws BLLException
 	 */
-	public List<ArticleVendu> moteurDeRecherche(Integer noCategorie, String etatVente, String motClef) throws BLLException;
+	public List<ArticleVendu> moteurDeRechercheDeconnecter(Integer noCategorie, String etatVente, String motClef) throws BLLException;
+	
+	public List<ArticleVendu> moteurDeRechercheConnecter(Integer noCategorie,Integer noUtilisateur , String etatVente, String motClef) throws BLLException;
+	
+	public List<ArticleVendu> moteurDeRechercheConnecterMesVentes(Integer noCategorie,Integer noUtilisateur , String etatVente, String motClef) throws BLLException;
+	
+	public List<ArticleVendu> moteurDeRechercheConnecterMesAchats(Integer noCategorie,Integer noUtilisateur , String etatVente, String motClef) throws BLLException;
 	
 	/**
 	 * Fonction permettant de rechercher un article à partir de son numéro de catégorie

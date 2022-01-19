@@ -335,18 +335,20 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 
 	}
+	
+	@Override
+	public Enchere recupererTopEnchere(Integer noArticle) throws BLLException {
+		Enchere enchere;
+		try {
+			enchere = dao.getTopEnchere(noArticle);
+		}  catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		return enchere;
+	}
 
-//	public void remporterVente(Enchere enchere) throws BLLException{
-//		Timestamp dateFinEnchere = Timestamp
-//				.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
-//		Timestamp dateJour = Timestamp.valueOf(LocalDate.now().atTime(LocalTime.now()));
-//
-//		if (dateJour.after(dateFinEnchere)) {
-//			crediterCompte(enchere);
-//			modifierEtatVente();
-//		}
-//
-//	}
+
 
 	public void crediterCompte(ArticleVendu article) throws BLLException {
 		try {
@@ -365,7 +367,7 @@ public class EnchereManagerImpl implements EnchereManager {
 		Timestamp dateJour = Timestamp.valueOf(LocalDate.now().atTime(LocalTime.now()));
 		// actualisation des ventes en attente, a vente en cour
 		try {
-			List<ArticleVendu> lstEtat = moteurDeRecherche(null, "EA", null);
+			List<ArticleVendu> lstEtat = moteurDeRechercheDeconnecter(null, "EA", null);
 			System.out.println(lstEtat);
 			for (ArticleVendu article : lstEtat) {
 				Timestamp dateDebutEnchere = Timestamp.valueOf(article.getDateDebutEncheres().atStartOfDay());
@@ -376,7 +378,7 @@ public class EnchereManagerImpl implements EnchereManager {
 			}
 
 			// actualisation des ventes en cours à vente terminé
-			List<ArticleVendu> lstEtatTerminer = moteurDeRecherche(null, "EC", null);
+			List<ArticleVendu> lstEtatTerminer = moteurDeRechercheDeconnecter(null, "EC", null);
 			for (ArticleVendu article : lstEtatTerminer) {
 				Timestamp dateFinEnchere = Timestamp.valueOf(article.getDateFinEncheres().plusDays(1).atStartOfDay());
 				if (dateJour.after(dateFinEnchere)) {
@@ -396,7 +398,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	}
 
 	@Override
-	public List<ArticleVendu> moteurDeRecherche(Integer noCategorie, String etatVente, String motClef)
+	public List<ArticleVendu> moteurDeRechercheDeconnecter(Integer noCategorie, String etatVente, String motClef)
 			throws BLLException {
 		List<ArticleVendu> lstRecherche = new ArrayList<ArticleVendu>();
 		try {
@@ -435,6 +437,130 @@ public class EnchereManagerImpl implements EnchereManager {
 		return lstRecherche;
 	}
 	
+	@Override
+	public List<ArticleVendu> moteurDeRechercheConnecter(Integer noCategorie, Integer noUtilisateur, String etatVente,
+			String motClef) throws BLLException {
+		List<ArticleVendu> lstRecherche = new ArrayList<ArticleVendu>();
+		try {
+			List<ArticleVendu> lstArticles = dao.getAllArticles();
+			if (noCategorie != null && etatVente != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && etatVente != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+
+			} else if (etatVente != null && motClef != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			}  else if (noCategorie != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+			} else if (etatVente != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+			} else if (motClef != null) {
+				lstRecherche = rechercheParMotClefs(motClef, lstArticles);
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		return lstRecherche;
+	}
+	
+	@Override
+	public List<ArticleVendu> moteurDeRechercheConnecterMesVentes(Integer noCategorie, Integer noUtilisateur,
+			String etatVente, String motClef) throws BLLException {
+		List<ArticleVendu> lstRecherche = new ArrayList<ArticleVendu>();
+		try {
+			List<ArticleVendu> lstArticles = dao.getAllArticles();
+			if (noCategorie != null && etatVente != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && etatVente != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+
+			} else if (etatVente != null && motClef != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if(etatVente != null && noUtilisateur != null){
+				lstRecherche = rechercheMesVentes(etatVente, lstArticles, noUtilisateur);
+			} else if (noCategorie != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+			} else if (etatVente != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+			} else if (motClef != null) {
+				lstRecherche = rechercheParMotClefs(motClef, lstArticles);
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		return lstRecherche;
+	}
+
+	@Override
+	public List<Enchere> moteurDeRechercheConnecterMesAchats(Integer noCategorie, Integer noUtilisateur,
+			String etatVente, String motClef) throws BLLException {
+		List<Enchere> lstRecherche = new ArrayList<Enchere>();
+		try {
+			List<Enchere> lstArticles = dao.get;
+			if (noCategorie != null && etatVente != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && etatVente != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+
+			} else if (etatVente != null && motClef != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if (noCategorie != null && motClef != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+
+				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+
+			} else if(etatVente != null && noUtilisateur != null){
+				lstRecherche = rechercheMesAchats(etatVente, lstArticles, noUtilisateur);
+			} else if (noCategorie != null) {
+				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+			} else if (etatVente != null) {
+				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+			} else if (motClef != null) {
+				lstRecherche = rechercheParMotClefs(motClef, lstArticles);
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		return lstRecherche;
+	}
+
 	
 
 	@Override
@@ -450,6 +576,8 @@ public class EnchereManagerImpl implements EnchereManager {
 		return lstArticleParCategorie;
 	}
 
+	
+	
 	@Override
 	public List<ArticleVendu> rechercheParMotClefs(String motClef, List<ArticleVendu> lstAfiltrer) throws BLLException {
 		List<ArticleVendu> lstArticleParMotClef = new ArrayList<ArticleVendu>();
@@ -473,6 +601,122 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 		return lstArticleParEtatVente;
 	}
+	
+	public List<ArticleVendu> rechercheMesVentes(String etatVente, List<ArticleVendu> lstAfiltrer, Integer noUtilisateur){
+		List<ArticleVendu> lstFinal = new ArrayList<ArticleVendu>();
+		switch (etatVente) {
+		//mes ventes en cours
+		case "EA":List<ArticleVendu> lstEnAttente;
+			try {
+				lstEnAttente = rechercheParEtatVente(etatVente, lstAfiltrer);
+				List<ArticleVendu> lstMesVentesEnAttente = new ArrayList<ArticleVendu>();
+				for (ArticleVendu articleVendu : lstEnAttente) {
+					if (articleVendu.getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+						lstMesVentesEnAttente.add(articleVendu);
+					}
+				}
+				lstFinal = lstMesVentesEnAttente;
+				break;
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//mes ventes non débutées	
+		case "EC":List<ArticleVendu> lstEnCour;
+			try {
+				lstEnCour = rechercheParEtatVente(etatVente, lstAfiltrer);
+				List<ArticleVendu> lstMesVentesEnCours = new ArrayList<ArticleVendu>();
+				for (ArticleVendu articleVendu : lstEnCour) {
+					if (articleVendu.getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+						lstMesVentesEnCours.add(articleVendu);
+					}
+				}
+				lstFinal =  lstMesVentesEnCours;
+				break;
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//mes ventes terminées	
+		case "VT":List<ArticleVendu> lstTermine;
+			try {
+				lstTermine = rechercheParEtatVente(etatVente, lstAfiltrer);
+				List<ArticleVendu> lstMesVentesTermine = new ArrayList<ArticleVendu>();
+				for (ArticleVendu articleVendu : lstTermine) {
+					if (articleVendu.getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+						lstMesVentesTermine.add(articleVendu);
+					}
+				}
+				lstFinal = lstMesVentesTermine;
+				break;
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lstFinal;
+	}
+	
+	public List<ArticleVendu> rechercheMesAchats(String etatVente, List<ArticleVendu> lstAfiltrer,
+			Integer noUtilisateur) {
+		List<ArticleVendu> lstFinal = new ArrayList<ArticleVendu>();
+		switch (etatVente) {
+		//mes ventes en cours
+		case "EA":List<ArticleVendu> lstEnAttente;
+			try {
+				lstEnAttente = rechercheParEtatVente(etatVente, lstAfiltrer);
+				List<ArticleVendu> lstMesVentesEnAttente = new ArrayList<ArticleVendu>();
+				for (Enchere enchere : lstEnAttente) {
+					if (enchere.getArticleVendu().getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+						lstMesVentesEnAttente.add(enchere);
+					}
+				}
+				lstFinal = lstMesVentesEnAttente;
+				break;
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//mes ventes non débutées	
+		case "EC":List<ArticleVendu> lstEnCour;
+			try {
+				lstEnCour = rechercheParEtatVente(etatVente, lstAfiltrer);
+				List<ArticleVendu> lstMesVentesEnCours = new ArrayList<ArticleVendu>();
+				for (ArticleVendu articleVendu : lstEnCour) {
+					if (articleVendu.getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+						lstMesVentesEnCours.add(articleVendu);
+					}
+				}
+				lstFinal =  lstMesVentesEnCours;
+				break;
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//mes ventes terminées	
+		case "VT":List<ArticleVendu> lstTermine;
+			try {
+				lstTermine = rechercheParEtatVente(etatVente, lstAfiltrer);
+				List<ArticleVendu> lstMesVentesTermine = new ArrayList<ArticleVendu>();
+				for (ArticleVendu articleVendu : lstTermine) {
+					if (articleVendu.getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+						lstMesVentesTermine.add(articleVendu);
+					}
+				}
+				lstFinal = lstMesVentesTermine;
+				break;
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return lstFinal;
+	}
+	
+	
+	
+	
+	
 
 	private void verificationNomArticle(String nomArticle, BLLException be) {
 		if (nomArticle.length() > 30 || nomArticle.isBlank() || nomArticle == null) {
@@ -602,6 +846,7 @@ public class EnchereManagerImpl implements EnchereManager {
 	 * @param codePostal
 	 * @param be
 	 */
+	
 	private void verificationCodePostalUtilisateur(String codePostal, BLLException be) {
 		if (codePostal.length() > 10 || codePostal.isBlank() || codePostal == null) {
 			be.ajouterErreur(new ParameterException("Le code postal est obligatoire et inferieur a 10 caracteres"));
@@ -710,6 +955,12 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 
 	}
+
+
+
+
+
+
 
 
 
