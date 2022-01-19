@@ -212,6 +212,24 @@ public class EnchereManagerImpl implements EnchereManager {
 		return utilisateur;
 	}
 
+	@Override
+	public ArticleVendu recupererUnArticle(Integer noArticle) throws BLLException {
+		ArticleVendu article = new ArticleVendu();
+		try {
+			for (ArticleVendu art : dao.getAllArticles()) {
+				if (art.getNoArticle().equals(noArticle)) {
+					article = art;
+				}
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException();
+		}
+		
+		return article;
+	}
+	
+	
 	/**
 	 * Fonction permettant de créer un article
 	 * 
@@ -416,6 +434,8 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 		return lstRecherche;
 	}
+	
+	
 
 	@Override
 	public List<ArticleVendu> rechercheParCategorie(Integer noCategorie, List<ArticleVendu> lstAfiltrer)
@@ -690,5 +710,7 @@ public class EnchereManagerImpl implements EnchereManager {
 		}
 
 	}
+
+
 
 }
