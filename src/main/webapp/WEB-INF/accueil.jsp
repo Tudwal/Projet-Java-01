@@ -21,7 +21,7 @@
   
     <body id="page-top">
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top colorMobile" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="#page-top">ENI-ENCHERE</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,10 @@
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="https://www.pngmart.com/files/17/Auction-PNG-Transparent-Image.png" alt="..." />
+                <img class="masthead-avatar mb-5 imgLargeAccueil" src="https://www.pngmart.com/files/17/Auction-PNG-Transparent-Image.png" alt="..." />
+                
+                <img class="masthead-avatar mb-5 imgMobileAccueil" src="https://www.eni-ecole.fr/wp-content/uploads/2021/05/elodie-anthony-angelique-anna-perrine-1-1-980x368.png" alt="..." />
+                
                 <!-- Masthead Heading-->
                 <h1 class="masthead-heading text-uppercase mb-0">Liste des Enchères</h1>
         
@@ -105,12 +108,9 @@
 	        		</div>
 	        		
 	        		 <div class="informationsArticle">
-	        		 	  <%--     <c:out value="${ status.count }" /> : <c:out value="${ titre }" />  --%>
-            <br>
-<%--            <c:url value=""> ${article.nomArticle} </c:url> --%>
 			
 			<a href="ConnexionServlet">${article.nomArticle}</a>
-
+			<br>
             <br> Prix : ${article.miseAPrix} points
             <br> Fin de l'enchère : ${article.dateFinEncheres} 
             <br>Vendeur : ${article.utilisateur.pseudo} <br>
