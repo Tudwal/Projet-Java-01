@@ -74,6 +74,8 @@ public interface EnchereManager {
 	 */
 	public Utilisateur recupererUnProfil (String identifiant) throws BLLException;
 	
+	public ArticleVendu recupererUnArticle (Integer noArticle) throws BLLException;
+	
 	/**
 	 * Fonction permettant de créer un article
 	 * @param article
