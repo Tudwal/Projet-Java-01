@@ -684,7 +684,7 @@ progress {
   max-width: 100%;
   padding-right: calc(var(--bs-gutter-x) * 0.5);
   padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-top: var(--bs-gutter-y);
+  margin-top: 25px;
 }
 
 .col {
@@ -7643,6 +7643,7 @@ html {
   border-radius: 8px;
   margin-bottom: 30px;
   width: 100%;
+  margin-left: 10%;
 }
 
 select {
@@ -7660,10 +7661,13 @@ select {
   margin-bottom: 10px;
   font-weight: bolder;
   font-size: larger;
+  margin-left: 10%;
+  
 }
 
 .categorie {
   float: left;
+  margin-left: 10%;
 }
 
 .btn-Rechercher {
@@ -7684,4 +7688,26 @@ select {
   color: blanchedalmond;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+}
+
+.lstArticles {
+	align-items: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    height: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top : 10px;
+    padding: 0;
+    border: 2px solid;
+    background: #c0c0c0;
+}
+.imgArticle img {
+	align-items: center;
+	width: 50%;
+    float: left;
+}
+.informationsArticle {
+	width: 50%;
+    float: right;
 }

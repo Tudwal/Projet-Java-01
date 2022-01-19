@@ -113,6 +113,49 @@
 </div>
 </div>
 </div>
+
+
+
+<div class="container-fluid">
+    	<div class="row">
+
+<c:forEach items="${ accueilmodel.lstArticles }" var="article" varStatus="index">
+      
+      
+	        <div class="col-xl-3 col-lg-4 col-sm-6">
+	        
+	        	<div class="lstArticles">
+	        	
+	        		
+	        		<div class="imgArticle">
+	        			<img alt="..." src="https://www.grandparquet.com/wp-content/uploads/2016/02/pas-de-photo.png">
+	        		</div>
+	        		
+	        		 <div class="informationsArticle">
+	        		 	  <%--     <c:out value="${ status.count }" /> : <c:out value="${ titre }" />  --%>
+            <br>
+<%--            <c:url value=""> ${article.nomArticle} </c:url> --%>
+			
+			<a href="ConnexionServlet">${article.nomArticle}</a>
+
+            <br> Prix : ${article.miseAPrix} points
+            <br> Fin de l'enchère : ${article.dateFinEncheres} 
+            <br>Vendeur : ${article.utilisateur.pseudo} <br>
+            <br>
+	        		 </div>
+	        		
+        
+        		</div>
+        
+        	</div>
+	
+        
+</c:forEach>
+
+ 		</div>
+	</div>
+
+
         </header>
        
        
