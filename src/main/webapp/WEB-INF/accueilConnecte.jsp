@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,9 +58,10 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
+                </div>
                 <!-- Masthead Subheading-->
                     <br> 
-    
+    <form action="AccueilConnecteServlet" method="post">
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
@@ -66,6 +69,7 @@
             <input class="inputRecherche" placeholder="Le nom de l'article contient" type="search"/>
             
             <br>
+            
             <span class="categorie">Catégorie : </span> 
             <select name="menu_categorie">
                 <option>Toutes </option>
@@ -79,7 +83,7 @@
         </div>
         <div class="col-sm-6">
         <br>
-            <button class="btn-Rechercher" type="submit" name="ajouter" value="Créer">Rechercher</button>
+            <button class="btn-Rechercher" type="submit" name="rechercher" value="Rechercher">Rechercher</button>
 
         </div>
     </div>
@@ -113,35 +117,36 @@
 </div>
 </div>
 </div>
+</form>
 
 
-
-<div class="container-fluid">
+<div id="divArticle" class="container-fluid">
     	<div class="row">
 
-<c:forEach items="${ accueilmodel.lstArticles }" var="article" varStatus="index">
+<c:forEach items="${ model.lstArticles }" var="articleVendu" varStatus="index">
       
+      	<c:url value = "UneVenteServlet" var="UneVenteServlet"></c:url>
+			
+		<c:url value = "UnProfilServlet" var="UnProfilServlet"></c:url>
       
 	        <div class="col-xl-3 col-lg-4 col-sm-6">
 	        
 	        	<div class="lstArticles">
-	        	
-	        		
+	        	     		
 	        		<div class="imgArticle">
 	        			<img alt="..." src="https://www.grandparquet.com/wp-content/uploads/2016/02/pas-de-photo.png">
 	        		</div>
 	        		
 	        		 <div class="informationsArticle">
-	        		 	  <%--     <c:out value="${ status.count }" /> : <c:out value="${ titre }" />  --%>
             <br>
-<%--            <c:url value=""> ${article.nomArticle} </c:url> --%>
 			
-			<a href="ConnexionServlet">${article.nomArticle}</a>
-
-            <br> Prix : ${article.miseAPrix} points
-            <br> Fin de l'enchère : ${article.dateFinEncheres} 
-            <br>Vendeur : ${article.utilisateur.pseudo} <br>
+			<br> <a href="UneVenteServlet?numArticle=${articleVendu.noArticle}" >${articleVendu.nomArticle}</a> 
+            <br> Prix : ${articleVendu.miseAPrix} points
+            <br> Fin de l'enchère : ${articleVendu.dateFinEncheres} 
+            <br> Vendeur : <a href="UnProfilServlet?numUtilisateur=${articleVendu.utilisateur.noUtilisateur}">${articleVendu.utilisateur.pseudo}</a>  <br>
             <br>
+            
+            
 	        		 </div>
 	        		
         

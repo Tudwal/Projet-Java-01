@@ -136,7 +136,7 @@
        
         <!-- Copyright Section-->
         <div class="copyright py-4 text-center text-white">
-            <div class="container"><small>© From { <a href="https://github.com/Totobyro" target="_blank">Totobyro</a> - <a href="https://github.com/Tudwal" target="_blank">Tudwal</a> - <a href="https://www.linkedin.com/in/thomas-guerin-074433146/" target="_blank">3rwan</a> }</small></div>
+            <div class="container"><small>© From { <a href="https://github.com/Totobyro" target="_blank">Totobyro</a> - <a href="https://github.com/Tudwal" target="_blank">Tudwal</a> - <a href="https://github.com/3rwn" target="_blank">3rwan</a> }</small></div>
         </div>
        
        

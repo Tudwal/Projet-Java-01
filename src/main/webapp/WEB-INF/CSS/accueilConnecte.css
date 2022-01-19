@@ -250,6 +250,21 @@ a:not([href]):not([class]), a:not([href]):not([class]):hover {
   text-decoration: none;
 }
 
+#divArticle, a{
+	color: #800000;
+	text-decoration: none;
+}
+
+#divArticle, a:hover {
+  color: #ff8000;
+  text-decoration: none;
+}
+
+#divArticle, a:not([href]):not([class]), a:not([href]):not([class]):hover {
+  color: inherit;
+  text-decoration: none;
+}
+
 pre,
 code,
 kbd,

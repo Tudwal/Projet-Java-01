@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.enchere.bll.BLLException;
+import fr.eni.enchere.bll.EnchereManager;
+import fr.eni.enchere.bll.EnchereManagerSing;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.ihm.deconnecte.AccueilModel;
 
 /**
@@ -15,29 +19,50 @@ import fr.eni.enchere.ihm.deconnecte.AccueilModel;
 @WebServlet("/AccueilConnecteServlet")
 public class AccueilConnecteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AccueilConnecteServlet() {
-        super();
-    }
+	EnchereManager manager = EnchereManagerSing.getInstance();
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public AccueilConnecteServlet() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		UtilisateurModel model = (UtilisateurModel) request.getSession().getAttribute("model");
-		
+
+		if (request.getParameter("rechercher") != null) {
+//			if (request.getParameter("motClef") != null) {
+//				String articleRecherche = request.getParameter("motClef");
+//			}
+//				if (request.getParameter("menuCategorie") != null) {
+//					Integer categorie = Integer.parseInt(request.getParameter("menuCategorie"));
+//				}
+			try {
+				model.setLstArticles(manager.consulterArticles());
+				System.out.println(model.getLstArticles());
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		request.setAttribute("model", model);
 		request.getRequestDispatcher("WEB-INF/accueilConnecte.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
