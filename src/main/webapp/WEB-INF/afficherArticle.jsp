@@ -84,7 +84,7 @@
 	<span>${model.enchere.articleVendu.lieuRetrait.codePostal}</span>
 	<span>${model.enchere.articleVendu.lieuRetrait.ville}</span>
 	<br>
-	<span>${model.enchere.articleVendu.utilisateur.pseudo}</span>
+	
 	
 		
 	<form action="UneVenteServlet?numArticle=${model.enchere.articleVendu.noArticle}" method="post">
