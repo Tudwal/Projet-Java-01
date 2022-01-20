@@ -76,12 +76,12 @@
             <br>
             
             <span class="categorie">Catégorie : </span> 
-            <select name="menu_categorie">
-                <option>Toutes </option>
-                <option>Informatique </option>
-                <option>Ameublement </option>
-                <option>Vetement </option>
-                <option>Sport&Loisirs </option>
+            <select name="menuCategorie">
+                <option value="0">Toutes </option>
+                <option value="1">Informatique </option>
+                <option value="2">Ameublement </option>
+                <option value="3">Vetement </option>
+                <option value="4">Sport&Loisirs </option>
             </select>
 
 
@@ -110,14 +110,20 @@
 
 <div class="row">
     <div class="col-sm-6">
-            <input class="inputGauche" type="checkbox" value="encheresOuvertes" id="encheresOuvertes"> <span class="checkboxGauche">enchères ouvertes</span>
-            <span class="checkboxDroite">mes ventes en cours</span><input class="inputDroite" type="checkbox" value="mesVentesEnCours" id="mesVentesEnCours">
+            <input class="inputGauche" name="encheresOuvertes" type="checkbox" value="encheresOuvertes" id="encheresOuvertes"> 
+            <span class="checkboxGauche">enchères ouvertes</span>
+            <span class="checkboxDroite">mes ventes en cours</span>
+            <input class="inputDroite" name="mesVentesEnCours" type="checkbox" value="mesVentesEnCours" id="mesVentesEnCours">
             <br>
-            <input class="inputGauche" type="checkbox" value="mesEncheres" id="mesEncheres"> <span class="checkboxGauche">mes enchères</span>
-            <span class="checkboxDroite">ventes non débutées</span><input class="inputDroite" type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees">
+            <input class="inputGauche" name="mesEncheres" type="checkbox" value="mesEncheres" id="mesEncheres"> 
+            <span class="checkboxGauche">mes enchères</span>
+            <span class="checkboxDroite">ventes non débutées</span>
+            <input class="inputDroite" name="ventesNonDebutees" type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees">
             <br>
-            <input class="inputGauche" type="checkbox" value="mesEncheresRemportees" id="mesEncheresRemportees"> <span class="checkboxGauche">mes encheres remportées</span>
-            <span class="checkboxDroite">ventes terminées</span><input class="inputDroite" type="checkbox" value="ventesTerminees" id="ventesTerminees">    
+            <input class="inputGauche" name="mesEncheresRemportees" type="checkbox" value="mesEncheresRemportees" id="mesEncheresRemportees"> 
+            <span class="checkboxGauche">mes encheres remportées</span>
+            <span class="checkboxDroite">ventes terminées</span>
+            <input class="inputDroite" name="ventesTerminees" type="checkbox" value="ventesTerminees" id="ventesTerminees">    
         
 </div>
 </div>
@@ -128,7 +134,7 @@
 <div id="divArticle" class="container-fluid">
     	<div class="row">
 
-<c:forEach items="${ model.lstArticles }" var="articleVendu" varStatus="index">
+	<c:forEach items="${ model.lstArticles }" var="articleVendu" varStatus="index">
       
       	<c:url value = "UneVenteServlet" var="UneVenteServlet"></c:url>
 			
@@ -150,20 +156,16 @@
             <br> Fin de l'enchère : ${articleVendu.dateFinEncheres} 
             <br> Vendeur : <a href="UnProfilServlet?numUtilisateur=${articleVendu.utilisateur.noUtilisateur}">${articleVendu.utilisateur.pseudo}</a>  <br>
             <br>
-            
-            
 	        		 </div>
-	        		
-        
         		</div>
-        
         	</div>
-	
-        
-</c:forEach>
+	</c:forEach>
 
  		</div>
 	</div>
+
+	
+	
 
 
         </header>

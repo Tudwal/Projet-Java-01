@@ -108,6 +108,11 @@ public class TestIHM extends HttpServlet {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
+		
+		
+		manager.moteurDeRechercheConnecter(null, 1, null, null));
+		System.out.println(manager.getLstArticles());
 
 	}
 

@@ -23,6 +23,8 @@ public class UtilisateurModel {
 	private Utilisateur autreUtilisateur;
 	
 	private Enchere enchere;
+	
+	private List<Enchere> lstEncheres = new ArrayList<Enchere>();
 
 	public UtilisateurModel() {
 		// TODO Auto-generated constructor stub
@@ -100,6 +102,14 @@ public class UtilisateurModel {
 
 	public void setEnchere(Enchere enchere) {
 		this.enchere = enchere;
+	}
+
+	public List<Enchere> getLstEnchere() {
+		return lstEncheres;
+	}
+
+	public void setLstEnchere(List<Enchere> lstEnchere) {
+		this.lstEncheres = lstEnchere;
 	}
 
 }

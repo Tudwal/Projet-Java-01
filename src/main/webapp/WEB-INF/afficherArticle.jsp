@@ -63,27 +63,47 @@
                 <!-- Masthead Subheading-->
                     <br> 
 
+<%-- 	<c:if test="${model.enchere!=null}"> --%>
+<%-- 	<span>${model.enchere.articleVendu.nomArticle}</span> --%>
+<!-- 	<br> -->
+<%-- 	<span class="spanInfos">Description :</span> <span>${model.enchere.articleVendu.description}</span> --%>
+<!-- 	<br> -->
+<%-- 	<span class="spanInfos">Catégorie :</span> <span>${model.enchere.articleVendu.categorieArticle.libelle}</span> --%>
+<!-- 	<br> -->
+<%-- <%-- 	<c:if test="${model.enchere.montantEnchere}=!null"> --%> 
+<%-- 		<span class="spanInfos">Meilleure offre :</span> <span>${model.enchere.montantEnchere}  par  ${model.enchere.utilisateur.pseudo}</span> --%>
+<!-- 		<br> -->
+<%-- <%-- 	</c:if> --%>
 	
-	<span>${model.enchere.articleVendu.nomArticle}</span>
-	<br>
-	<span class="spanInfos">Description :</span> <span>${model.enchere.articleVendu.description}</span>
-	<br>
-	<span class="spanInfos">Catégorie :</span> <span>${model.enchere.articleVendu.categorieArticle.libelle}</span>
-	<br>
-<%-- 	<c:if test="${model.enchere.montantEnchere}=!null"> --%>
-		<span class="spanInfos">Meilleure offre :</span> <span>${model.enchere.montantEnchere}  par  ${model.enchere.utilisateur.pseudo}</span>
-		<br>
+<%-- 	<span class="spanInfos">Mise à prix :</span> <span>${model.enchere.articleVendu.miseAPrix}</span> --%>
+<!-- 	<br> -->
+<%-- 	<span class="spanInfos">Fin de l'enchère :</span> <span>${model.enchere.articleVendu.dateFinEncheres}</span> --%>
+<!-- 	<br> -->
+<%-- 	<span class="spanInfos">Retrait :</span> <span>${model.articleVendu.lieuRetrait.rue}</span> --%>
+<!-- 	<br> -->
+<%-- 	<span>${model.articleVendu.lieuRetrait.codePostal}</span> --%>
+<%-- 	<span>${model.articleVendu.lieuRetrait.ville}</span> --%>
+<!-- 	<br> -->
 <%-- 	</c:if> --%>
 	
-	<span class="spanInfos">Mise à prix :</span> <span>${model.enchere.articleVendu.miseAPrix}</span>
+	<span>${model.articleVendu.nomArticle}</span>
 	<br>
-	<span class="spanInfos">Fin de l'enchère :</span> <span>${model.enchere.articleVendu.dateFinEncheres}</span>
+	<span class="spanInfos">Description :</span> <span>${model.articleVendu.description}</span>
 	<br>
-	<span class="spanInfos">Retrait :</span> <span>${model.enchere.articleVendu.lieuRetrait.rue}</span>
+	<span class="spanInfos">Catégorie :</span> <span>${model.articleVendu.categorieArticle.libelle}</span>
+	<br>	
+	<span class="spanInfos">Mise à prix :</span> <span>${model.articleVendu.miseAPrix}</span>
 	<br>
-	<span>${model.enchere.articleVendu.lieuRetrait.codePostal}</span>
-	<span>${model.enchere.articleVendu.lieuRetrait.ville}</span>
+	<span class="spanInfos">Meilleure offre :</span> <span>${model.enchere.montantEnchere}  par  ${model.enchere.utilisateur.pseudo}</span>
 	<br>
+	<span class="spanInfos">Fin de l'enchère :</span> <span>${model.articleVendu.dateFinEncheres}</span>
+	<br>
+	<span class="spanInfos">Retrait :</span> <span>${model.articleVendu.lieuRetrait.rue}</span>
+	<br>
+	<span>${model.articleVendu.lieuRetrait.codePostal}</span>
+	<span>${model.articleVendu.lieuRetrait.ville}</span>
+	<br>
+
 	
 	
 		

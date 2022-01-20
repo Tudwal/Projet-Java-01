@@ -48,7 +48,7 @@ public class AccueilServlet extends HttpServlet {
 				numCategorie = Integer.parseInt(request.getParameter("menuCategorie"));
 				if (numCategorie == 0) {
 					numCategorie = null;
-				}				
+				}
 			}
 
 			try {
@@ -57,13 +57,6 @@ public class AccueilServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-//			try {
-//				accueilmodel.setLstArticles(manager.consulterArticles());
-//				System.out.println(accueilmodel.getLstArticles());
-//			} catch (BLLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
 
 		// model.setLstArticles(manager.afficherArticles());
