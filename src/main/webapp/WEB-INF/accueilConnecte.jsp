@@ -25,7 +25,7 @@
     </head>
     <body id="page-top">
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top colorMobile" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="#page-top">ENI-ENCHERE</a>
                 <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,18 +37,23 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilConnecteServlet">Enchères</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="NouvelleVenteServlet">Vendre un article</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="MonProfilServlet">Mon profil</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilServlet">Déconnexion</a></li>
-                        
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="AccueilServlet">Déconnexion</a></li>                                                
                     </ul>
                 </div>
             </div>
         </nav>
-        <!-- Masthead-->
+        <!-- Masthead-->        
         <header class="masthead bg-primary text-white text-center">
+        
             <div class="container d-flex align-items-center flex-column">
+                <h3 class="creditAccueil">Crédits: ${model.utilisateur.credit} jetons</h3> 
+                   
                 <h3 class="bienvenue">Bienvenue  ${model.utilisateur.pseudo}</h3> 
                 <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="https://www.pngmart.com/files/17/Auction-PNG-Transparent-Image.png" alt="..." />
+                <img class="masthead-avatar mb-5 imgLargeAccueil" src="https://www.pngmart.com/files/17/Auction-PNG-Transparent-Image.png" alt="..." />
+                
+                <img class="masthead-avatar mb-5 imgMobileAccueil" src="https://www.eni-ecole.fr/wp-content/uploads/2021/05/elodie-anthony-angelique-anna-perrine-1-1-980x368.png" alt="..." />
+                
                 <!-- Masthead Heading-->
                 <h1 class="masthead-heading text-uppercase mb-0">Liste des Enchères</h1>
         

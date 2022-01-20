@@ -250,16 +250,6 @@ a:not([href]):not([class]), a:not([href]):not([class]):hover {
   text-decoration: none;
 }
 
-#divArticle, a{
-	color: #800000;
-	text-decoration: none;
-}
-
-#divArticle, a:hover {
-  color: #ff8000;
-  text-decoration: none;
-}
-
 #divArticle, a:not([href]):not([class]), a:not([href]):not([class]):hover {
   color: inherit;
   text-decoration: none;
@@ -7711,7 +7701,6 @@ select {
   background-color: #1a252f;
 }
 
-
 .rechercherFiltre {
   margin: 50px 50px 50px 50px;
   float: left;
@@ -7724,7 +7713,9 @@ select {
   font-family: "Advent Pro", sans-serif;
   border-radius: 8px;
   margin-bottom: 30px;
-  width: 100%;
+  width: 80%;
+  margin-left: 1%;
+  
 }
 
 select {
@@ -7742,10 +7733,12 @@ select {
   margin-bottom: 10px;
   font-weight: bolder;
   font-size: larger;
+  margin-left: 10%; 
 }
 
 .categorie {
   float: left;
+  margin-left: 10%; 
 }
 
 .btn-Rechercher {
@@ -7805,3 +7798,84 @@ select {
     margin-bottom: 25px;
     color: darkblue;
   }
+  
+  .creditAccueil {
+  	float: right;
+    font-size: 1em;
+    font-style: italic;
+    color: crimson;
+    margin-top: -85px;
+  }
+
+  .lstArticles {
+	align-items: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    height: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top : 10px;
+    padding: 0;
+    border-radius: 9%;
+    background: #eff6fd;
+}
+.imgArticle img {
+	align-items: center;
+	width: 40%;
+    float: left;
+    border-radius: 13%;
+}
+.informationsArticle {
+	width: 60%;
+    float: right;
+    text-align: left;
+    padding-left: 12px;
+    color: black;
+    font-style: italic;
+}
+.informationsArticle a {
+	color: #d12a3a;
+	font-weight: bold;
+	margin-left: 7%;
+	text-decoration: none;
+    font-style: initial;
+}
+.creditNav {
+	font-size: 0.7em;
+}
+
+@media (max-width: 576px) {
+	.imgLargeAccueil {
+		display: none;
+	}
+	.bg-primary  {
+  		--bs-bg-opacity: 1;
+  		background-color: #0005b1eb !important;
+	}
+	.btn-Rechercher:hover {
+  		background-color: red;
+  		color: blanchedalmond;
+  		cursor: pointer;
+  		transition: 0.3s ease-in-out;
+	}
+	.colorMobile a:hover {
+  		color: red !important;
+	}	
+	a {
+		color: #0080ff;
+	}	
+	.bienvenue {
+    	font-size: 1.2em;
+    	margin-bottom: 25px;
+    	color: #ff040b;
+  }
+  	.creditAccueil {
+    font-size: 0.8em; 
+  }
+}
+
+@media (min-width: 576px) {
+	.imgMobileAccueil {
+		display: none;
+	}
+}

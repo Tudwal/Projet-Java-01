@@ -7740,7 +7740,10 @@ select {
 	}
 		.colorMobile a:hover {
   color: red !important;
-	}		
+	}	
+		a {
+	color: #0080ff;
+	}	
 }
 
 @media (min-width: 576px) {
