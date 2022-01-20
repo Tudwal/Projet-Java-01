@@ -116,7 +116,7 @@ public interface EnchereManager {
 	
 	public List<ArticleVendu> moteurDeRechercheConnecterMesVentes(Integer noCategorie,Integer noUtilisateur , String etatVente, String motClef) throws BLLException;
 	
-	public List<Enchere> moteurDeRechercheConnecterMesAchats(Integer noCategorie,Integer noUtilisateur , String etatVente, String motClef) throws BLLException;
+	public List<ArticleVendu> moteurDeRechercheConnecterMesAchats(Integer noCategorie,Integer noUtilisateur , String etatVente, String motClef) throws BLLException;
 	
 	/**
 	 * Fonction permettant de rechercher un article à partir de son numéro de catégorie

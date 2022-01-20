@@ -523,9 +523,10 @@ public class EnchereManagerImpl implements EnchereManager {
 	}
 
 	@Override
-	public List<Enchere> moteurDeRechercheConnecterMesAchats(Integer noCategorie, Integer noUtilisateur,
+	public List<ArticleVendu> moteurDeRechercheConnecterMesAchats(Integer noCategorie, Integer noUtilisateur,
 			String etatVente, String motClef) throws BLLException {
 		List<Enchere> lstRecherche = new ArrayList<Enchere>();
+		List<ArticleVendu> lstarti = new ArrayList<ArticleVendu>();
 		try {
 			List<Enchere> lstEnchere = dao.getAllEnchere();
 			if (noCategorie != null && etatVente != null && motClef != null) {
@@ -557,11 +558,19 @@ public class EnchereManagerImpl implements EnchereManager {
 			} else if (motClef != null) {
 				lstRecherche = rechercheParMotClefEnchere(motClef, lstEnchere);
 			}
+			
+			
+			for (Enchere enchere : lstRecherche) {
+				Integer noArticle = enchere.getArticleVendu().getNoArticle();
+				ArticleVendu article = dao.getUnArticle(noArticle);
+				lstarti.add(article);
+			}
+			
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException();
 		}
-		return lstRecherche;
+		return lstarti;
 	}
 
 	
