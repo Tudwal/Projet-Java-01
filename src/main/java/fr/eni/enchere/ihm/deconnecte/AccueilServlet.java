@@ -33,30 +33,41 @@ public class AccueilServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		AccueilModel accueilmodel = new AccueilModel();
+		AccueilModel accueilModel = new AccueilModel();
+		String articleRecherche = null;
+		Integer numCategorie = null;
 
 		request.getSession().invalidate();
 		request.getSession().removeAttribute("model");
 
 		if (request.getParameter("rechercher") != null) {
 			if (request.getParameter("motClef") != null) {
-				String articleRecherche = request.getParameter("motClef");
+				articleRecherche = request.getParameter("motClef");
 			}
-//			if (request.getParameter("menuCategorie") != null) {
-//				Integer categorie = Integer.parseInt(request.getParameter("menuCategorie"));
-//			}
+			if (request.getParameter("menuCategorie") != null) {
+				numCategorie = Integer.parseInt(request.getParameter("menuCategorie"));
+				System.out.println(numCategorie);
+				
+			}
+
 			try {
-				accueilmodel.setLstArticles(manager.consulterArticles());
-				System.out.println(accueilmodel.getLstArticles());
+				accueilModel.setLstArticles(manager.moteurDeRechercheDeconnecter(numCategorie, "EC", articleRecherche));
 			} catch (BLLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+//			try {
+//				accueilmodel.setLstArticles(manager.consulterArticles());
+//				System.out.println(accueilmodel.getLstArticles());
+//			} catch (BLLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 
 		// model.setLstArticles(manager.afficherArticles());
 
-		request.setAttribute("accueilmodel", accueilmodel);
+		request.setAttribute("accueilmodel", accueilModel);
 		request.getRequestDispatcher("WEB-INF/accueil.jsp").forward(request, response);
 	}
 

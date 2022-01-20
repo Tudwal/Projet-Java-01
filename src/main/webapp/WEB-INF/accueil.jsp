@@ -69,12 +69,12 @@
             	<input class="inputRecherche" placeholder="Le nom de l'article contient" type="search" name="motClef"/>
             		<br>
             	<span class="categorie">Catégorie : </span> 
-            	<select name="menu_categorie">
-                	<option>Toutes </option>
-                	<option>Informatique </option>
-                	<option>Ameublement </option>
-                	<option>Vetement </option>
-                	<option>Sport&Loisirs </option>
+            	<select name="menuCategorie">
+                	<option value="0">Toutes </option>
+                	<option value="1">Informatique </option>
+                	<option value="2">Ameublement </option>
+                	<option value="3">Vetement </option>
+                	<option value="4">Sport&Loisirs </option>
             	</select>  
           </div>
             
