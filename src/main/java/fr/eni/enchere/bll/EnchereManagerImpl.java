@@ -524,35 +524,35 @@ public class EnchereManagerImpl implements EnchereManager {
 			String etatVente, String motClef) throws BLLException {
 		List<Enchere> lstRecherche = new ArrayList<Enchere>();
 		try {
-			List<Enchere> lstArticles = dao.getAllEnchere();
+			List<Enchere> lstEnchere = dao.getAllEnchere();
 			if (noCategorie != null && etatVente != null && motClef != null) {
-				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
-				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
-				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+				lstRecherche = rechercheParCategorieEnchere(noCategorie, lstEnchere);
+				lstRecherche = rechercheParEtatVenteEnchere(etatVente, lstRecherche);
+				lstRecherche = rechercheParMotClefEnchere(motClef, lstRecherche);
 
 			} else if (noCategorie != null && etatVente != null) {
-				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+				lstRecherche = rechercheParCategorieEnchere(noCategorie, lstEnchere);
 
-				lstRecherche = rechercheParEtatVente(etatVente, lstRecherche);
+				lstRecherche = rechercheParEtatVenteEnchere(etatVente, lstRecherche);
 
 			} else if (etatVente != null && motClef != null) {
-				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+				lstRecherche = rechercheParEtatVenteEnchere(etatVente, lstEnchere);
 
-				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+				lstRecherche = rechercheParMotClefEnchere(motClef, lstRecherche);
 
 			} else if (noCategorie != null && motClef != null) {
-				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+				lstRecherche = rechercheParCategorieEnchere(noCategorie, lstEnchere);
 
-				lstRecherche = rechercheParMotClefs(motClef, lstRecherche);
+				lstRecherche = rechercheParMotClefEnchere(motClef, lstRecherche);
 
 			} else if(etatVente != null && noUtilisateur != null){
-				lstRecherche = rechercheMesAchats(etatVente, lstArticles, noUtilisateur);
+				lstRecherche = rechercheMesAchats(etatVente, lstEnchere, noUtilisateur);
 			} else if (noCategorie != null) {
-				lstRecherche = rechercheParCategorie(noCategorie, lstArticles);
+				lstRecherche = rechercheParCategorieEnchere(noCategorie, lstEnchere);
 			} else if (etatVente != null) {
-				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
+				lstRecherche = rechercheParEtatVenteEnchere(etatVente, lstEnchere);
 			} else if (motClef != null) {
-				lstRecherche = rechercheParMotClefs(motClef, lstArticles);
+				lstRecherche = rechercheParMotClefEnchere(motClef, lstEnchere);
 			}
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -657,68 +657,81 @@ public class EnchereManagerImpl implements EnchereManager {
 		return lstFinal;
 	}
 	
-	public List<ArticleVendu> rechercheMesAchats(String etatVente, List<ArticleVendu> lstAfiltrer,
-			Integer noUtilisateur) {
-		List<ArticleVendu> lstFinal = new ArrayList<ArticleVendu>();
+	public List<Enchere> rechercheMesAchats(String etatVente, List<Enchere> lstAfiltrer,
+			Integer noUtilisateur) throws BLLException, DALException {
+		List<Enchere> lstFinal = new ArrayList<Enchere>();
 		switch (etatVente) {
 		//mes ventes en cours
-		case "EA":List<ArticleVendu> lstEnAttente;
-			try {
-				lstEnAttente = rechercheParEtatVente(etatVente, lstAfiltrer);
-				List<ArticleVendu> lstMesVentesEnAttente = new ArrayList<ArticleVendu>();
-				for (Enchere enchere : lstEnAttente) {
-					if (enchere.getArticleVendu().getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
-						lstMesVentesEnAttente.add(enchere);
-					}
+		case "EA":List<Enchere> lstEnAttente;
+			lstEnAttente = rechercheParEtatVenteEnchere(etatVente, lstAfiltrer);
+			List<Enchere> lstMesVentesEnAttente = new ArrayList<Enchere>();
+			for (Enchere enchere : lstEnAttente) {
+				if (enchere.getArticleVendu().getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+					lstMesVentesEnAttente.add(enchere);
 				}
-				lstFinal = lstMesVentesEnAttente;
-				break;
-			} catch (BLLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			lstFinal = lstMesVentesEnAttente;
+			break;
 		//mes ventes non débutées	
-		case "EC":List<ArticleVendu> lstEnCour;
-			try {
-				lstEnCour = rechercheParEtatVente(etatVente, lstAfiltrer);
-				List<ArticleVendu> lstMesVentesEnCours = new ArrayList<ArticleVendu>();
-				for (ArticleVendu articleVendu : lstEnCour) {
-					if (articleVendu.getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
-						lstMesVentesEnCours.add(articleVendu);
-					}
+		case "EC":List<Enchere> lstEnCour;
+			lstEnCour = rechercheParEtatVenteEnchere(etatVente, lstAfiltrer);
+			List<Enchere> lstMesVentesEnCours = new ArrayList<Enchere>();
+			for (Enchere enchere : lstEnCour) {
+				if (enchere.getArticleVendu().getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+					lstMesVentesEnCours.add(enchere);
 				}
-				lstFinal =  lstMesVentesEnCours;
-				break;
-			} catch (BLLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			lstFinal =  lstMesVentesEnCours;
+			break;
 		//mes ventes terminées	
-		case "VT":List<ArticleVendu> lstTermine;
-			try {
-				lstTermine = rechercheParEtatVente(etatVente, lstAfiltrer);
-				List<ArticleVendu> lstMesVentesTermine = new ArrayList<ArticleVendu>();
-				for (ArticleVendu articleVendu : lstTermine) {
-					if (articleVendu.getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
-						lstMesVentesTermine.add(articleVendu);
-					}
+		case "VT":List<Enchere> lstTermine;
+			lstTermine = rechercheParEtatVenteEnchere(etatVente, lstAfiltrer);
+			List<Enchere> lstMesVentesTermine = new ArrayList<Enchere>();
+			for (Enchere enchere : lstTermine) {
+				if (enchere.getArticleVendu().getUtilisateur().getNoUtilisateur().equals(noUtilisateur)) {
+					lstMesVentesTermine.add(enchere);
 				}
-				lstFinal = lstMesVentesTermine;
-				break;
-			} catch (BLLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			lstFinal = lstMesVentesTermine;
+			break;
 		}
 		return lstFinal;
 	}
 	
+	public List<Enchere> rechercheParEtatVenteEnchere (String etatVente, List<Enchere> lstAFiltrer){
+		List<Enchere> lstEnchereParEtatVente = new ArrayList<Enchere>();
+		for (Enchere enchere : lstAFiltrer) {
+			if (enchere.getArticleVendu().getEtatVente().equals(etatVente)) {
+				lstEnchereParEtatVente.add(enchere);
+			}
+		}
+		return lstEnchereParEtatVente;
+	}
+	
+	public List<Enchere> rechercheParCategorieEnchere (Integer noCategorie, List<Enchere> lstAFiltrer){
+		List<Enchere> lstEnchereParCategorie = new ArrayList<Enchere>();
+		for (Enchere enchere : lstAFiltrer) {
+			if (enchere.getArticleVendu().getCategorieArticle().getNoCategorie().equals(noCategorie)) {
+				lstEnchereParCategorie.add(enchere);
+			}
+		}
+		return lstEnchereParCategorie;
+	}
+	
+	public List<Enchere> rechercheParMotClefEnchere (String motClef, List<Enchere> lstAFiltrer){
+		List<Enchere> lstArticleParMotClefEnchere = new ArrayList<Enchere>();
+		for (Enchere enchere : lstAFiltrer) {
+			if (enchere.getArticleVendu().getDescription().contains(motClef.toLowerCase())
+					|| enchere.getArticleVendu().getNomArticle().contains(motClef.toLowerCase())) {
+				lstArticleParMotClefEnchere.add(enchere);
+			}
+		}
+		return lstArticleParMotClefEnchere;
+	}
 	
 	
 	
-	
-
-	private void verificationNomArticle(String nomArticle, BLLException be) {
+ 	private void verificationNomArticle(String nomArticle, BLLException be) {
 		if (nomArticle.length() > 30 || nomArticle.isBlank() || nomArticle == null) {
 			be.ajouterErreur(
 					new ParameterException("Le nom de l'article est obligatoire et inferieur a 30 caracteres"));
