@@ -8102,3 +8102,9 @@ body {
     left: 52.5%;
     transform: skew(10deg) rotate(-15deg)
   }
+  
+  .identifiantMessage {
+  	color: red !important;
+  	font-size: 2em;
+  	float: right;
+  }

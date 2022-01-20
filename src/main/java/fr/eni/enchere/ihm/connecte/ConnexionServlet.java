@@ -53,6 +53,7 @@ public class ConnexionServlet extends HttpServlet {
 					session.setAttribute("model", model);
 				} else {
 					model.setMessage("L'identifiant et/ou le mdp est invalide");
+					System.out.println(model.getMessage());
 				}
 			} catch (BLLException e) {
 				e.printStackTrace();

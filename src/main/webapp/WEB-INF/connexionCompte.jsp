@@ -36,8 +36,7 @@
             </div>
         </nav>
         
- </body>
- <body>   
+
         <form action="ConnexionServlet" method="POST">
 
         <h1 class="a11y-hidden">Login Form</h1>
@@ -59,8 +58,9 @@
         </div>
         <input type="submit" name="connexion" value="Connexion" />
         <div class="email">
-          <a href="mailto:email@exemple.com?subject=subject text">Mot de passe oublié</a>
+          <a href="mailto:email@exemple.com?subject=subject text">Mot de passe oublié</a>          
         </div>
+                
         <figure aria-hidden="true">
           <div class="person-body"></div>
           <div class="neck skin"></div>
@@ -75,9 +75,10 @@
         </figure>
       </form>
       
-      <h4>${model.message}</h4>
      
-      
+     
+     	<span>${model.message}</span>
+   
       
       <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
