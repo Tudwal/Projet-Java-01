@@ -46,8 +46,9 @@ public class AccueilServlet extends HttpServlet {
 			}
 			if (request.getParameter("menuCategorie") != null) {
 				numCategorie = Integer.parseInt(request.getParameter("menuCategorie"));
-				System.out.println(numCategorie);
-				
+				if (numCategorie == 0) {
+					numCategorie = null;
+				}				
 			}
 
 			try {
