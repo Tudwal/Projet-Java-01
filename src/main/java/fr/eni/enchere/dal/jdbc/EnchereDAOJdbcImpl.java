@@ -65,7 +65,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			System.out.println(utilisateur);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("problème de conection insertUser");
+			throw new DALException("problème de conection insertUtilisateur");
 		}
 	}
 
@@ -172,7 +172,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("probleme de connection getAll");
+			throw new DALException("probleme de connection getAllUtilisateur");
 		}
 		return lstUtilisateurs;
 	}
@@ -422,7 +422,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private Enchere mapEnchere(ResultSet rs) throws SQLException, DALException {
 		Enchere enchere = new Enchere();
 		Integer noEnchere = rs.getInt("no_enchere");
-		java.util.Date test = rs.getTimestamp("date_enchere");
+		java.util.Date dateEnchere = rs.getTimestamp("date_enchere");
 		Integer montantEnchere = rs.getInt("montant_enchere");
 		Integer noArticle = rs.getInt("no_article");
 		Integer noUtilisateur = rs.getInt("no_utilisateur");
@@ -430,7 +430,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		enchere.setArticleVendu(getUnArticle(noArticle));
 		Utilisateur utilisateur = enchere.getUtilisateur();
 		ArticleVendu article = enchere.getArticleVendu();
-		enchere = new Enchere(article, utilisateur, noEnchere, test, montantEnchere);
+		enchere = new Enchere(article, utilisateur, noEnchere, dateEnchere, montantEnchere);
 		return enchere;
 	}
 
@@ -482,7 +482,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * map et de pouvoir s'en servir dans d'autres fonctions
 	 * 
 	 * @param rs
-	 * @return
+	 * @return article
 	 * @throws SQLException
 	 * @throws DALException
 	 */
@@ -502,10 +502,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		article.setCategorieArticle(getUneCategorie(noCategorie));
 		Utilisateur utilisateur = article.getUtilisateur();
 		Categorie categorie = article.getCategorieArticle();
-		// Retrait lieuRetrait = new Retrait(utilisateur.getRue(),
-		// utilisateur.getCodePostal(), utilisateur.getVille());
+		Retrait lieuRetrait = new Retrait(utilisateur.getRue(),
+		utilisateur.getCodePostal(), utilisateur.getVille());
 
-		article = new ArticleVendu(utilisateur, categorie, noArticle, nomArticle, description, dateDebutEnchere,
+		article = new ArticleVendu(utilisateur, categorie, lieuRetrait, noArticle, nomArticle, description, dateDebutEnchere,
 				dateFinEnchere, prixInitial, prixVente, etatVente);
 		return article;
 	}

@@ -356,6 +356,8 @@ public class EnchereManagerImpl implements EnchereManager {
 			article.getUtilisateur().setCredit(
 					article.getUtilisateur().getCredit() + meilleurEnchere.getMontantEnchere());
 			dao.updateUtilisateur(article.getUtilisateur());
+			article.setPrixVente(meilleurEnchere.getMontantEnchere());
+			dao.updateArticle(article);
 
 		} catch (DALException e) {
 			e.printStackTrace();
