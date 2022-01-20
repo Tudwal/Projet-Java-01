@@ -84,6 +84,24 @@ public class EnchereDAOMock implements EnchereDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Enchere> getAllEnchere() throws DALException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateArticle(ArticleVendu article) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteArticle(Integer noArticle) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 

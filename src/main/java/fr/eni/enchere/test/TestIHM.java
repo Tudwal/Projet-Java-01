@@ -111,8 +111,8 @@ public class TestIHM extends HttpServlet {
 		
 		
 		
-		manager.moteurDeRechercheConnecter(null, 1, null, null));
-		System.out.println(manager.getLstArticles());
+//		manager.moteurDeRechercheConnecter(null, 1, null, null));
+//		System.out.println(manager.getLstArticles());
 
 	}
 
