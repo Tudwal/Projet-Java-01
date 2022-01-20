@@ -306,7 +306,6 @@ public class EnchereManagerImpl implements EnchereManager {
 					.valueOf(enchere.getArticleVendu().getDateFinEncheres().plusDays(1).atStartOfDay());
 			Timestamp dateEnchere = new Timestamp(enchere.getDateEnchere().getTime());
 			
-//			remporterVente(enchere);
 
 			if (dateEnchere.after(dateDebutEnchere) && dateEnchere.before(dateFinEnchere)) {
 				if (meilleurEnchere.getMontantEnchere() < enchere.getMontantEnchere()
@@ -471,6 +470,8 @@ public class EnchereManagerImpl implements EnchereManager {
 				lstRecherche = rechercheParEtatVente(etatVente, lstArticles);
 			} else if (motClef != null) {
 				lstRecherche = rechercheParMotClefs(motClef, lstArticles);
+			} else {
+				lstRecherche = lstArticles;
 			}
 		} catch (DALException e) {
 			e.printStackTrace();
