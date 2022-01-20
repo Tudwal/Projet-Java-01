@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.enchere.bll.BLLException;
 import fr.eni.enchere.bll.EnchereManager;
@@ -61,6 +62,9 @@ public class InscriptionServlet extends HttpServlet {
 					manager.creerCompte(utilisateur);
 					System.out.println("OK VALIDER COMPTE");
 					adresse = "AccueilConnecteServlet";
+					HttpSession session = request.getSession();
+					model.setUtilisateur(manager.recupererUnProfil(pseudo));
+					session.setAttribute("model", model);
 
 				} catch (BLLException e) {
 					model.setMessage("La création du compte n'est pas validée ");

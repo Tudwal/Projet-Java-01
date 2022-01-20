@@ -101,8 +101,9 @@
     <div class="row">
         <div class="col-sm-6">
 
-           <input class="inputGauche" type="radio" name="encheres" value="achats" id="achats" onclick="onClickAchats()"> <span class="spanGauche">Achats</span> 
-           <span class="spanDroite">Mes ventes</span> <input class="inputDroite" type="radio" name="encheres" value="ventes" id="ventes" onclick="onClickVentes()"> 
+           <input class="inputGauche" type="radio" name="achats" value="achats" id="achats" checked onclick="onClickAchats()"> <span class="spanGauche">Achats</span> 
+           <span class="spanDroite">Mes ventes</span> 
+           <input class="inputDroite" type="radio" name="ventes" value="ventes" id="ventes" onclick="onClickVentes()"> 
 
         </div>
     </div>
@@ -110,20 +111,20 @@
 
 <div class="row">
     <div class="col-sm-6">
-            <input class="inputGauche" name="encheresOuvertes" type="checkbox" value="encheresOuvertes" id="encheresOuvertes"> 
+            <input class="inputGauche" name="encheresOuvertes" type="checkbox" value="encheresOuvertes" id="encheresOuvertes" > 
             <span class="checkboxGauche">enchères ouvertes</span>
             <span class="checkboxDroite">mes ventes en cours</span>
-            <input class="inputDroite" name="mesVentesEnCours" type="checkbox" value="mesVentesEnCours" id="mesVentesEnCours">
+            <input class="inputDroite" name="mesVentesEnCours" disabled type="checkbox" value="mesVentesEnCours" id="mesVentesEnCours">
             <br>
-            <input class="inputGauche" name="mesEncheres" type="checkbox" value="mesEncheres" id="mesEncheres"> 
+            <input class="inputGauche" name="mesEncheres"   type="checkbox" value="mesEncheres" id="mesEncheres"> 
             <span class="checkboxGauche">mes enchères</span>
             <span class="checkboxDroite">ventes non débutées</span>
-            <input class="inputDroite" name="ventesNonDebutees" type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees">
+            <input class="inputDroite" name="ventesNonDebutees" disabled type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees">
             <br>
             <input class="inputGauche" name="mesEncheresRemportees" type="checkbox" value="mesEncheresRemportees" id="mesEncheresRemportees"> 
             <span class="checkboxGauche">mes encheres remportées</span>
             <span class="checkboxDroite">ventes terminées</span>
-            <input class="inputDroite" name="ventesTerminees" type="checkbox" value="ventesTerminees" id="ventesTerminees">    
+            <input class="inputDroite" name="ventesTerminees"  disabled type="checkbox" value="ventesTerminees" id="ventesTerminees">    
         
 </div>
 </div>
@@ -164,9 +165,6 @@
  		</div>
 	</div>
 
-	
-	
-
 
         </header>
        
@@ -190,17 +188,22 @@
 
         <script type="application/javascript">
         function onClickAchats() {
+        	var encheresOuvertes = document.getElementById("achats");
+            ventes.checked = false;  
             var mesVentesEnCours = document.getElementById("mesVentesEnCours");
             mesVentesEnCours.checked = false;
             mesVentesEnCours.disabled = true;
+            ventes.checked = false;
         
             var ventesNonDebutees = document.getElementById("ventesNonDebutees");
             ventesNonDebutees.checked = false;
             ventesNonDebutees.disabled = true;
+            ventes.checked = false;
         
             var ventesTerminees = document.getElementById("ventesTerminees");
             ventesTerminees.checked = false;
             ventesTerminees.disabled = true;
+            ventes.checked = false;
 
 
             var encheresOuvertes = document.getElementById("encheresOuvertes");
@@ -212,8 +215,12 @@
             var mesEncheresRemportees = document.getElementById("mesEncheresRemportees");
             mesEncheresRemportees.disabled = false;
         }
+      
 
-            function onClickVentes() {
+            function onClickVentes() {      	
+            	var encheresOuvertes = document.getElementById("ventes");
+                achats.checked = false;          	
+            	
                 var encheresOuvertes = document.getElementById("encheresOuvertes");
                 encheresOuvertes.checked = false;
                 encheresOuvertes.disabled = true;
@@ -236,7 +243,7 @@
                 var ventesTerminees = document.getElementById("ventesTerminees");
                 ventesTerminees.disabled = false;
             }
-
+   
         </script>
 
 
