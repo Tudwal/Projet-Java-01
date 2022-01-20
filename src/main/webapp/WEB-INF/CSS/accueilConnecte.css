@@ -7843,7 +7843,6 @@ select {
 .creditNav {
 	font-size: 0.7em;
 }
-
 @media (max-width: 576px) {
 	.imgLargeAccueil {
 		display: none;
@@ -7873,7 +7872,6 @@ select {
     font-size: 0.8em; 
   }
 }
-
 @media (min-width: 576px) {
 	.imgMobileAccueil {
 		display: none;

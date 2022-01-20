@@ -58,10 +58,10 @@
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
-                </div>
-                <!-- Masthead Subheading-->
-                    <br> 
-
+                </div> <br>           
+        	</div>
+		
+		
 <h2>Inscription</h2>
 
 <form action="InscriptionServlet" method="POST">
@@ -93,6 +93,8 @@
 	<div id="deuxiemeTrait"></div>
 	
 	
+	
+</header>	
 	<!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
